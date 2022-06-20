@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -44,13 +45,30 @@ class AuthController extends Controller
             if (!Auth::attempt($attributes)) {
 
                 return response()->json([
-                    'status_code' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => 'Unauthorized'
+                    'status_code' => Response::HTTP_UNAUTHORIZED,
+                    'message' => 'Email or Password is not valid.'
                 ]);
             }
 
-            $user  = Auth::user();
+            $user = Auth::user();
+
+            if (!$user->status) {
+
+                Auth::logout();
+
+                return response()->json([
+                    'status_code' => Response::HTTP_UNAUTHORIZED,
+                    'message' => 'Account is not active.'
+                ]);
+            }
+
+
             $token = $user->createToken('authToken')->plainTextToken;
+
+            $user->update([
+                'last_login_at' => Carbon::now()->toDateTimeString(),
+                'last_login_ip' => $request->getClientIp()
+            ]);
 
             return response()->json([
                 'status_code'  => Response::HTTP_OK,

@@ -2,7 +2,23 @@ window._ = require('lodash');
 
 try {
     require('bootstrap');
-} catch (e) {}
+} catch (e) { }
+
+window.Swal = require('sweetalert2');
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
+window.Toast = Toast;
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

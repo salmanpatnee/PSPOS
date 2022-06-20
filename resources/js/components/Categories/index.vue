@@ -1,11 +1,17 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>
+                <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
+            </li>
+            <li class="active">Categories</li>
+        </ol>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4 class="d-inline-block">Manage Category </h4>
+                            <h4 class="d-inline-block">Manage Categories </h4>
                             <button @click="create" class="d-inline-block pull-right btn btn-success text-white">Add
                                 Category</button>
                         </div>
@@ -97,6 +103,7 @@ export default {
 
     data: () => ({
         modal: "#category_modal",
+        endPoint: '/api/categories/',
         categories: {},
         editMode: false,
         form: new Form({
@@ -106,20 +113,18 @@ export default {
     }),
     methods: {
         getCategories() {
-            this.form.get('/api/categories').then(({ data }) => (this.categories = data.data));
+            this.form.get(this.endPoint).then(({ data }) => (this.categories = data.data));
         },
         create() {
             this.resetModal();
         },
         store() {
             this.$Progress.start();
-            this.form.post('/api/categories').then(() => {
+            this.form.post(this.endPoint).then(() => {
                 Fire.$emit('refreshCategories');
 
                 $(this.modal).modal('hide');
-
-                this.showToast("Category added successfully");
-
+                Notification.success('Category Added');
                 this.$Progress.finish();
             }).catch((error) => this.$Progress.fail());
 
@@ -130,37 +135,37 @@ export default {
         },
         update() {
             this.$Progress.start();
-            this.form.put('/api/categories/' + this.form.id).then(() => {
+            this.form.put(this.endPoint + this.form.id).then(() => {
                 Fire.$emit('refreshCategories');
 
                 $(this.modal).modal('hide');
-
-                this.showToast("Category updated successfully");
+                Notification.success('Category Updated');
 
                 this.$Progress.finish();
             }).catch((error) => this.$Progress.fail());
         },
         deleteCategory(id) {
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#318d01',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
+            Swal.fire(Notification.confirmDialogAtts()).then((result) => {
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    this.form.delete('/api/categories/' + id).then(() => {
+                    const originalCategories = this.categories;
 
-                        this.showToast("Category delete successfully");
+                    this.categories = this.categories.filter(category => category.id != id);
+
+                    this.form.delete(this.endPoint + id).then(() => {
+
+                        Notification.success('Category Deleted');
 
                         Fire.$emit('refreshCategories');
 
                         this.$Progress.finish();
-                    }).catch((error) => this.$Progress.fail());
+                    }).catch((error) => {
+                        this.categories = originalCategories;
+                        this.$Progress.fail();
+                        Notification.error('Unexpected error occurred.');
+                        console.log('Error', error);
+                    });
                 }
             })
         },
@@ -169,12 +174,6 @@ export default {
             this.form.reset();
             $(this.modal).modal('show');
         },
-        showToast(message = "", icon = "success") {
-            Toast.fire({
-                icon: icon,
-                title: message
-            });
-        }
     },
     created() {
         this.getCategories();

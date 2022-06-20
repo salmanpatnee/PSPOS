@@ -81,6 +81,32 @@
                     </ul>
 
                 </li>
+
+                <!-- user menu part -->
+                <li class="treeview ">
+
+                    <a href="javascript:void(0)">
+
+                        <i class="metismenu-icon fa fa-users"></i> <span>Users</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li>
+                            <router-link to="/users">
+                                All Users
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/users/create">
+                                Add User
+                            </router-link>
+                        </li>
+                    </ul>
+
+                </li>
             </ul>
         </div> <!-- /.sidebar -->
     </aside>

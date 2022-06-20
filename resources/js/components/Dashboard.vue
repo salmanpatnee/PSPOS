@@ -1,5 +1,11 @@
 <template>
     <div>
+        <ol class="breadcrumb">
+            <li>
+                <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
+            </li>
+            <li class="active">Dashboard</li>
+        </ol>
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                 <div class="small-box bg-green whitecolor">

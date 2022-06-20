@@ -31,16 +31,14 @@ const store = new Vuex.Store({
 
                 const response = await axios.post('/api/login', payload);
 
-                console.log(response);
-
                 if (response.data.status_code != 200) {
-                    throw response.message;
+                    throw response.data.message;
                 }
 
                 return this.dispatch('getUser');
 
             } catch (error) {
-                throw "Error while login.";
+                throw error;
             }
         },
         async getUser({ commit }) {

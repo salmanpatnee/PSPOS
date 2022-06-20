@@ -8,12 +8,6 @@
             <!-- Content Header (Page header) -->
             <!-- Main content -->
             <div class="content">
-                <ol class="breadcrumb" v-if="authenticated">
-                    <li><a href="#"><i class="pe-7s-home"></i> Home</a></li>
-                    <li><a href="#">dashboard</a></li>
-                    <li class="active">Dashboard</li>
-                </ol>
-
                 <!-- load messages -->
                 <div class="se-pre-con"></div>
                 <!-- load custom page -->
