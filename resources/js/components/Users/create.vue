@@ -16,7 +16,7 @@
                         <div class="panel-title">
                             <h4 class="d-inline-block">Add User </h4>
 
-                            <router-link :to="{ name: 'users.index' }"
+                            <router-link :to="{ name: 'users.index' }" v-if="can('view-users')"
                                 class="d-inline-block pull-right btn btn-success text-white">All
                                 User</router-link>
                         </div>
@@ -105,7 +105,8 @@
 
                             <div class="form-group text-right">
                                 <button type="reset" class="btn btn-primary w-md m-b-5">Reset</button>
-                                <Button :form="form" class="btn btn-success w-md m-b-5">{{ editMode ? "Update" : "Add"
+                                <Button v-if="can('create-users')" :form="form" class="btn btn-success w-md m-b-5">{{
+                                        editMode ? "Update" : "Add"
                                 }}
                                 </Button>
                             </div>

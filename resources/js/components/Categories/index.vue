@@ -12,7 +12,8 @@
                     <div class="panel-heading">
                         <div class="panel-title">
                             <h4 class="d-inline-block">Manage Categories </h4>
-                            <button @click="create" class="d-inline-block pull-right btn btn-success text-white">Add
+                            <button v-if="can('create-categories')" @click="create"
+                                class="d-inline-block pull-right btn btn-success text-white">Add
                                 Category</button>
                         </div>
                     </div>
@@ -34,13 +35,14 @@
                                         <td>
                                             <center>
 
-                                                <button @click="edit(category)" class="btn btn-info btn-sm"
-                                                    data-toggle="tooltip" data-placement="left" title=""
-                                                    data-original-title="Update">
+                                                <button v-if="can('update-categories')" @click="edit(category)"
+                                                    class="btn btn-info btn-sm" data-toggle="tooltip"
+                                                    data-placement="left" title="" data-original-title="Update">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
 
-                                                <button @click="deleteCategory(category.id)" type="button"
+                                                <button v-if="can('delete-categories')"
+                                                    @click="deleteCategory(category.id)" type="button"
                                                     class="btn btn-danger btn-sm" data-toggle="tooltip"
                                                     data-placement="right" title="" data-original-title="Delete "><i
                                                         class="fa fa-trash-o" aria-hidden="true"></i></button>

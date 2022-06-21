@@ -2356,6 +2356,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2675,6 +2677,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2752,6 +2755,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -3155,10 +3159,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['authenticated', 'user']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['authenticated', 'user'])),
+  created: function created() {
+    console.log(this.can('view-users'));
+  }
 });
 
 /***/ }),
@@ -3245,19 +3251,21 @@ var Notification = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes/index */ "./resources/js/routes/index.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Helpers_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Helpers/Notification */ "./resources/js/Helpers/Notification.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+/* harmony import */ var _mixins_Auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mixins/Auth */ "./resources/js/mixins/Auth.js");
+/* harmony import */ var _Helpers_Notification__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Helpers/Notification */ "./resources/js/Helpers/Notification.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+
 
 
 
@@ -3270,33 +3278,34 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-window.Notification = _Helpers_Notification__WEBPACK_IMPORTED_MODULE_5__["default"];
+window.Notification = _Helpers_Notification__WEBPACK_IMPORTED_MODULE_6__["default"];
 
-(axios__WEBPACK_IMPORTED_MODULE_6___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_6___default().defaults.baseURL) = 'http://pharmapos.test/';
+(axios__WEBPACK_IMPORTED_MODULE_7___default().defaults.withCredentials) = true;
+(axios__WEBPACK_IMPORTED_MODULE_7___default().defaults.baseURL) = 'http://pharmapos.test/';
 /* Components */
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
   color: 'rgb(69, 194, 3)',
   failedColor: 'red',
   height: '2px'
 });
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_7__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_7__.Button);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_7__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_7__.HasError);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].filter('formatteddDate', function (date) {
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.Button);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.HasError);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].filter('formatteddDate', function (date) {
   return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format('MMMM Do YYYY');
 });
 window.Form = vform__WEBPACK_IMPORTED_MODULE_2__.Form;
-window.Fire = new vue__WEBPACK_IMPORTED_MODULE_9__["default"]();
+window.Fire = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]();
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].mixin(_mixins_Auth__WEBPACK_IMPORTED_MODULE_5__["default"]);
 _store_index__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('getUser').then(function () {
-  var app = new vue__WEBPACK_IMPORTED_MODULE_9__["default"]({
+  var app = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
     el: '#app',
     components: {
-      App: _components_App__WEBPACK_IMPORTED_MODULE_8__["default"]
+      App: _components_App__WEBPACK_IMPORTED_MODULE_9__["default"]
     },
-    router: _routes__WEBPACK_IMPORTED_MODULE_0__["default"],
+    router: _routes_index__WEBPACK_IMPORTED_MODULE_0__["default"],
     store: _store_index__WEBPACK_IMPORTED_MODULE_1__["default"]
   });
 });
@@ -3328,34 +3337,39 @@ var Toast = Swal.mixin({
   }
 });
 window.Toast = Toast;
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-// import Echo from 'laravel-echo';
-// window.Pusher = require('pusher-js');
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
 
 /***/ }),
 
-/***/ "./resources/js/routes.js":
-/*!********************************!*\
-  !*** ./resources/js/routes.js ***!
-  \********************************/
+/***/ "./resources/js/mixins/Auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/Auth.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    can: function can(key) {
+      var permissions = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.user.data.permissions;
+      return permissions.includes(key);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/routes/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/routes/index.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3365,12 +3379,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
-/* harmony import */ var _components_Auth_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Auth/Login */ "./resources/js/components/Auth/Login.vue");
-/* harmony import */ var _components_Dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Dashboard */ "./resources/js/components/Dashboard.vue");
-/* harmony import */ var _components_Categories_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Categories/index */ "./resources/js/components/Categories/index.vue");
-/* harmony import */ var _components_Users_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Users/index */ "./resources/js/components/Users/index.vue");
-/* harmony import */ var _components_Users_create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Users/create */ "./resources/js/components/Users/create.vue");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+/* harmony import */ var _components_Auth_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Auth/Login */ "./resources/js/components/Auth/Login.vue");
+/* harmony import */ var _components_Dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Dashboard */ "./resources/js/components/Dashboard.vue");
+/* harmony import */ var _components_Categories_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Categories/index */ "./resources/js/components/Categories/index.vue");
+/* harmony import */ var _components_Users_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Users/index */ "./resources/js/components/Users/index.vue");
+/* harmony import */ var _components_Users_create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Users/create */ "./resources/js/components/Users/create.vue");
 
 
 
@@ -3401,7 +3415,8 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]({
   {
     path: '/categories',
     component: _components_Categories_index__WEBPACK_IMPORTED_MODULE_3__["default"],
-    name: 'categories'
+    name: 'categories',
+    authorize: ['create-categories']
   }, //Users
   {
     path: '/users',
@@ -3431,20 +3446,50 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]({
   mode: 'history'
 });
 Routes.beforeEach(function (to, from, next) {
-  if (to.matched.some(function (record) {
-    return record.meta.requiredAuth;
-  })) {
-    if (!_store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.authenticated) {
+  var _to$meta = to.meta,
+      requiresAuth = _to$meta.requiresAuth,
+      authorize = _to$meta.authorize;
+  var authenticated = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.authenticated;
+
+  if (requiresAuth) {
+    if (authenticated) {
+      var permissions = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.user.data.permissions;
+
+      if (authorize) {
+        if (!authorize.some(function (permission) {
+          return permissions.includes(permission);
+        })) {
+          next({
+            name: 'login'
+          });
+        }
+      } else {
+        next();
+      }
+
+      next();
+    } else {
       next({
         name: 'login'
       });
-    } else {
-      next();
     }
   }
 
   next();
 });
+/*
+Routes.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiredAuth)) {
+        if (!store.getters.authenticated) {
+            next({ name: 'login' })
+        } else {
+            next();
+        }
+    }
+    next();
+});
+*/
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Routes);
 
 /***/ }),
@@ -66391,15 +66436,17 @@ var render = function () {
                 _vm._v("Manage Categories "),
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "d-inline-block pull-right btn btn-success text-white",
-                  on: { click: _vm.create },
-                },
-                [_vm._v("Add\n                            Category")]
-              ),
+              _vm.can("create-categories")
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "d-inline-block pull-right btn btn-success text-white",
+                      on: { click: _vm.create },
+                    },
+                    [_vm._v("Add\n                            Category")]
+                  )
+                : _vm._e(),
             ]),
           ]),
           _vm._v(" "),
@@ -66426,54 +66473,58 @@ var render = function () {
                           "td",
                           [
                             _c("center", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-sm",
-                                  attrs: {
-                                    "data-toggle": "tooltip",
-                                    "data-placement": "left",
-                                    title: "",
-                                    "data-original-title": "Update",
-                                  },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.edit(category)
+                              _vm.can("update-categories")
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-info btn-sm",
+                                      attrs: {
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "left",
+                                        title: "",
+                                        "data-original-title": "Update",
+                                      },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.edit(category)
+                                        },
+                                      },
                                     },
-                                  },
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fa fa-pencil",
-                                    attrs: { "aria-hidden": "true" },
-                                  }),
-                                ]
-                              ),
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-pencil",
+                                        attrs: { "aria-hidden": "true" },
+                                      }),
+                                    ]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: {
-                                    type: "button",
-                                    "data-toggle": "tooltip",
-                                    "data-placement": "right",
-                                    title: "",
-                                    "data-original-title": "Delete ",
-                                  },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.deleteCategory(category.id)
+                              _vm.can("delete-categories")
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger btn-sm",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "right",
+                                        title: "",
+                                        "data-original-title": "Delete ",
+                                      },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.deleteCategory(category.id)
+                                        },
+                                      },
                                     },
-                                  },
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fa fa-trash-o",
-                                    attrs: { "aria-hidden": "true" },
-                                  }),
-                                ]
-                              ),
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-trash-o",
+                                        attrs: { "aria-hidden": "true" },
+                                      }),
+                                    ]
+                                  )
+                                : _vm._e(),
                             ]),
                           ],
                           1
@@ -66875,15 +66926,17 @@ var render = function () {
                   _vm._v("Add User "),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass:
-                      "d-inline-block pull-right btn btn-success text-white",
-                    attrs: { to: { name: "users.index" } },
-                  },
-                  [_vm._v("All\n                            User")]
-                ),
+                _vm.can("view-users")
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass:
+                          "d-inline-block pull-right btn btn-success text-white",
+                        attrs: { to: { name: "users.index" } },
+                      },
+                      [_vm._v("All\n                            User")]
+                    )
+                  : _vm._e(),
               ],
               1
             ),
@@ -67232,19 +67285,21 @@ var render = function () {
                       [_vm._v("Reset")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "Button",
-                      {
-                        staticClass: "btn btn-success w-md m-b-5",
-                        attrs: { form: _vm.form },
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(_vm.editMode ? "Update" : "Add") +
-                            "\n                            "
-                        ),
-                      ]
-                    ),
+                    _vm.can("create-users")
+                      ? _c(
+                          "Button",
+                          {
+                            staticClass: "btn btn-success w-md m-b-5",
+                            attrs: { form: _vm.form },
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.editMode ? "Update" : "Add") +
+                                "\n                            "
+                            ),
+                          ]
+                        )
+                      : _vm._e(),
                   ],
                   1
                 ),
@@ -67368,15 +67423,17 @@ var render = function () {
                   _vm._v("Manage Users "),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass:
-                      "d-inline-block pull-right btn btn-success text-white",
-                    attrs: { to: { name: "users.create" } },
-                  },
-                  [_vm._v("Add\n                            User")]
-                ),
+                _vm.can("create-users")
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass:
+                          "d-inline-block pull-right btn btn-success text-white",
+                        attrs: { to: { name: "users.create" } },
+                      },
+                      [_vm._v("Add\n                            User")]
+                    )
+                  : _vm._e(),
               ],
               1
             ),
@@ -67412,53 +67469,57 @@ var render = function () {
                         _c(
                           "td",
                           [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-info btn-sm",
-                                attrs: {
-                                  to: {
-                                    name: "users.edit",
-                                    params: { user: user },
+                            _vm.can("update-users")
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "btn btn-info btn-sm",
+                                    attrs: {
+                                      to: {
+                                        name: "users.edit",
+                                        params: { user: user },
+                                      },
+                                      "data-toggle": "tooltip",
+                                      "data-placement": "left",
+                                      title: "",
+                                      "data-original-title": "Update",
+                                    },
                                   },
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "left",
-                                  title: "",
-                                  "data-original-title": "Update",
-                                },
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-pencil",
-                                  attrs: { "aria-hidden": "true" },
-                                }),
-                              ]
-                            ),
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-pencil",
+                                      attrs: { "aria-hidden": "true" },
+                                    }),
+                                  ]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger btn-sm",
-                                attrs: {
-                                  type: "button",
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "right",
-                                  title: "",
-                                  "data-original-title": "Delete ",
-                                },
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.destroy(user.id)
+                            _vm.can("delete-users")
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger btn-sm",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "tooltip",
+                                      "data-placement": "right",
+                                      title: "",
+                                      "data-original-title": "Delete ",
+                                    },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.destroy(user.id)
+                                      },
+                                    },
                                   },
-                                },
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-trash-o",
-                                  attrs: { "aria-hidden": "true" },
-                                }),
-                              ]
-                            ),
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-trash-o",
+                                      attrs: { "aria-hidden": "true" },
+                                    }),
+                                  ]
+                                )
+                              : _vm._e(),
                           ],
                           1
                         ),
@@ -67734,63 +67795,81 @@ var render = function () {
               1
             ),
             _vm._v(" "),
-            _c("li", { staticClass: "treeview " }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("ul", { staticClass: "treeview-menu" }, [
-                _c(
-                  "li",
-                  [
-                    _c("router-link", { attrs: { to: "/categories" } }, [
-                      _vm._v(
-                        "\n                            Categories\n                        "
-                      ),
-                    ]),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
-                _vm._m(3),
-                _vm._v(" "),
-                _vm._m(4),
-                _vm._v(" "),
-                _vm._m(5),
-                _vm._v(" "),
-                _vm._m(6),
-              ]),
-            ]),
+            _vm.can("view-products")
+              ? _c("li", { staticClass: "treeview" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "treeview-menu" }, [
+                    _vm.can("view-categories")
+                      ? _c(
+                          "li",
+                          [
+                            _c(
+                              "router-link",
+                              { attrs: { to: "/categories" } },
+                              [
+                                _vm._v(
+                                  "\n                            Categories\n                        "
+                                ),
+                              ]
+                            ),
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _vm._m(6),
+                  ]),
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("li", { staticClass: "treeview " }, [
-              _vm._m(7),
-              _vm._v(" "),
-              _c("ul", { staticClass: "treeview-menu" }, [
-                _c(
-                  "li",
-                  [
-                    _c("router-link", { attrs: { to: "/users" } }, [
-                      _vm._v(
-                        "\n                            All Users\n                        "
-                      ),
-                    ]),
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  [
-                    _c("router-link", { attrs: { to: "/users/create" } }, [
-                      _vm._v(
-                        "\n                            Add User\n                        "
-                      ),
-                    ]),
-                  ],
-                  1
-                ),
-              ]),
-            ]),
+            _vm.can("view-users")
+              ? _c("li", { staticClass: "treeview" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "treeview-menu" }, [
+                    _vm.can("view-users")
+                      ? _c(
+                          "li",
+                          [
+                            _c("router-link", { attrs: { to: "/users" } }, [
+                              _vm._v(
+                                "\n                            All Users\n                        "
+                              ),
+                            ]),
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      [
+                        _vm.can("create-users")
+                          ? _c(
+                              "router-link",
+                              { attrs: { to: "/users/create" } },
+                              [
+                                _vm._v(
+                                  "\n                            Add User\n                        "
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ],
+                      1
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
           ]),
         ]),
       ])

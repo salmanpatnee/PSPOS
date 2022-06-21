@@ -26,7 +26,7 @@
                 </li>
 
                 <!-- product menu part -->
-                <li class="treeview ">
+                <li class="treeview" v-if="can('view-products')">
 
                     <a href="javascript:void(0)">
 
@@ -37,8 +37,7 @@
                     </a>
 
                     <ul class="treeview-menu">
-                        <li>
-
+                        <li v-if="can('view-categories')">
                             <router-link to="/categories">
                                 Categories
                             </router-link>
@@ -83,7 +82,7 @@
                 </li>
 
                 <!-- user menu part -->
-                <li class="treeview ">
+                <li class="treeview" v-if="can('view-users')">
 
                     <a href="javascript:void(0)">
 
@@ -94,13 +93,13 @@
                     </a>
 
                     <ul class="treeview-menu">
-                        <li>
+                        <li v-if="can('view-users')">
                             <router-link to="/users">
                                 All Users
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/users/create">
+                            <router-link to="/users/create" v-if="can('create-users')">
                                 Add User
                             </router-link>
                         </li>
@@ -118,6 +117,9 @@ export default {
         ...mapGetters([
             'authenticated', 'user'
         ])
+    },
+    created() {
+        console.log(this.can('view-users'));
     }
 }
 </script>

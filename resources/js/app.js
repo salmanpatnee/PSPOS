@@ -1,9 +1,11 @@
 import Vue from 'vue';
-import router from './routes';
+import router from './routes/index';
 import store from './store/index';
 import { Form } from 'vform';
 import Moment from 'moment';
 import VueProgressBar from 'vue-progressbar'
+import Auth from './mixins/Auth';
+
 require('./bootstrap');
 
 /* Helpers */
@@ -34,6 +36,8 @@ Vue.filter('formatteddDate', function (date) {
 
 window.Form = Form;
 window.Fire = new Vue();
+
+Vue.mixin(Auth);
 
 store.dispatch('getUser').then(() => {
     const app = new Vue({
