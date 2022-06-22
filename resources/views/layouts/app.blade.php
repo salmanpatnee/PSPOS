@@ -54,8 +54,6 @@
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('admin/js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin/js/frame.js') }}"></script>
     <script src="{{ asset('admin/js/pace.min.js') }}"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>

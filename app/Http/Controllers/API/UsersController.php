@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
+// use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
@@ -25,6 +26,23 @@ class UsersController extends Controller
     {
         $users = User::latest()->paginate(10);
         return new UserCollection($users);
+
+        //Prepare Response for DataTable Plugin.
+        /*
+        return DataTables::of(User::query())
+            ->addColumn('role', function (User $user) {
+                return $user->getRoleNames()->first();
+            })->addColumn('status', function (User $user) {
+                return $user->status ? 'Active' : 'Inactive';
+            })->addColumn('joining_date', function (User $user) {
+                return $user->created_at->format('Y m d');
+            })->addColumn('last_login', function (User $user) {
+                return ($user->last_login_at) ? Carbon::parse($user->last_login_at)->diffForHumans() : '';
+            })->addColumn('action', function (User $user) {
+                $buttons = '';
+                return $buttons;
+            })->make(true);
+        */
     }
 
     /**

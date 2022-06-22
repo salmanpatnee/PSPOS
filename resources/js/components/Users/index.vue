@@ -20,7 +20,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table id="dataTableExample3" class="table table-bordered table-striped table-hover">
+                            <table id="usersTable" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>SL.</th>
@@ -28,18 +28,19 @@
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Status</th>
+                                        <th>Joining Date</th>
                                         <th>Last Login</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <tr v-for="user in users" :key="user.id">
                                         <td>{{ user.id }}</td>
                                         <td>{{ user.name }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.role }}</td>
                                         <td>{{ user.status }}</td>
+                                        <td>{{ user.joining_date }}</td>
                                         <td>{{ user.last_login }}</td>
                                         <td>
 
@@ -70,6 +71,9 @@
 </template>
 
 <script>
+
+// import 'datatables.net';
+
 export default {
 
     data: () => ({
@@ -92,12 +96,9 @@ export default {
                         Notification.success('User Deleted.');
                         this.$Progress.finish();
                     }).catch((error) => {
-
                         this.users = originalUsers;
                         this.$Progress.fail();
                         Notification.error('Unexpected error occurred.');
-                        console.log('Error', error);
-
                     });
                 }
             })
@@ -106,6 +107,27 @@ export default {
 
     created() {
         this.getUsers();
+
+        // Initialize DataTable Plugin.
+        /*
+        $(document).ready(function () {
+            $("#usersTable").DataTable({
+                'processing': true,
+                'serveSide': true,
+                'ajax': '/api/users',
+                'columns': [
+                    { 'data': 'id' },
+                    { 'data': 'name' },
+                    { 'data': 'email' },
+                    { 'data': 'role' },
+                    { 'data': 'status' },
+                    { 'data': 'joining_date' },
+                    { 'data': 'last_login' },
+                    { 'data': 'action' },
+                ]
+            });
+        });
+        */
     }
 }
 </script>

@@ -25,6 +25,40 @@
                     </router-link>
                 </li>
 
+                <!-- user menu part -->
+                <li class="treeview" v-if="can('view-customers')">
+                    <a href="javascript:void(0)">
+                        <i class="metismenu-icon pe-7s-user"></i> <span>Customers</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li v-if="can('view-customers')">
+                            <router-link to="/customers">
+                                Manage Customers
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/customers/create" v-if="can('create-customers')">
+                                Add Customer
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/customers" v-if="can('view-customers')">
+                                Credit Customer
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/customers" v-if="can('view-customers')">
+                                Paid Customer
+                            </router-link>
+                        </li>
+                    </ul>
+
+                </li>
+
                 <!-- product menu part -->
                 <li class="treeview" v-if="can('view-products')">
 
@@ -95,7 +129,7 @@
                     <ul class="treeview-menu">
                         <li v-if="can('view-users')">
                             <router-link to="/users">
-                                All Users
+                                Manage Users
                             </router-link>
                         </li>
                         <li>

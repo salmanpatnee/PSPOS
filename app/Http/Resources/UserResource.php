@@ -22,8 +22,8 @@ class UserResource extends JsonResource
             'status'        => $this->status ? 'Active' : 'Inactive',
             'role'          => $this->getRoleNames()->first(),
             'permissions'   => $this->getPermissionsViaRoles()->pluck('name'),
-            'joining_date'  => $this->created_at->format('Y m d'),
-            'last_login'    => $this->when(!is_null($this->last_login_at), Carbon::parse($this->last_login_at)->diffForHumans())
+            'joining_date'  => $this->created_at->format('d M Y'),
+            'last_login'    => $this->when(!is_null($this->last_login_at), Carbon::parse($this->last_login_at)->diffForHumans()),
 
         ];
     }

@@ -16,49 +16,67 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => Rights::CAN_VIEW_USERS]);
-        Permission::create(['name' => Rights::CAN_CREATE_USERS]);
-        Permission::create(['name' => Rights::CAN_UPDATE_USERS]);
-        Permission::create(['name' => Rights::CAN_DELETE_USERS]);
+        // Permission::create(['name' => Rights::CAN_VIEW_USERS]);
+        // Permission::create(['name' => Rights::CAN_CREATE_USERS]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_USERS]);
+        // Permission::create(['name' => Rights::CAN_DELETE_USERS]);
 
-        Permission::create(['name' =>  Rights::CAN_VIEW_CATEGORIES]);
-        Permission::create(['name' =>  Rights::CAN_CREATE_CATEGORIES]);
-        Permission::create(['name' => Rights::CAN_UPDATE_CATEGORIES]);
-        Permission::create(['name' => Rights::CAN_DELETE_CATEGORIES]);
+        // Permission::create(['name' => Rights::CAN_VIEW_CUSTOMERS]);
+        // Permission::create(['name' => Rights::CAN_CREATE_CUSTOMERS]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_CUSTOMERS]);
+        // Permission::create(['name' => Rights::CAN_DELETE_CUSTOMERS]);
 
-        Permission::create(['name' => Rights::CAN_VIEW_PRODUCTS]);
-        Permission::create(['name' => Rights::CAN_CREATE_PRODUCTS]);
-        Permission::create(['name' => Rights::CAN_UPDATE_PRODUCTS]);
-        Permission::create(['name' => Rights::CAN_DELETE_PRODUCTS]);
+        // Permission::create(['name' =>  Rights::CAN_VIEW_CATEGORIES]);
+        // Permission::create(['name' =>  Rights::CAN_CREATE_CATEGORIES]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_CATEGORIES]);
+        // Permission::create(['name' => Rights::CAN_DELETE_CATEGORIES]);
 
-        $adminRole = Role::create(['name' => 'Admin']);
-        $managerRole = Role::create(['name' => 'Manager']);
-        $cashierRole = Role::create(['name' => 'Cashier']);
+        // Permission::create(['name' => Rights::CAN_VIEW_PRODUCTS]);
+        // Permission::create(['name' => Rights::CAN_CREATE_PRODUCTS]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_PRODUCTS]);
+        // Permission::create(['name' => Rights::CAN_DELETE_PRODUCTS]);
+
+
+
+        // $adminRole = Role::create(['name' => 'Admin']);
+        // $managerRole = Role::create(['name' => 'Manager']);
+        // $managerRole = Role::create(['name' => 'Cashier']);
+
+        $adminRole = Role::find(1);
+        $managerRole = Role::find(2);
 
         $adminRole->givePermissionTo([
-            Rights::CAN_VIEW_USERS,
-            Rights::CAN_CREATE_USERS,
-            Rights::CAN_UPDATE_USERS,
-            Rights::CAN_DELETE_USERS,
-            Rights::CAN_VIEW_CATEGORIES,
-            Rights::CAN_CREATE_CATEGORIES,
-            Rights::CAN_UPDATE_CATEGORIES,
-            Rights::CAN_DELETE_CATEGORIES,
-            Rights::CAN_VIEW_PRODUCTS,
-            Rights::CAN_CREATE_PRODUCTS,
-            Rights::CAN_UPDATE_PRODUCTS,
-            Rights::CAN_DELETE_PRODUCTS,
+            // Rights::CAN_VIEW_USERS,
+            // Rights::CAN_CREATE_USERS,
+            // Rights::CAN_UPDATE_USERS,
+            // Rights::CAN_DELETE_USERS,
+            // Rights::CAN_VIEW_CATEGORIES,
+            // Rights::CAN_CREATE_CATEGORIES,
+            // Rights::CAN_UPDATE_CATEGORIES,
+            // Rights::CAN_DELETE_CATEGORIES,
+            // Rights::CAN_VIEW_PRODUCTS,
+            // Rights::CAN_CREATE_PRODUCTS,
+            // Rights::CAN_UPDATE_PRODUCTS,
+            // Rights::CAN_DELETE_PRODUCTS,
+            Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_CREATE_CUSTOMERS,
+            Rights::CAN_UPDATE_CUSTOMERS,
+            Rights::CAN_DELETE_CUSTOMERS,
         ]);
 
         $managerRole->givePermissionTo([
-            Rights::CAN_VIEW_CATEGORIES,
-            Rights::CAN_CREATE_CATEGORIES,
-            Rights::CAN_UPDATE_CATEGORIES,
-            Rights::CAN_DELETE_CATEGORIES,
-            Rights::CAN_VIEW_PRODUCTS,
-            Rights::CAN_CREATE_PRODUCTS,
-            Rights::CAN_UPDATE_PRODUCTS,
-            Rights::CAN_DELETE_PRODUCTS,
+            // Rights::CAN_VIEW_CATEGORIES,
+            // Rights::CAN_CREATE_CATEGORIES,
+            // Rights::CAN_UPDATE_CATEGORIES,
+            // Rights::CAN_DELETE_CATEGORIES,
+            // Rights::CAN_VIEW_PRODUCTS,
+            // Rights::CAN_CREATE_PRODUCTS,
+            // Rights::CAN_UPDATE_PRODUCTS,
+            // Rights::CAN_DELETE_PRODUCTS, 
+            Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_CREATE_CUSTOMERS,
+            Rights::CAN_UPDATE_CUSTOMERS,
+            Rights::CAN_DELETE_CUSTOMERS,
         ]);
     }
 }

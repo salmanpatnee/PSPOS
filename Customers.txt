@@ -1,0 +1,17 @@
+Customers
+ - ID
+ - Name
+ - Phone
+ - Mobile
+ - Email
+ - Address
+ - Previous Balance
+ - DOB
+ - Total Purchases
+ - Last Purchase
+
+Credit Customers
+- Customers whose having a previous balance.
+
+Paid Customers
+- Customers whose not having a previous balance.

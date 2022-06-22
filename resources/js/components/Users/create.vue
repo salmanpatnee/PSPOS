@@ -30,7 +30,7 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.name" name="name" class="form-control" type="text"
-                                                placeholder="First Name" id="name">
+                                                placeholder="First Name" id="name" required>
                                             <HasError :form="form" field="name" />
                                         </div>
                                     </div>
@@ -41,7 +41,7 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.email" name="email" class="form-control" type="email"
-                                                placeholder="Email" id="email">
+                                                placeholder="Email" id="email" required>
                                             <HasError :form="form" field="email" />
                                         </div>
                                     </div>

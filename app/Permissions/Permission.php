@@ -6,6 +6,14 @@ class Permission
 {
 
     /*
+    * Customers Permission
+    */
+    public const CAN_VIEW_CUSTOMERS   = 'view-customers';
+    public const CAN_CREATE_CUSTOMERS = 'create-customers';
+    public const CAN_UPDATE_CUSTOMERS = 'update-customers';
+    public const CAN_DELETE_CUSTOMERS = 'delete-customers';
+
+    /*
     * Users Permission
     */
     public const CAN_VIEW_USERS = 'view-users';
