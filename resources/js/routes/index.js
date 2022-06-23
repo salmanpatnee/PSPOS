@@ -11,6 +11,8 @@ import User from '../components/Users/create';
 
 import Customers from '../components/Customers/index';
 import Customer from '../components/Customers/create';
+import CreditCustomers from '../components/Customers/credit';
+import PaidCustomers from '../components/Customers/paid';
 
 
 Vue.use(VueRouter);
@@ -31,8 +33,10 @@ const Routes = new VueRouter({
 
         //Customers
         { path: '/customers', component: Customers, name: 'customers.index', meta: { requiresAuth: true, authorize: ['view-customers'] } },
+        { path: '/customers/credit', component: CreditCustomers, name: 'customers.credit', meta: { requiresAuth: true, authorize: ['view-customers'] } },
+        { path: '/customers/paid', component: PaidCustomers, name: 'customers.paid', meta: { requiresAuth: true, authorize: ['view-customers'] } },
         { path: '/customers/create', component: Customer, name: 'customers.create', meta: { requiresAuth: true, authorize: ['create-customers'] } },
-        { path: '/customers/edit/:user', component: Customer, name: 'customers.edit', meta: { requiresAuth: true, authorize: ['update-customers'] } },
+        { path: '/customers/edit/:customer', component: Customer, name: 'customers.edit', meta: { requiresAuth: true, authorize: ['update-customers'] } },
     ],
     mode: 'history'
 });

@@ -132,8 +132,8 @@ export default {
             email: '',
             password: '',
             password_confirmation: '',
-            role: 'Manager',
-            status: 1,
+            role: 'Cashier',
+            status: 'Active',
         })
     }),
     methods: {

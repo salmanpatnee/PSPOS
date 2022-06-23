@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Customer;
 use App\Models\User;
 use App\Permissions\Permission;
-
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class CustomerPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +19,19 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can(Permission::CAN_VIEW_USERS);
+        return $user->can(Permission::CAN_VIEW_CUSTOMERS);
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\user  $model
+     * @param  \App\Models\Customer  $Customer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, user $model)
+    public function view(User $user, Customer $Customer)
     {
-        return $user->can(Permission::CAN_VIEW_USERS);
+        return $user->can(Permission::CAN_VIEW_CUSTOMERS);
     }
 
     /**
@@ -42,30 +42,30 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can(Permission::CAN_CREATE_USERS);
+        return $user->can(Permission::CAN_CREATE_CUSTOMERS);
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\user  $model
+     * @param  \App\Models\Customer  $Customer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, user $model)
+    public function update(User $user, Customer $Customer)
     {
-        return $user->can(Permission::CAN_UPDATE_USERS);
+        return $user->can(Permission::CAN_UPDATE_CUSTOMERS);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\user  $model
+     * @param  \App\Models\Customer  $Customer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, user $model)
+    public function delete(User $user, Customer $Customer)
     {
-        return $user->can(Permission::CAN_DELETE_USERS && $model->id !== 1);
+        return $user->can(Permission::CAN_DELETE_CUSTOMERS);
     }
 }

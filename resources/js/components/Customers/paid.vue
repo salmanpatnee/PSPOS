@@ -4,22 +4,15 @@
             <li>
                 <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
             </li>
-            <li class="active">Customers</li>
+            <li class="active">Paid Customers</li>
         </ol>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-bd lobidrag">
                     <div class="panel-heading">
-                        <div class="panel-title" style="
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-">
-                            <h4 class="d-inline-block">Manage Customers </h4>
-                            <div class="text-center">
-                                <button class="btn btn-success btn-outline">Credit Customers</button>
-                                <button class="btn btn-success btn-outline">Paid Customers</button>
-                            </div>
+                        <div class="panel-title">
+                            <h4 class="d-inline-block">Manage Paid Customers</h4>
+
                             <router-link :to="{ name: 'customers.create' }" v-if="can('create-customers')"
                                 class="d-inline-block pull-right btn btn-success text-white">Add
                                 Customer</router-link>
@@ -85,12 +78,8 @@ export default {
         customers: {},
     }),
     methods: {
-        getCustomers(type) {
-            let endPoint = '/api/customers';
-            if (type) {
-                endPoint += '/' + type;
-            }
-            axios.get(endPoint).then(({ data }) => (this.customers = data.data));
+        getCustomers() {
+            axios.get('api/customers/?paidCustomers').then(({ data }) => (this.customers = data.data));
         },
         async destroy(id) {
 

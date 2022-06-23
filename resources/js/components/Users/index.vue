@@ -51,8 +51,9 @@
                                                     aria-hidden="true"></i></router-link>
 
 
-                                            <button @click="destroy(user.id)" type="button" v-if="can('delete-users')"
-                                                class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                            <button @click="destroy(user.id)" type="button"
+                                                v-if="can('delete-users') && user.id !== 1"
+                                                class=" btn btn-danger btn-sm" data-toggle="tooltip"
                                                 data-placement="right" title="" data-original-title="Delete "><i
                                                     class="fa fa-trash-o" aria-hidden="true"></i></button>
 

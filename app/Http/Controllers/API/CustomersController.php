@@ -12,16 +12,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomersController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Customer::class, 'customer');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('creditCustomers')) {
+            $customers = Customer::where('previous_balance', '>', 0)->paginate(10);
+            return new CustomerCollection($customers);
+        }
+
+        if ($request->has('paidCustomers')) {
+            $customers = Customer::where('previous_balance', '<=', 0)->paginate(10);
+            return new CustomerCollection($customers);
+        }
+
         $customers = Customer::latest()->paginate(10);
         return new CustomerCollection($customers);
+
+
+        // return $customers->paginate(20);
     }
+
+    // public function credit_customers()
+    // {
+    //     $customers = Customer::where('previous_balance', '>', 0)->latest()->paginate(10);
+    //     return new CustomerCollection($customers);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +60,7 @@ class CustomersController extends Controller
             'email'             => 'required|email|max:255|unique:users,email',
             'phone'             => 'nullable|string|min:8|unique:customers,phone',
             'mobile'            => 'required|string|min:11|unique:customers,mobile',
-            'date_of_birth'     => 'nullable|date',
+            'date_of_birth'     => 'nullable|string',
             'address'           => 'nullable|string',
             'previous_balance'  => 'nullable|numeric'
         ]);
@@ -71,7 +95,7 @@ class CustomersController extends Controller
             'email'             => ['required', 'email', 'max:255', Rule::unique('customers')->ignore($customer->id)],
             'phone'             => ['nullable', 'string', 'min:8', Rule::unique('customers')->ignore($customer->id)],
             'mobile'            => ['required', 'string', 'min:11', Rule::unique('customers')->ignore($customer->id)],
-            'date_of_birth'     => 'nullable|date',
+            'date_of_birth'     => 'nullable|string',
             'address'           => 'nullable|string',
             'previous_balance'  => 'nullable|numeric'
         ]);

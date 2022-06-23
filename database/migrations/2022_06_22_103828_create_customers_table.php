@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('email')->unique()->index();
             $table->string('phone')->unique()->nullable();
             $table->string('mobile')->unique()->index();
-            $table->datetime('date_of_birth')->nullable();
+            $table->string('date_of_birth')->nullable();
             $table->text('address')->nullable();
             $table->double('previous_balance', 8, 2)->nullable()->default(0.00);
             $table->double('total_purchases', 8, 2)->nullable()->default(0.00);

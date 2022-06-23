@@ -18,9 +18,15 @@ class AuthController extends Controller
                 'name'      => 'required|string|min:3|max:255',
                 'email'     => 'required|email|max:255|unique:users,email',
                 'password'  => 'required|min:6|max:255|confirmed',
+                'status'    => 'required|string',
+                'role'      => 'required|string|exists:roles,name'
             ]);
 
-            User::create($attributes);
+            $role = array_pop($attributes);
+
+            $user = User::create($attributes);
+
+            $user->assignRole($role);
 
             return $this->login($request);
 

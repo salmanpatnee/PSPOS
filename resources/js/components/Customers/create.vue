@@ -51,8 +51,9 @@
                                     <div class="form-group row">
                                         <label for="phone" class="col-sm-4 col-form-label text-d">Phone</label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.phone" name="phone" class="form-control" type="tel"
-                                                placeholder="Phone" id="phone">
+                                            <masked-input v-model="form.phone" name="phone" class="form-control"
+                                                mask="(02\1-3) 1111111" placeholder="Phone" id="phone">
+                                            </masked-input>
                                             <HasError :form="form" field="phone" />
                                         </div>
                                     </div>
@@ -63,8 +64,9 @@
                                         <label for="mobile" class="col-sm-4 col-form-label text-d">Mobile <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.mobile" name="mobile" class="form-control" type="tel"
-                                                placeholder="Mobile" id="mobile">
+                                            <masked-input v-model="form.mobile" name="mobile" class="form-control"
+                                                mask="(03)11-1111111" placeholder="Mobile" id="mobile">
+                                            </masked-input>
                                             <HasError :form="form" field="mobile" />
                                         </div>
                                     </div>
@@ -76,8 +78,8 @@
                                     <div class="form-group row">
                                         <label for="dob" class="col-sm-4 col-form-label text-d">Date of Birth</label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.date_of_birth" name="dob" class="form-control"
-                                                type="date" placeholder="Date of Birth" id="dob">
+                                            <masked-input v-model="form.date_of_birth" name="date_of_birth"
+                                                class="form-control" mask="11/11/1111" placeholder="Date of Birth" />
                                             <HasError :form="form" field="date_of_birth" />
                                         </div>
                                     </div>
@@ -97,7 +99,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group row">
+                                    <div class="form-group row" v-show="!this.form.id">
                                         <label for="previous_balance" class="col-sm-4 col-form-label text-d">Previous
                                             Balance</label>
                                         <div class="col-sm-8">
@@ -118,25 +120,22 @@
                                         </Button>
                                     </div>
                                 </div>
-
                             </div>
-
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
+import maskedInput from 'vue-masked-input';
+
 export default {
 
     data: () => ({
         endPoint: '/api/customers',
-        users: {},
         editMode: false,
         form: new Form({
             id: '',
@@ -149,6 +148,9 @@ export default {
             previous_balance: '',
         })
     }),
+    components: {
+        maskedInput
+    },
     methods: {
         store() {
             this.$Progress.start();

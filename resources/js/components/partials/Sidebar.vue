@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="info">
-                    <p>{{ user.name }}</p>
+                    <p>{{ user.data.name }}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Admin</a>
                 </div>
 
@@ -46,12 +46,12 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/customers" v-if="can('view-customers')">
+                            <router-link to="/customers/credit" v-if="can('view-customers')">
                                 Credit Customer
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/customers" v-if="can('view-customers')">
+                            <router-link to="/customers/paid" v-if="can('view-customers')">
                                 Paid Customer
                             </router-link>
                         </li>

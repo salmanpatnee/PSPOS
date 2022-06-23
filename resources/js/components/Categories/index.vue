@@ -105,7 +105,7 @@ export default {
 
     data: () => ({
         modal: "#category_modal",
-        endPoint: '/api/categories/',
+        endPoint: '/api/categories',
         categories: {},
         editMode: false,
         form: new Form({
@@ -137,7 +137,7 @@ export default {
         },
         update() {
             this.$Progress.start();
-            this.form.put(this.endPoint + this.form.id).then(() => {
+            this.form.put(this.endPoint + '/' + this.form.id).then(() => {
                 Fire.$emit('refreshCategories');
 
                 $(this.modal).modal('hide');
@@ -155,7 +155,7 @@ export default {
 
                     this.categories = this.categories.filter(category => category.id != id);
 
-                    this.form.delete(this.endPoint + id).then(() => {
+                    this.form.delete(this.endPoint + '/' + id).then(() => {
 
                         Notification.success('Category Deleted');
 
