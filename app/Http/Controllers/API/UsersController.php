@@ -41,9 +41,14 @@ class UsersController extends Controller
             })->addColumn('last_login', function (User $user) {
                 return ($user->last_login_at) ? Carbon::parse($user->last_login_at)->diffForHumans() : '';
             })->addColumn('action', function (User $user) {
-                $userData = json_encode($user);
+                $userData = new UserResource($user);
+                $userData = json_encode($userData);
                 $buttons =  "<button data-user='" . $userData . "' class='btn btn-info btn-sm edit-btn' data-toggle='tooltip' data-placement='left'  data-original-title='Update'><i class='fa fa-pencil'
-                aria-hidden='true'></i></button>";
+                aria-hidden='true'></i></button> <button data-userId='" . $user->id . "' type='button'
+                
+                class='btn btn-danger btn-sm delete-btn' data-toggle='tooltip'
+                data-placement='right'  data-original-title='Delete'><i
+                    class='fa fa-trash-o' aria-hidden='true'></i></button>";
                 return $buttons;
             })->rawColumns(['action'])->make(true);
     }

@@ -1,7 +1,7 @@
 <template>
     <header class="main-header" v-if="authenticated">
 
-        <div class="se-pre-con"></div>
+        <!-- <div class="se-pre-con"></div> -->
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

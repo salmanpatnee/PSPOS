@@ -75,6 +75,8 @@
 
 import 'datatables.net';
 
+let myVm = null;
+
 export default {
 
     data: () => ({
@@ -105,26 +107,38 @@ export default {
             })
         },
     },
-
+    created() {
+        myVm = this;
+    },
     mounted() {
         // this.getUsers();
 
         // Initialize DataTable Plugin.
 
-        document.querySelector('button.edit-btn').addEventListener('click', (e) => {
+        $(document).on('click', 'button.edit-btn', function () {
+            const user = $(this).data('user')
+            myVm.$router.push({ name: 'users.edit', params: { user: user } })
+        });
+        $(document).on('click', 'button.delete-btn', function () {
+            const userId = $(this).data('userid');
 
-            console.log(this);
+            myVm.destroy(userId);
         });
 
-        // $(document).on('click', 'button.edit-btn', (e) => {
-        // });
 
+        // $(document).on('click', 'button.edit-btn', function (e) {
+
+        //     console.log($(this).data('user'));
+
+        //     // const user = $(this).data('user')
+        //     // $vm.$router.push({ name: 'users.edit', params: { user: user } })
+        // });
 
         $("#usersTable").DataTable({
             'processing': true,
             'serveSide': true,
             'ajax': '/api/users',
-            "pageLength": 2,
+            "pageLength": 100,
             'columns': [
                 { 'data': 'id' },
                 { 'data': 'name' },

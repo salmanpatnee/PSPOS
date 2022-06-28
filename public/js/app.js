@@ -3504,6 +3504,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+var myVm = null;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3558,21 +3559,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
+  created: function created() {
+    myVm = this;
+  },
   mounted: function mounted() {
-    var _this3 = this;
-
     // this.getUsers();
     // Initialize DataTable Plugin.
-    document.querySelector('button.edit-btn').addEventListener('click', function (e) {
-      console.log(_this3);
-    }); // $(document).on('click', 'button.edit-btn', (e) => {
+    $(document).on('click', 'button.edit-btn', function () {
+      var user = $(this).data('user');
+      myVm.$router.push({
+        name: 'users.edit',
+        params: {
+          user: user
+        }
+      });
+    });
+    $(document).on('click', 'button.delete-btn', function () {
+      var userId = $(this).data('userid');
+      myVm.destroy(userId);
+    }); // $(document).on('click', 'button.edit-btn', function (e) {
+    //     console.log($(this).data('user'));
+    //     // const user = $(this).data('user')
+    //     // $vm.$router.push({ name: 'users.edit', params: { user: user } })
     // });
 
     $("#usersTable").DataTable({
       'processing': true,
       'serveSide': true,
       'ajax': '/api/users',
-      "pageLength": 2,
+      "pageLength": 100,
       'columns': [{
         'data': 'id'
       }, {
@@ -73131,7 +73146,7 @@ process.umask = function() { return 0; };
 /***/ (function(module) {
 
 /*!
-* sweetalert2 v11.4.17
+* sweetalert2 v11.4.19
 * Released under the MIT License.
 */
 (function (global, factory) {
@@ -74049,7 +74064,7 @@ process.umask = function() { return 0; };
       youtubeId: 'saK5UTKroDA'
     }]); // The message will only be shown to Russian users visiting Russian sites
 
-    if (navigator.language === 'ru' && location.host.match(/\.(ru|su|xn--p1ai)$/)) {
+    if (/^ru\b/.test(navigator.language) && location.host.match(/\.(ru|su|xn--p1ai)$/)) {
       const noWar = document.createElement('div');
       noWar.className = swalClasses['no-war'];
       setInnerHtml(noWar, "<a href=\"https://www.youtube.com/watch?v=".concat(message.youtubeId, "\" target=\"_blank\">").concat(message.text, "</a>"));
@@ -77089,7 +77104,7 @@ process.umask = function() { return 0; };
     };
   });
   SweetAlert.DismissReason = DismissReason;
-  SweetAlert.version = '11.4.17';
+  SweetAlert.version = '11.4.19';
 
   const Swal = SweetAlert; // @ts-ignore
 
@@ -81495,8 +81510,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _vm.authenticated
     ? _c("header", { staticClass: "main-header" }, [
-        _c("div", { staticClass: "se-pre-con" }),
-        _vm._v(" "),
         _c("nav", { staticClass: "navbar navbar-static-top" }, [
           _vm._m(0),
           _vm._v(" "),
