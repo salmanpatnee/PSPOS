@@ -14,7 +14,7 @@ window.Notification = Notification;
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://pharmapos.test/'
+axios.defaults.baseURL = process.env.APP_URL;
 
 
 /* Components */

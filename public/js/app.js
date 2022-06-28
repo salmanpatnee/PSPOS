@@ -4020,6 +4020,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
 
@@ -4036,7 +4037,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Notification = _Helpers_Notification__WEBPACK_IMPORTED_MODULE_6__["default"];
 
 (axios__WEBPACK_IMPORTED_MODULE_7___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_7___default().defaults.baseURL) = 'http://pharmapos.test/';
+(axios__WEBPACK_IMPORTED_MODULE_7___default().defaults.baseURL) = process.env.APP_URL;
 /* Components */
 
 
