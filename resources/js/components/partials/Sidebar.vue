@@ -153,7 +153,6 @@ export default {
         ])
     },
     created() {
-        console.log(this.can('view-users'));
     }
 }
 </script>

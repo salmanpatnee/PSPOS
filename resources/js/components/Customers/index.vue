@@ -17,7 +17,8 @@
 ">
                             <h4 class="d-inline-block">Manage Customers </h4>
                             <div class="text-center">
-                                <button class="btn btn-success btn-outline">Credit Customers</button>
+                                <button class="btn btn-success btn-outline" @click="getCreditCustomers">Credit
+                                    Customers</button>
                                 <button class="btn btn-success btn-outline">Paid Customers</button>
                             </div>
                             <router-link :to="{ name: 'customers.create' }" v-if="can('create-customers')"

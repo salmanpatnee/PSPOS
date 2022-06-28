@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
-// use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
+
     public function __construct()
     {
         $this->authorizeResource(User::class, 'user');
@@ -24,11 +26,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        return new UserCollection($users);
+        // $users = User::latest()->paginate(10);
+        // return new UserCollection($users);
 
         //Prepare Response for DataTable Plugin.
-        /*
+
         return DataTables::of(User::query())
             ->addColumn('role', function (User $user) {
                 return $user->getRoleNames()->first();
@@ -39,10 +41,11 @@ class UsersController extends Controller
             })->addColumn('last_login', function (User $user) {
                 return ($user->last_login_at) ? Carbon::parse($user->last_login_at)->diffForHumans() : '';
             })->addColumn('action', function (User $user) {
-                $buttons = '';
+                $userData = json_encode($user);
+                $buttons =  "<button data-user='" . $userData . "' class='btn btn-info btn-sm edit-btn' data-toggle='tooltip' data-placement='left'  data-original-title='Update'><i class='fa fa-pencil'
+                aria-hidden='true'></i></button>";
                 return $buttons;
-            })->make(true);
-        */
+            })->rawColumns(['action'])->make(true);
     }
 
     /**

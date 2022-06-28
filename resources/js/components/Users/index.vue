@@ -34,7 +34,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="user in users" :key="user.id">
+                                    <!-- <tr v-for="user in users" :key="user.id">
                                         <td>{{ user.id }}</td>
                                         <td>{{ user.name }}</td>
                                         <td>{{ user.email }}</td>
@@ -59,7 +59,7 @@
 
 
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -73,7 +73,7 @@
 
 <script>
 
-// import 'datatables.net';
+import 'datatables.net';
 
 export default {
 
@@ -106,29 +106,37 @@ export default {
         },
     },
 
-    created() {
-        this.getUsers();
+    mounted() {
+        // this.getUsers();
 
         // Initialize DataTable Plugin.
-        /*
-        $(document).ready(function () {
-            $("#usersTable").DataTable({
-                'processing': true,
-                'serveSide': true,
-                'ajax': '/api/users',
-                'columns': [
-                    { 'data': 'id' },
-                    { 'data': 'name' },
-                    { 'data': 'email' },
-                    { 'data': 'role' },
-                    { 'data': 'status' },
-                    { 'data': 'joining_date' },
-                    { 'data': 'last_login' },
-                    { 'data': 'action' },
-                ]
-            });
+
+        document.querySelector('button.edit-btn').addEventListener('click', (e) => {
+
+            console.log(this);
         });
-        */
+
+        // $(document).on('click', 'button.edit-btn', (e) => {
+        // });
+
+
+        $("#usersTable").DataTable({
+            'processing': true,
+            'serveSide': true,
+            'ajax': '/api/users',
+            "pageLength": 2,
+            'columns': [
+                { 'data': 'id' },
+                { 'data': 'name' },
+                { 'data': 'email' },
+                { 'data': 'role' },
+                { 'data': 'status' },
+                { 'data': 'joining_date' },
+                { 'data': 'last_login' },
+                { 'data': 'action' },
+            ]
+        });
+
     }
 }
 </script>

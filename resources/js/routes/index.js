@@ -65,17 +65,4 @@ Routes.beforeEach((to, from, next) => {
     next();
 });
 
-/*
-Routes.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiredAuth)) {
-        if (!store.getters.authenticated) {
-            next({ name: 'login' })
-        } else {
-            next();
-        }
-    }
-    next();
-});
-*/
-
 export default Routes;
