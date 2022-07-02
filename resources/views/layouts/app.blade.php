@@ -30,7 +30,7 @@
 
 <body class="hold-transition sidebar-mini">
     <div id="app">
-        <div class="page-loader-wrapper">
+        {{-- <div class="page-loader-wrapper">
             <div class="loader">
                 <div class="preloader">
                     <div class="spinner-layer pl-green">
@@ -44,7 +44,7 @@
                 </div>
                 <p>Please wait...</p>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Site wrapper -->
         <div class="wrapper">

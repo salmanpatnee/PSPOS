@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
@@ -26,31 +24,16 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // $users = User::latest()->paginate(10);
-        // return new UserCollection($users);
+        $paginate   = request('paginate', 10);
+        $term       = request('search', '');
+        $sortOrder  = request('sortOrder', 'desc');
+        $orderBy    = request('orderBy', 'created_at');
 
-        //Prepare Response for DataTable Plugin.
+        $users = User::search($term)
+            ->orderBy($orderBy, $sortOrder)
+            ->paginate($paginate);
 
-        return DataTables::of(User::query())
-            ->addColumn('role', function (User $user) {
-                return $user->getRoleNames()->first();
-            })->addColumn('status', function (User $user) {
-                return $user->status ? 'Active' : 'Inactive';
-            })->addColumn('joining_date', function (User $user) {
-                return $user->created_at->format('Y m d');
-            })->addColumn('last_login', function (User $user) {
-                return ($user->last_login_at) ? Carbon::parse($user->last_login_at)->diffForHumans() : '';
-            })->addColumn('action', function (User $user) {
-                $userData = new UserResource($user);
-                $userData = json_encode($userData);
-                $buttons =  "<button data-user='" . $userData . "' class='btn btn-info btn-sm edit-btn' data-toggle='tooltip' data-placement='left'  data-original-title='Update'><i class='fa fa-pencil'
-                aria-hidden='true'></i></button> <button data-userId='" . $user->id . "' type='button'
-                
-                class='btn btn-danger btn-sm delete-btn' data-toggle='tooltip'
-                data-placement='right'  data-original-title='Delete'><i
-                    class='fa fa-trash-o' aria-hidden='true'></i></button>";
-                return $buttons;
-            })->rawColumns(['action'])->make(true);
+        return new UserCollection($users);
     }
 
     /**

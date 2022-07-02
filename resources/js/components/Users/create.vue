@@ -149,7 +149,9 @@ export default {
 
         },
         update() {
+            this.$Progress.start();
             this.form.put(this.endPoint + '/' + this.form.id).then(() => {
+                this.$Progress.finish();
                 Notification.success('User Updated');
                 this.$router.push({ name: 'users.index' })
             }).catch((error) => {

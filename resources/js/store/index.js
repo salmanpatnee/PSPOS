@@ -6,7 +6,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         authenticated: false,
-        user: null
+        user: null,
+        // accessToken: null
     },
     getters: {
         authenticated: state => {
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
         user: state => {
             return state.user;
         },
+        // accessToken: state => {
+        //     return state.accessToken;
+        // },
     },
     mutations: {
         setAuthenticated: (state, payload) => {
@@ -22,12 +26,15 @@ const store = new Vuex.Store({
         },
         setUser: (state, payload) => {
             state.user = payload;
-        }
+        },
+        // setAccessToken: (state, payload) => {
+        //     state.accessToken = payload;
+        // }
     },
     actions: {
         async login({ dispatch }, payload) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
+                axios.get('/sanctum/csrf-cookie');
 
                 const response = await axios.post('/api/login', payload);
 
@@ -42,16 +49,19 @@ const store = new Vuex.Store({
             }
         },
         async getUser({ commit }) {
+
             await axios.get('/api/user')
                 .then(response => {
                     console.log(response);
                     commit('setUser', response.data);
                     commit('setAuthenticated', true);
+                    // commit('setAccessToken', payload.access_token);
                 })
                 .catch(error => {
                     console.log(error);
                     commit('setUser', null);
                     commit('setAuthenticated', false);
+                    // commit('setAccessToken', null);
                 })
         },
         async logout({ commit }) {
@@ -59,12 +69,14 @@ const store = new Vuex.Store({
                 .then(response => {
                     commit('setUser', null);
                     commit('setAuthenticated', false);
+                    // commit('setAccessToken', null);
 
                 })
                 .catch(error => {
 
                     commit('setUser', null);
                     commit('setAuthenticated', false);
+                    // commit('setAccessToken', null);
                 })
         }
     }
