@@ -24,21 +24,18 @@ class CustomersController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('creditCustomers')) {
-            $customers = Customer::where('previous_balance', '>', 0)->paginate(10);
-            return new CustomerCollection($customers);
-        }
+        $paginate   = request('paginate', 10);
+        $term       = request('search', '');
+        $customersType       = request('customersType', null);
+        $sortOrder  = request('sortOrder', 'desc');
+        $orderBy    = request('orderBy', 'created_at');
 
-        if ($request->has('paidCustomers')) {
-            $customers = Customer::where('previous_balance', '<=', 0)->paginate(10);
-            return new CustomerCollection($customers);
-        }
+        $customers = Customer::search($term)
+            ->type($customersType)
+            ->orderBy($orderBy, $sortOrder)
+            ->paginate($paginate);
 
-        $customers = Customer::latest()->paginate(10);
         return new CustomerCollection($customers);
-
-
-        // return $customers->paginate(20);
     }
 
     // public function credit_customers()
@@ -116,5 +113,17 @@ class CustomersController extends Controller
         $customer->delete();
 
         return response([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function selectAll()
+    {
+        return Customer::pluck('id');
+    }
+
+    public function export($customers)
+    {
+        $customers = explode(',', $customers);
+
+        // return (new customersExport($customers));
     }
 }

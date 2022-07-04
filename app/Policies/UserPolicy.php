@@ -66,6 +66,6 @@ class UserPolicy
      */
     public function delete(User $user, user $model)
     {
-        return $user->can(Permission::CAN_DELETE_USERS && $model->id !== 1);
+        return $user->can(Permission::CAN_DELETE_USERS) && $model->id !== 1;
     }
 }

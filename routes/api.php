@@ -16,6 +16,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('categories', CategoriesController::class);
     Route::apiResource('users', UsersController::class);
 
+    Route::get('/customers/selectAll', [CustomersController::class, 'selectAll']);
+    Route::get('/customers/export/{customers}', [CustomersController::class, 'export']);
     Route::apiResource('customers', CustomersController::class);
 });
 

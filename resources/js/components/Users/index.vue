@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table id="usersTable" class="table table-bordered table-striped table-hover">
+                            <table id="users_table" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID.</th>
@@ -169,6 +169,7 @@ export default {
             this.getUsers();
         },
         async destroy(id) {
+
             Swal.fire(Notification.confirmDialogAtts()).then((result) => {
                 this.$Progress.start();
                 if (result.isConfirmed) {
