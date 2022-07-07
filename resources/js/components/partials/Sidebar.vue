@@ -25,7 +25,7 @@
                     </router-link>
                 </li>
 
-                <!-- user menu part -->
+                <!-- customer menu part -->
                 <li class="treeview" v-if="can('view-customers')">
                     <a href="javascript:void(0)">
                         <i class="metismenu-icon pe-7s-user"></i> <span>Customers</span>
@@ -45,14 +45,28 @@
                                 Add Customer
                             </router-link>
                         </li>
-                        <li>
-                            <router-link to="/customers/credit" v-if="can('view-customers')">
-                                Credit Customer
+                    </ul>
+
+                </li>
+
+                <!-- supplier menu part -->
+                <li class="treeview" v-if="can('view-suppliers')">
+                    <a href="javascript:void(0)">
+                        <i class="metismenu-icon fa fa-user-secret"></i> <span>Suppliers</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li v-if="can('view-suppliers')">
+                            <router-link to="/suppliers">
+                                Manage Suppliers
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/customers/paid" v-if="can('view-customers')">
-                                Paid Customer
+                            <router-link to="/suppliers/create" v-if="can('create-suppliers')">
+                                Add Supplier
                             </router-link>
                         </li>
                     </ul>
@@ -135,6 +149,27 @@
                         <li>
                             <router-link to="/users/create" v-if="can('create-users')">
                                 Add User
+                            </router-link>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <!-- user menu part -->
+                <li class="treeview" v-if="can('view-settings')">
+
+                    <a href="javascript:void(0)">
+
+                        <i class="ti-settings"></i> <span>Settings</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li v-if="can('view-settings')">
+                            <router-link to="/settings">
+                                Business
                             </router-link>
                         </li>
                     </ul>

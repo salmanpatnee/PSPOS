@@ -9,6 +9,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
+use App\Exports\CustomerExport;
 
 class CustomersController extends Controller
 {
@@ -22,13 +23,13 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $paginate   = request('paginate', 10);
-        $term       = request('search', '');
-        $customersType       = request('customersType', null);
-        $sortOrder  = request('sortOrder', 'desc');
-        $orderBy    = request('orderBy', 'created_at');
+        $paginate      = request('paginate', 10);
+        $term          = request('search', '');
+        $customersType = request('customersType', null);
+        $sortOrder     = request('sortOrder', 'desc');
+        $orderBy       = request('orderBy', 'created_at');
 
         $customers = Customer::search($term)
             ->type($customersType)
@@ -37,12 +38,6 @@ class CustomersController extends Controller
 
         return new CustomerCollection($customers);
     }
-
-    // public function credit_customers()
-    // {
-    //     $customers = Customer::where('previous_balance', '>', 0)->latest()->paginate(10);
-    //     return new CustomerCollection($customers);
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -54,7 +49,7 @@ class CustomersController extends Controller
     {
         $attributes = request()->validate([
             'name'              => 'required|string|min:3|max:255',
-            'email'             => 'required|email|max:255|unique:users,email',
+            'email'             => 'nullable|email|max:255|unique:customers,email',
             'phone'             => 'nullable|string|min:8|unique:customers,phone',
             'mobile'            => 'required|string|min:11|unique:customers,mobile',
             'date_of_birth'     => 'nullable|string',
@@ -97,6 +92,7 @@ class CustomersController extends Controller
             'previous_balance'  => 'nullable|numeric'
         ]);
 
+
         $customer->update($attributes);
 
         return new CustomerResource($customer);
@@ -124,6 +120,6 @@ class CustomersController extends Controller
     {
         $customers = explode(',', $customers);
 
-        // return (new customersExport($customers));
+        return (new CustomerExport($customers));
     }
 }

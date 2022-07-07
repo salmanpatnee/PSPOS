@@ -6,6 +6,7 @@
             </li>
             <li class="active">Dashboard</li>
         </ol>
+
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                 <div class="small-box bg-green whitecolor">
@@ -16,7 +17,7 @@
                     <div class="icon">
                         <i class="fa fa-users"></i>
                     </div>
-                    <a href="http://erp.test\/customer_list" class="small-box-footer">Total Customer</a>
+                    <a href="" class="small-box-footer">Total Customer</a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
@@ -29,7 +30,7 @@
                     <div class="icon">
                         <i class="fa fa-shopping-bag"></i>
                     </div>
-                    <a href="http://erp.test\/product_list" class="small-box-footer">Total Product</a>
+                    <a href="" class="small-box-footer">Total Product</a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
@@ -42,7 +43,7 @@
                     <div class="icon">
                         <i class="fa fa-user"></i>
                     </div>
-                    <a href="http://erp.test\/supplier_list" class="small-box-footer">Total Supplier </a>
+                    <a href="" class="small-box-footer">Total Supplier </a>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
@@ -55,7 +56,7 @@
                     <div class="icon">
                         <i class="fa fa-money"></i>
                     </div>
-                    <a href="http://erp.test\/invoice_list" class="small-box-footer">Total Sale </a>
+                    <a href="" class="small-box-footer">Total Sale </a>
                 </div>
             </div>
         </div>

@@ -14,6 +14,14 @@ class Permission
     public const CAN_DELETE_CUSTOMERS = 'delete-customers';
 
     /*
+    * Customers Permission
+    */
+    public const CAN_VIEW_SUPPLIERS   = 'view-suppliers';
+    public const CAN_CREATE_SUPPLIERS = 'create-suppliers';
+    public const CAN_UPDATE_SUPPLIERS = 'update-suppliers';
+    public const CAN_DELETE_SUPPLIERS = 'delete-suppliers';
+
+    /*
     * Users Permission
     */
     public const CAN_VIEW_USERS = 'view-users';
@@ -36,4 +44,10 @@ class Permission
     public const CAN_CREATE_PRODUCTS = 'create-products';
     public const CAN_UPDATE_PRODUCTS = 'update-products';
     public const CAN_DELETE_PRODUCTS = 'delete-products';
+
+    /*
+    * Business Settings Permissions
+    */
+    public const CAN_VIEW_SETTINGS = 'view-settings';
+    public const CAN_UPDATE_SETTINGS = 'update-settings';
 }

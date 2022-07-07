@@ -21,6 +21,6 @@ class UserSeeder extends Seeder
             'status' => 'Active'
         ]);
 
-        $superAdmin->assignRole('Admin');
+        $superAdmin->assignRole('Super Admin');
     }
 }

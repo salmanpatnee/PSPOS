@@ -3,8 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BusinessController;
 use App\Http\Controllers\API\CategoriesController;
+use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\API\CustomersController;
+use App\Http\Controllers\API\SuppliersController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Resources\UserResource;
 
@@ -19,6 +22,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/customers/selectAll', [CustomersController::class, 'selectAll']);
     Route::get('/customers/export/{customers}', [CustomersController::class, 'export']);
     Route::apiResource('customers', CustomersController::class);
+
+    Route::apiResource('suppliers', SuppliersController::class);
+    Route::apiResource('business', BusinessController::class)->except(['store', 'destroy']);
+    Route::apiResource('currencies', CurrencyController::class)->except(['show', 'store', 'update', 'destroy']);
 });
 
 

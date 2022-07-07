@@ -8,56 +8,64 @@
         </ol>
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-bd lobidrag">
-                    <div class="panel-heading">
-                        <div class="panel-title">
-                            <h4 class="d-inline-block">Manage Categories </h4>
-                            <button v-if="can('create-categories')" @click="create"
-                                class="d-inline-block pull-right btn btn-success text-white">Add
-                                Category</button>
+                <panel>
+                    <template slot="title">Manage Categories</template>
+
+                    <template slot="header-right">
+                        <button v-if="can('create-categories')" @click="create"
+                            class="d-inline-block pull-right btn btn-success text-white">Add
+                            Category</button>
+                    </template>
+                    <template name="before-content">
+
+                        <div class="row mb-2">
+                            <div class="col-md-4 form-inline">
+                                <paginate-dropdown @updatePageSize="paginate = $event" />
+                            </div>
+                            <div class="col-md-4 text-center">
+
+                            </div>
+                            <div class="col-md-4 form-inline text-right">
+                                <search @updateSearchTerm="search = $event" />
+                            </div>
                         </div>
+                    </template>
+                    <div class="table-responsive">
+                        <table id="dataTableExample3" class="table table-bordered table-striped table-hover">
+                            <table-header :columns="columns" :sortOrder="sortOrder" :orderBy="orderBy"
+                                @handleSort="sort($event)" />
+                            <tbody>
+
+                                <tr v-for="category in categories.data" :key="category.id">
+                                    <td>{{ category.id }}</td>
+                                    <td>{{ category.name }}</td>
+                                    <td>
+                                        <action-button @action="edit(category)" class='btn-sm btn-info'
+                                            permission="update-categories" label="Update">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </action-button>
+                                        <delete-button @handleDelete="destroy(category.id)"
+                                            permission="delete-categories" />
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table id="dataTableExample3" class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>SL.</th>
-                                        <th>Category Name</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
-                                    <tr v-for="category in categories" :key="category.id">
-                                        <td>{{ category.id }}</td>
-                                        <td>{{ category.name }}</td>
-                                        <td>
-                                            <center>
-
-                                                <button v-if="can('update-categories')" @click="edit(category)"
-                                                    class="btn btn-info btn-sm" data-toggle="tooltip"
-                                                    data-placement="left" title="" data-original-title="Update">
-                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                </button>
-
-                                                <button v-if="can('delete-categories')"
-                                                    @click="deleteCategory(category.id)" type="button"
-                                                    class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                    data-placement="right" title="" data-original-title="Delete "><i
-                                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
-
-                                            </center>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <template name="footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <pagination-info :data="categories" />
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <Pagination :data="categories" @pagination-change-page="getCategories" />
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </template>
+                </panel>
             </div>
         </div>
-
         <div class="modal fade modal-success" id="category_modal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -101,28 +109,85 @@
 </template>
 
 <script>
+import LaravelVuePagination from 'laravel-vue-pagination';
 export default {
 
     data: () => ({
         modal: "#category_modal",
-        endPoint: '/api/categories',
+        baseEndPoint: '/api/categories',
         categories: {},
+        columns: [
+            {
+                title: 'SL',
+                name: ''
+            },
+            {
+                title: 'Category Name',
+                name: 'name',
+                sort: true
+            },
+            {
+                title: 'Action',
+                name: '',
+            }
+        ],
+        dataLoaded: false,
         editMode: false,
         form: new Form({
             id: '',
             name: '',
-        })
+        }),
+        orderBy: 'created_at',
+        paginate: 10,
+        search: '',
+        sortOrder: 'desc',
     }),
+    computed: {
+        total() {
+            return this.categories.meta.total;
+        }
+    },
+    components: {
+        'Pagination': LaravelVuePagination
+    },
+    watch: {
+        paginate: function ($value) {
+            this.getCategories();
+        },
+        search: function ($value) {
+            this.getCategories();
+        },
+    },
     methods: {
-        getCategories() {
-            this.form.get(this.endPoint).then(({ data }) => (this.categories = data.data));
+        getCategories(page = 1) {
+            this.$Progress.start();
+            this.form.get(this.baseEndPoint
+                + '?page=' + page
+                + '&paginate=' + this.paginate
+                + '&search=' + this.search
+                + '&sortOrder=' + this.sortOrder
+                + '&orderBy=' + this.orderBy
+            ).then(({ data }) => {
+                this.categories = data;
+                this.dataLoaded = true;
+                this.$Progress.finish();
+            }).catch(error => {
+                this.dataLoaded = false;
+                this.$Progress.fail();
+                console.log('Error: ' + error);
+            });
+        },
+        sort(col) {
+            this.orderBy = col;
+            this.sortOrder = this.sortOrder == 'desc' ? 'asc' : 'desc';
+            this.getCategories();
         },
         create() {
             this.resetModal();
         },
         store() {
             this.$Progress.start();
-            this.form.post(this.endPoint).then(() => {
+            this.form.post(this.baseEndPoint).then(() => {
                 Fire.$emit('refreshCategories');
 
                 $(this.modal).modal('hide');
@@ -137,7 +202,7 @@ export default {
         },
         update() {
             this.$Progress.start();
-            this.form.put(this.endPoint + '/' + this.form.id).then(() => {
+            this.form.put(this.baseEndPoint + '/' + this.form.id).then(() => {
                 Fire.$emit('refreshCategories');
 
                 $(this.modal).modal('hide');
@@ -146,16 +211,16 @@ export default {
                 this.$Progress.finish();
             }).catch((error) => this.$Progress.fail());
         },
-        deleteCategory(id) {
+        destroy(id) {
 
             Swal.fire(Notification.confirmDialogAtts()).then((result) => {
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    const originalCategories = this.categories;
+                    const originalCategories = this.categories.data;
 
-                    this.categories = this.categories.filter(category => category.id != id);
+                    this.categories.data = this.categories.data.filter(category => category.id != id);
 
-                    this.form.delete(this.endPoint + '/' + id).then(() => {
+                    this.form.delete(this.baseEndPoint + '/' + id).then(() => {
 
                         Notification.success('Category Deleted');
 
@@ -163,7 +228,7 @@ export default {
 
                         this.$Progress.finish();
                     }).catch((error) => {
-                        this.categories = originalCategories;
+                        this.categories.data = originalCategories;
                         this.$Progress.fail();
                         Notification.error('Unexpected error occurred.');
                         console.log('Error', error);

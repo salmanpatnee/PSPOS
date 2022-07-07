@@ -1,20 +1,15 @@
 <template>
     <div>
-        <ol class="breadcrumb">
-            <li>
-                <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
-            </li>
-            <li class="active">Users</li>
-        </ol>
+        <breadcrumb></breadcrumb>
         <div class="row">
             <div class="col-sm-12">
                 <panel>
-                    <template slot="title">Manage Users</template>
+                    <template slot="title">Manage Suppliers</template>
 
                     <template slot="header-right">
-                        <router-link :to="{ name: 'users.create' }" v-if="can('create-users')"
+                        <router-link :to="{ name: 'suppliers.create' }" v-if="can('create-suppliers')"
                             class="d-inline-block pull-right btn btn-success text-white">Add
-                            User</router-link>
+                            Supplier</router-link>
                     </template>
                     <template name="before-content">
 
@@ -30,24 +25,26 @@
                             </div>
                         </div>
                     </template>
+
                     <div class="table-responsive">
-                        <table id="users_table" class="table table-bordered table-striped table-hover">
+                        <table id="suppliers_table" class="table table-bordered table-striped table-hover">
                             <table-header :columns="columns" :sortOrder="sortOrder" :orderBy="orderBy"
                                 @handleSort="sort($event)" />
                             <tbody>
-                                <tr v-for="(user, index) in users.data" :key="user.id">
-                                    <td>{{ index + 1 }}</td>
-                                    <td>{{ user.name }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.role }}</td>
-                                    <td>{{ user.status }}</td>
-                                    <td>{{ user.joining_date }}</td>
-                                    <td>{{ user.last_login }}</td>
-                                    <td>
-                                        <edit-button routeName="users.edit" :data="{ user: user }"
-                                            permission="update-users" />
 
-                                        <delete-button @handleDelete="destroy(user.id)" permission="delete-users" />
+                                <tr v-for="(supplier, index) in suppliers.data" :key="supplier.id">
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ supplier.name }}</td>
+                                    <td>{{ supplier.email }}</td>
+                                    <td>{{ supplier.mobile }}</td>
+                                    <td>{{ supplier.previous_balance }}</td>
+                                    <td>{{ supplier.advance_balance }}</td>
+                                    <td>
+                                        <edit-button routeName="suppliers.edit" :data="{ supplier: supplier }"
+                                            permission="update-suppliers" />
+
+                                        <delete-button @handleDelete="destroy(supplier.id)"
+                                            permission="delete-suppliers" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -57,28 +54,26 @@
                     <template name="footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <pagination-info :data="users" />
+                                <pagination-info :data="suppliers" />
                             </div>
                             <div class="col-md-6 text-right">
-                                <Pagination :data="users" @pagination-change-page="getUsers" />
+                                <Pagination :data="suppliers" @pagination-change-page="getSuppliers" />
                             </div>
                         </div>
                     </template>
                 </panel>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
-
 import LaravelVuePagination from 'laravel-vue-pagination';
 
 export default {
 
     data: () => ({
-        baseEndPoint: '/api/users',
+        baseEndPoint: '/api/suppliers',
         columns: [
             {
                 title: 'SL',
@@ -95,27 +90,27 @@ export default {
                 sort: true
             },
             {
-                title: 'Role',
+                title: 'Mobile',
+                name: 'mobile',
             },
             {
-                title: 'Status',
-            },
-            {
-                title: 'Joining Date',
-                name: 'created_at',
+                title: 'Balance',
+                name: 'previous_balance',
                 sort: true
             },
             {
-                title: 'Last Login at',
-                name: 'last_login',
+                title: 'Advance Balance',
+                name: 'advance_balance',
+                sort: true
             },
             {
                 title: 'Action',
                 name: '',
             }
         ],
-        users: {},
+        suppliers: {},
         dataLoaded: false,
+        exportUrl: '',
         orderBy: 'created_at',
         paginate: 10,
         search: '',
@@ -123,22 +118,22 @@ export default {
     }),
     computed: {
         total() {
-            return this.users.meta.total;
-        }
+            return this.suppliers.meta.total;
+        },
     },
     watch: {
         paginate: function ($value) {
-            this.getUsers();
+            this.getSuppliers();
         },
         search: function ($value) {
-            this.getUsers();
+            this.getSuppliers();
         },
     },
     components: {
         'Pagination': LaravelVuePagination
     },
     methods: {
-        getUsers(page = 1) {
+        getSuppliers(page = 1) {
             this.$Progress.start();
             axios.get(this.baseEndPoint
                 + '?page=' + page
@@ -147,7 +142,7 @@ export default {
                 + '&sortOrder=' + this.sortOrder
                 + '&orderBy=' + this.orderBy
             ).then(({ data }) => {
-                this.users = data;
+                this.suppliers = data;
                 this.dataLoaded = true;
                 this.$Progress.finish();
             }).catch(error => {
@@ -159,22 +154,22 @@ export default {
         sort(col) {
             this.orderBy = col;
             this.sortOrder = this.sortOrder == 'desc' ? 'asc' : 'desc';
-            this.getUsers();
+            this.getSuppliers();
         },
         async destroy(id) {
 
             Swal.fire(Notification.confirmDialogAtts()).then((result) => {
-                this.$Progress.start();
                 if (result.isConfirmed) {
-                    const originalUsers = this.users.data;
+                    this.$Progress.start();
+                    const originalSuppliers = this.suppliers.data;
 
-                    this.users.data = this.users.data.filter(user => user.id != id);
+                    this.suppliers.data = this.suppliers.data.filter(supplier => supplier.id != id);
                     axios.delete(this.baseEndPoint + '/' + id).then(() => {
 
-                        Notification.success('User Deleted.');
+                        Notification.success('Supplier Deleted.');
                         this.$Progress.finish();
                     }).catch((error) => {
-                        this.users.data = originalUsers;
+                        this.suppliers.data = originalSuppliers;
                         this.$Progress.fail();
                         Notification.error('Unexpected error occurred.');
                     });
@@ -182,8 +177,9 @@ export default {
             })
         },
     },
-    mounted() {
-        this.getUsers();
+
+    created() {
+        this.getSuppliers();
     }
 }
 </script>

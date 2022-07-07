@@ -59,6 +59,14 @@ class User extends Authenticatable
         $this->attributes['status'] = $value == 'Active' ? 1 : 0;
     }
 
+    /**
+     * Get the business that owns the user.
+     */
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
+
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";

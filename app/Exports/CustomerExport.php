@@ -13,7 +13,12 @@ class CustomerExport implements FromQuery, Responsable, WithHeadings, WithMappin
 {
     use Exportable;
 
-    protected $students;
+    protected $customers;
+
+    public function __construct(array $customers)
+    {
+        $this->customers = $customers;
+    }
 
     private $fileName = 'customers.xlsx';
 
@@ -33,28 +38,24 @@ class CustomerExport implements FromQuery, Responsable, WithHeadings, WithMappin
         ];
     }
 
-    public function map($student): array
+    public function map($customer): array
     {
         return [
-            $student->id,
-            $student->class->name,
-            $student->section->name,
-            $student->name,
-            $student->email,
-            $student->address,
-            $student->phone_number,
-            // $student->created_at->toFormattedDateString(),
-            // $student->updated_at->toFormattedDateString()
+            $customer->id,
+            $customer->name,
+            $customer->email,
+            $customer->phone,
+            $customer->mobile,
+            $customer->date_of_birth->toFormattedDateString(),
+            $customer->address,
+            $customer->previous_balance,
+            $customer->total_purchases,
+            $customer->last_purchase->toFormattedDateString()
         ];
-    }
-
-    public function __construct(array $students)
-    {
-        $this->students = $students;
     }
 
     public function query()
     {
-        return Student::query()->whereKey($this->students);
+        return Customer::query()->whereKey($this->customers);
     }
 }

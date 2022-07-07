@@ -29,7 +29,7 @@
                                         <label for="name" class="col-sm-4 col-form-label text-d">Name <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.name" name="name" class="form-control" type="text"
+                                            <input v-model="form.name" class="form-control" type="text"
                                                 placeholder="First Name" id="name" required>
                                             <HasError :form="form" field="name" />
                                         </div>
@@ -40,7 +40,7 @@
                                         <label for="email" class="col-sm-4 col-form-label text-d">Email <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.email" name="email" class="form-control" type="email"
+                                            <input v-model="form.email" class="form-control" type="email"
                                                 placeholder="Email" id="email" required>
                                             <HasError :form="form" field="email" />
                                         </div>
@@ -54,7 +54,7 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.password" name="password" class="form-control"
-                                                type="password" placeholder="Password" id="password">
+                                                type="password" placeholder="Password" id="password" readonly>
                                             <HasError :form="form" field="password" />
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                         <div class="col-sm-8">
                                             <input v-model="form.password_confirmation" name="password_confirmation"
                                                 class="form-control" type="password" placeholder="Confirm Password"
-                                                id="password_confirmation">
+                                                id="password_confirmation" required>
                                             <HasError :form="form" field="password_confirmation" />
                                         </div>
                                     </div>
@@ -80,7 +80,8 @@
                                     <div class="form-group row">
                                         <label for="role" class="col-sm-4 col-form-label text-d">Role </label>
                                         <div class="col-sm-8">
-                                            <select v-model="form.role" name="role" class="form-control" id="role">
+                                            <select v-model="form.role" name="role" class="form-control" id="role"
+                                                required>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Manager">Manager</option>
                                                 <option value="Cashier">Cashier</option>

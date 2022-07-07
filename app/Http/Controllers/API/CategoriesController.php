@@ -19,7 +19,15 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->paginate(10);
+        $paginate      = request('paginate', 10);
+        $term          = request('search', '');
+        $sortOrder     = request('sortOrder', 'desc');
+        $orderBy       = request('orderBy', 'created_at');
+
+        $categories = Category::search($term)
+            ->orderBy($orderBy, $sortOrder)
+            ->paginate($paginate);
+
         return new CategoryCollection($categories);
     }
 
