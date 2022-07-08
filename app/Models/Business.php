@@ -28,7 +28,6 @@ class Business extends Model
      */
     protected $casts = [
         'email_settings' => 'array',
-        'sms_settings' => 'array',
     ];
 
     /**

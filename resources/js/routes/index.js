@@ -23,9 +23,9 @@ const Routes = new VueRouter({
     routes: [
         { path: '/', component: Login, name: 'app' },
         { path: '/login', component: Login, name: 'login', alias: '/' },
-        { path: '/dashboard', component: Dashboard, name: 'dashboard', meta: { requiredAuth: true } },
+        { path: '/dashboard', component: Dashboard, name: 'dashboard', meta: { requiresAuth: true } },
 
-        { path: '/settings', component: Settings, name: 'settings.index', meta: { requiredAuth: true } },
+        { path: '/settings', component: Settings, name: 'settings.index', meta: { requiresAuth: true, authorize: ['view-settings'] } },
 
         //Categories
         { path: '/categories', component: Categories, name: 'categories', authorize: ['create-categories'] },

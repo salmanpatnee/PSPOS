@@ -18,7 +18,7 @@ axios.defaults.baseURL = process.env.APP_URL;
 
 
 /* Components */
-import { Button, HasError } from 'vform/src/components/bootstrap4';
+import { Button, HasError, AlertErrors } from 'vform/src/components/bootstrap4';
 import App from './components/App';
 
 
@@ -30,6 +30,7 @@ Vue.use(VueProgressBar, {
 
 Vue.component(Button.name, Button)
 Vue.component(HasError.name, HasError)
+Vue.component(AlertErrors.name, AlertErrors)
 
 Vue.component('paginate-dropdown', require('./components/Common/PaginateDropdown.vue').default);
 Vue.component('pagination-info', require('./components/Common/PaginationInfo.vue').default);

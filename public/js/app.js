@@ -2487,24 +2487,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       baseEndPoint: '/api/business',
       currencies: [],
-      settings: {},
       form: new Form({
         id: '',
         name: '',
         currency_id: '',
         currency_symbol_placement: '',
+        logo: null,
         tax_number: '',
-        email_settings: [{
-          'host': ''
-        }, {
-          'driver': ''
-        }]
+        email_settings: {
+          driver: 'SMTP',
+          host: 'localhost',
+          port: '456',
+          username: '',
+          password: '',
+          encryption: 'SSL',
+          from: '',
+          name: ''
+        }
       })
     };
   },
@@ -2543,16 +2552,36 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Error: ' + error);
       });
     },
-    update: function update() {
+    getProfileImage: function getProfileImage() {
+      return this.form.logo.length > 200 ? this.form.logo : 'images/' + this.form.logo;
+    },
+    uploadFile: function uploadFile(e) {
       var _this3 = this;
+
+      var file = e.target.files[0];
+
+      if (file['size'] <= '2097152') {
+        var reader = new FileReader();
+
+        reader.onloadend = function (file) {
+          _this3.form.logo = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        Notification.error('You are uploading a large file.');
+      }
+    },
+    update: function update() {
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.put(this.baseEndPoint + '/' + this.form.id).then(function () {
         Notification.success('Settings Updated');
 
-        _this3.$Progress.finish();
+        _this4.$Progress.finish();
       })["catch"](function (error) {
-        return _this3.$Progress.fail();
+        return _this4.$Progress.fail();
       });
     }
   },
@@ -5051,6 +5080,7 @@ vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_progressbar__WEBPACK_IMPOR
 });
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.Button);
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.HasError);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.AlertErrors.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_8__.AlertErrors);
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].component('paginate-dropdown', (__webpack_require__(/*! ./components/Common/PaginateDropdown.vue */ "./resources/js/components/Common/PaginateDropdown.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].component('pagination-info', (__webpack_require__(/*! ./components/Common/PaginationInfo.vue */ "./resources/js/components/Common/PaginationInfo.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].component('search', (__webpack_require__(/*! ./components/Common/Search.vue */ "./resources/js/components/Common/Search.vue")["default"]));
@@ -5186,14 +5216,15 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]({
     component: _components_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"],
     name: 'dashboard',
     meta: {
-      requiredAuth: true
+      requiresAuth: true
     }
   }, {
     path: '/settings',
     component: _components_Business_index__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'settings.index',
     meta: {
-      requiredAuth: true
+      requiresAuth: true,
+      authorize: ['view-settings']
     }
   }, //Categories
   {
@@ -73310,6 +73341,14 @@ var render = function () {
                     },
                   },
                   [
+                    _c("AlertErrors", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        form: _vm.form,
+                        message: "There were some problems with your input.",
+                      },
+                    }),
+                    _vm._v(" "),
                     _c(
                       "div",
                       {
@@ -73362,6 +73401,7 @@ var render = function () {
                                           type: "text",
                                           placeholder: "Business Name",
                                           tabindex: "1",
+                                          required: "",
                                         },
                                         domProps: { value: _vm.form.name },
                                         on: {
@@ -73415,7 +73455,10 @@ var render = function () {
                                       _c("Select2", {
                                         attrs: {
                                           options: _vm.currencies,
+                                          id: "currency_id",
                                           placeholder: "Select Currency",
+                                          tabindex: "2",
+                                          required: "",
                                         },
                                         model: {
                                           value: _vm.form.currency_id,
@@ -73450,7 +73493,9 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "name" },
+                                      attrs: {
+                                        for: "currency_symbol_placement",
+                                      },
                                     },
                                     [
                                       _vm._v(
@@ -73557,15 +73602,36 @@ var render = function () {
                                     [
                                       _c("input", {
                                         staticClass: "form-control",
-                                        attrs: { type: "file", id: "logo" },
+                                        attrs: {
+                                          type: "file",
+                                          id: "logo",
+                                          tabindex: "3",
+                                        },
+                                        on: { change: _vm.uploadFile },
                                       }),
                                       _vm._v(" "),
                                       _c("HasError", {
                                         attrs: {
                                           form: _vm.form,
-                                          field: "currency_symbol_placement",
+                                          field: "logo",
                                         },
                                       }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "mt-2",
+                                          attrs: { id: "image_preview" },
+                                        },
+                                        [
+                                          _c("img", {
+                                            staticClass: "elevation-2",
+                                            attrs: {
+                                              src: _vm.getProfileImage(),
+                                            },
+                                          }),
+                                        ]
+                                      ),
                                     ],
                                     1
                                   ),
@@ -73616,7 +73682,7 @@ var render = function () {
                                           id: "tax_number",
                                           type: "text",
                                           placeholder: "Tax Number",
-                                          tabindex: "1",
+                                          tabindex: "4",
                                         },
                                         domProps: {
                                           value: _vm.form.tax_number,
@@ -73666,7 +73732,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "mail_driver" },
                                     },
                                     [
                                       _vm._v(
@@ -73675,17 +73741,53 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "text",
-                                        placeholder: "Mail Driver",
-                                        tabindex: "1",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.form.email_settings.driver,
+                                            expression:
+                                              "form.email_settings.driver",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "mail_driver",
+                                          type: "text",
+                                          placeholder: "SMTP",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.email_settings.driver,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "driver",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.driver",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -73695,7 +73797,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "host" },
                                     },
                                     [
                                       _vm._v(
@@ -73704,17 +73806,52 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "text",
-                                        placeholder: "Host",
-                                        tabindex: "2",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.email_settings.host,
+                                            expression:
+                                              "form.email_settings.host",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "host",
+                                          type: "text",
+                                          placeholder: "localhost",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.email_settings.host,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "host",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.host",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -73724,7 +73861,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "port" },
                                     },
                                     [
                                       _vm._v(
@@ -73733,17 +73870,52 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "number",
-                                        placeholder: "Port",
-                                        tabindex: "3",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.email_settings.port,
+                                            expression:
+                                              "form.email_settings.port",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "port",
+                                          type: "number",
+                                          placeholder: "456",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.email_settings.port,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "port",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.port",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                             ]),
@@ -73755,7 +73927,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "username" },
                                     },
                                     [
                                       _vm._v(
@@ -73764,17 +73936,54 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "text",
-                                        placeholder: "Username",
-                                        tabindex: "1",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.form.email_settings.username,
+                                            expression:
+                                              "form.email_settings.username",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "username",
+                                          type: "email",
+                                          placeholder: "Username",
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.form.email_settings.username,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "username",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.username",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -73784,7 +73993,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "password" },
                                     },
                                     [
                                       _vm._v(
@@ -73793,17 +74002,55 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "text",
-                                        placeholder: "Password",
-                                        tabindex: "5",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.form.email_settings.password,
+                                            expression:
+                                              "form.email_settings.password",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "password",
+                                          type: "text",
+                                          placeholder: "Password",
+                                          tabindex: "5",
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.form.email_settings.password,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "password",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.password",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -73813,7 +74060,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "encryption" },
                                     },
                                     [
                                       _vm._v(
@@ -73822,17 +74069,83 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "number",
-                                        placeholder: "Encryption",
-                                        tabindex: "6",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.form.email_settings
+                                                  .encryption,
+                                              expression:
+                                                "form.email_settings.encryption",
+                                            },
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { id: "encryption" },
+                                          on: {
+                                            change: function ($event) {
+                                              var $$selectedVal =
+                                                Array.prototype.filter
+                                                  .call(
+                                                    $event.target.options,
+                                                    function (o) {
+                                                      return o.selected
+                                                    }
+                                                  )
+                                                  .map(function (o) {
+                                                    var val =
+                                                      "_value" in o
+                                                        ? o._value
+                                                        : o.value
+                                                    return val
+                                                  })
+                                              _vm.$set(
+                                                _vm.form.email_settings,
+                                                "encryption",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "SSL" } },
+                                            [_vm._v("SSL")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "TLS" } },
+                                            [_vm._v("TLS")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "STARTTLS" } },
+                                            [_vm._v("STARTTLS")]
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.encryption",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                             ]),
@@ -73844,7 +74157,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "from" },
                                     },
                                     [
                                       _vm._v(
@@ -73853,17 +74166,52 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "email",
-                                        placeholder: "From Email",
-                                        tabindex: "7",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.email_settings.from,
+                                            expression:
+                                              "form.email_settings.from",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "from",
+                                          type: "email",
+                                          placeholder: "From Email",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.email_settings.from,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "from",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.from",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -73873,7 +74221,7 @@ var render = function () {
                                     "label",
                                     {
                                       staticClass: "col-sm-4 col-form-label",
-                                      attrs: { for: "" },
+                                      attrs: { for: "from_name" },
                                     },
                                     [
                                       _vm._v(
@@ -73882,17 +74230,52 @@ var render = function () {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-sm-8" }, [
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        id: "",
-                                        type: "text",
-                                        placeholder: "From Name",
-                                        tabindex: "8",
-                                      },
-                                    }),
-                                  ]),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-sm-8" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.email_settings.name,
+                                            expression:
+                                              "form.email_settings.name",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "from_name",
+                                          type: "text",
+                                          placeholder: "From Name",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.email_settings.name,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.email_settings,
+                                              "name",
+                                              $event.target.value
+                                            )
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("HasError", {
+                                        attrs: {
+                                          form: _vm.form,
+                                          field: "email_settings.name",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ]),
                               ]),
                             ]),
@@ -73900,7 +74283,21 @@ var render = function () {
                         ),
                       ]
                     ),
-                  ]
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit", disabled: _vm.form.busy },
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Save\n                        "
+                        ),
+                      ]
+                    ),
+                  ],
+                  1
                 ),
               ]),
             ],
@@ -76967,11 +77364,9 @@ var render = function () {
                             ],
                             staticClass: "form-control",
                             attrs: {
-                              name: "password",
                               type: "password",
                               placeholder: "Password",
                               id: "password",
-                              readonly: "",
                             },
                             domProps: { value: _vm.form.password },
                             on: {

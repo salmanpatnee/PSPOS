@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'category');
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -53,8 +53,8 @@
                                         <label for="password" class="col-sm-4 col-form-label text-d">Password <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
-                                            <input v-model="form.password" name="password" class="form-control"
-                                                type="password" placeholder="Password" id="password" readonly>
+                                            <input v-model="form.password" class="form-control" type="password"
+                                                placeholder="Password" id="password">
                                             <HasError :form="form" field="password" />
                                         </div>
                                     </div>

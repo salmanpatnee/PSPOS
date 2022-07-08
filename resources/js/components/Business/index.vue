@@ -11,8 +11,6 @@
                 <panel>
                     <template slot="title">Business Settings</template>
                     <div>
-
-                        <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#business" aria-controls="business"
                                     role="tab" data-toggle="tab">Business</a></li>
@@ -20,12 +18,10 @@
                                     data-toggle="tab">Tax</a></li>
                             <li role="presentation"><a href="#email_settings" aria-controls="email_settings" role="tab"
                                     data-toggle="tab">Email Settings</a></li>
-                            <!-- <li role="presentation"><a href="#sms_settings" aria-controls="sms_settings" role="tab"
-                                    data-toggle="tab">SMS Settings</a></li> -->
                         </ul>
-
-                        <!-- Tab panes -->
                         <form class="form-vertical" @submit.prevent="update()" @keydown="form.onKeydown($event)">
+                            <AlertErrors :form="form" class="mt-2"
+                                message="There were some problems with your input." />
                             <div class="tab-content" style="padding: 2em 1em;">
                                 <div role="tabpanel" class="tab-pane  active" id="business">
                                     <div class="row">
@@ -36,7 +32,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.name" class="form-control" id="name"
-                                                        type="text" placeholder="Business Name" tabindex="1">
+                                                        type="text" placeholder="Business Name" tabindex="1" required>
                                                     <HasError :form="form" field="name" />
                                                 </div>
                                             </div>
@@ -48,7 +44,8 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <Select2 v-model="form.currency_id" :options="currencies"
-                                                        placeholder="Select Currency" />
+                                                        id="currency_id" placeholder="Select Currency" tabindex="2"
+                                                        required />
                                                     <HasError :form="form" field="currency_id" />
                                                 </div>
                                             </div>
@@ -57,7 +54,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label for="name" class="col-sm-4 col-form-label">
+                                                <label for="currency_symbol_placement" class="col-sm-4 col-form-label">
                                                     Business Symbol Placement
                                                 </label>
                                                 <div class="col-sm-8">
@@ -77,14 +74,17 @@
                                                     Logo
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input type="file" class="form-control" id="logo" />
-                                                    <HasError :form="form" field="currency_symbol_placement" />
+                                                    <input type="file" @change="uploadFile" class="form-control"
+                                                        id="logo" tabindex="3" />
+                                                    <HasError :form="form" field="logo" />
+                                                    <div id="image_preview" class="mt-2">
+                                                        <img class="elevation-2" :src="getProfileImage()">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div role="tabpanel" class="tab-pane " id="tax">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -95,7 +95,7 @@
                                                 <div class="col-sm-8">
                                                     <input v-model="form.tax_number" class="form-control"
                                                         id="tax_number" type="text" placeholder="Tax Number"
-                                                        tabindex="1">
+                                                        tabindex="4">
                                                     <HasError :form="form" field="tax_number" />
                                                 </div>
                                             </div>
@@ -109,37 +109,37 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="mail_driver" class="col-sm-4 col-form-label">
                                                     Mail Driver
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="text"
-                                                        placeholder="Mail Driver" tabindex="1">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.driver" class="form-control"
+                                                        id="mail_driver" type="text" placeholder="SMTP">
+                                                    <HasError :form="form" field="email_settings.driver" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="host" class="col-sm-4 col-form-label">
                                                     Host
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="text" placeholder="Host"
-                                                        tabindex="2">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.host" class="form-control"
+                                                        id="host" type="text" placeholder="localhost">
+                                                    <HasError :form="form" field="email_settings.host" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="port" class="col-sm-4 col-form-label">
                                                     Port
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="number" placeholder="Port"
-                                                        tabindex="3">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.port" class="form-control"
+                                                        id="port" type="number" placeholder="456">
+                                                    <HasError :form="form" field="email_settings.port" />
                                                 </div>
                                             </div>
                                         </div>
@@ -148,37 +148,41 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="username" class="col-sm-4 col-form-label">
                                                     Username
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="text" placeholder="Username"
-                                                        tabindex="1">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.username" class="form-control"
+                                                        id="username" type="email" placeholder="Username">
+                                                    <HasError :form="form" field="email_settings.username" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="password" class="col-sm-4 col-form-label">
                                                     Password
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="text" placeholder="Password"
-                                                        tabindex="5">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.password" class="form-control"
+                                                        id="password" type="text" placeholder="Password" tabindex="5">
+                                                    <HasError :form="form" field="email_settings.password" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="encryption" class="col-sm-4 col-form-label">
                                                     Encryption
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="number"
-                                                        placeholder="Encryption" tabindex="6">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <select v-model="form.email_settings.encryption"
+                                                        class="form-control" id="encryption">
+                                                        <option value="SSL">SSL</option>
+                                                        <option value="TLS">TLS</option>
+                                                        <option value="STARTTLS">STARTTLS</option>
+                                                    </select>
+                                                    <HasError :form="form" field="email_settings.encryption" />
                                                 </div>
                                             </div>
                                         </div>
@@ -187,35 +191,35 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="from" class="col-sm-4 col-form-label">
                                                     From Email
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="email"
-                                                        placeholder="From Email" tabindex="7">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.from" class="form-control"
+                                                        id="from" type="email" placeholder="From Email">
+                                                    <HasError :form="form" field="email_settings.from" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-4 col-form-label">
+                                                <label for="from_name" class="col-sm-4 col-form-label">
                                                     From Name
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="" type="text"
-                                                        placeholder="From Name" tabindex="8">
-                                                    <!-- <HasError :form="form" field="email_settings" /> -->
+                                                    <input v-model="form.email_settings.name" class="form-control"
+                                                        id="from_name" type="text" placeholder="From Name">
+                                                    <HasError :form="form" field="email_settings.name" />
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <!-- <div role="tabpanel" class="tab-pane " id="sms_settings">
-                                    SMS
-                                </div> -->
                             </div>
+                            <button type="submit" class="btn btn-success" :disabled="form.busy">
+                                Save
+                            </button>
                         </form>
 
                     </div>
@@ -236,22 +240,23 @@ export default {
     data: () => ({
         baseEndPoint: '/api/business',
         currencies: [],
-        settings: {},
         form: new Form({
             id: '',
             name: '',
             currency_id: '',
             currency_symbol_placement: '',
+            logo: null,
             tax_number: '',
-            email_settings: [
-                {
-                    'host': ''
-                },
-                {
-                    'driver': ''
-                }
-
-            ]
+            email_settings: {
+                driver: 'SMTP',
+                host: 'localhost',
+                port: '456',
+                username: '',
+                password: '',
+                encryption: 'SSL',
+                from: '',
+                name: '',
+            }
         }),
     }),
     components: {
@@ -281,7 +286,26 @@ export default {
                 console.log('Error: ' + error);
             });
         },
+        getProfileImage() {
+            return (this.form.logo.length > 200)
+                ? this.form.logo
+                : 'images/' + this.form.logo;
+        },
+        uploadFile(e) {
+            let file = e.target.files[0];
+            if (file['size'] <= '2097152') {
 
+                let reader = new FileReader()
+
+                reader.onloadend = (file) => {
+                    this.form.logo = reader.result;
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                Notification.error('You are uploading a large file.');
+            }
+        },
         update() {
             this.$Progress.start();
             this.form.put(this.baseEndPoint + '/' + this.form.id).then(() => {

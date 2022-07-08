@@ -1098,6 +1098,15 @@ html {
     margin-top: 0;
 }
 
+#image_preview img {
+    max-width: 150px;
+}
+
+.alert ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 /* Helper Classes */
 .level {
     display: flex;
