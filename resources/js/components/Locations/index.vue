@@ -9,12 +9,12 @@
         <div class="row">
             <div class="col-sm-12">
                 <panel>
-                    <template slot="title">Manage Suppliers</template>
+                    <template slot="title">Manage Locations</template>
 
                     <template slot="header-right">
-                        <router-link :to="{ name: 'suppliers.create' }" v-if="can('create-suppliers')"
+                        <router-link :to="{ name: 'locations.create' }" v-if="can('create-locations')"
                             class="d-inline-block pull-right btn btn-success text-white">Add
-                            Supplier</router-link>
+                            Location</router-link>
                     </template>
                     <template name="before-content">
 
@@ -32,24 +32,25 @@
                     </template>
 
                     <div class="table-responsive">
-                        <table id="suppliers_table" class="table table-bordered table-striped table-hover">
+                        <table id="locations_table" class="table table-bordered table-striped table-hover">
                             <table-header :columns="columns" :sortOrder="sortOrder" :orderBy="orderBy"
                                 @handleSort="sort($event)" />
                             <tbody>
 
-                                <tr v-for="(supplier, index) in suppliers.data" :key="supplier.id">
+                                <tr v-for="(location, index) in locations.data" :key="location.id">
                                     <td>{{ index + 1 }}</td>
-                                    <td>{{ supplier.name }}</td>
-                                    <td>{{ supplier.email }}</td>
-                                    <td>{{ supplier.mobile }}</td>
-                                    <td>{{ supplier.previous_balance }}</td>
-                                    <td>{{ supplier.advance_balance }}</td>
+                                    <td>{{ location.name }}</td>
+                                    <td>{{ location.location_id }}</td>
+                                    <td>{{ location.city }}</td>
+                                    <td>{{ location.mobile }}</td>
+                                    <td>{{ location.email }}</td>
+                                    <td>{{ location.status }}</td>
                                     <td>
-                                        <edit-button routeName="suppliers.edit" :data="{ supplier: supplier }"
-                                            permission="update-suppliers" />
+                                        <edit-button routeName="locations.edit" :data="{ location: location }"
+                                            permission="update-locations" />
 
-                                        <delete-button @handleDelete="destroy(supplier.id)"
-                                            permission="delete-suppliers" />
+                                        <delete-button @handleDelete="destroy(location.id)"
+                                            permission="delete-locations" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -59,10 +60,10 @@
                     <template name="footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <pagination-info :data="suppliers" />
+                                <pagination-info :data="locations" />
                             </div>
                             <div class="col-md-6 text-right">
-                                <Pagination :data="suppliers" @pagination-change-page="getSuppliers" />
+                                <Pagination :data="locations" @pagination-change-page="getLocations" />
                             </div>
                         </div>
                     </template>
@@ -78,7 +79,7 @@ import LaravelVuePagination from 'laravel-vue-pagination';
 export default {
 
     data: () => ({
-        baseEndPoint: '/api/suppliers',
+        baseEndPoint: '/api/locations',
         columns: [
             {
                 title: 'SL',
@@ -90,8 +91,13 @@ export default {
                 sort: true
             },
             {
-                title: 'Email',
-                name: 'email',
+                title: 'ID',
+                name: 'location_id',
+                sort: true
+            },
+            {
+                title: 'City',
+                name: 'city',
                 sort: true
             },
             {
@@ -99,23 +105,19 @@ export default {
                 name: 'mobile',
             },
             {
-                title: 'Balance',
-                name: 'previous_balance',
-                sort: true
+                title: 'Email',
+                name: 'email',
             },
             {
-                title: 'Advance Balance',
-                name: 'advance_balance',
-                sort: true
+                title: 'Status',
+                name: 'status'
             },
             {
                 title: 'Action',
                 name: '',
             }
         ],
-        suppliers: {},
-        dataLoaded: false,
-        exportUrl: '',
+        locations: {},
         orderBy: 'created_at',
         paginate: 10,
         search: '',
@@ -123,22 +125,22 @@ export default {
     }),
     computed: {
         total() {
-            return this.suppliers.meta.total;
+            return this.locations.meta.total;
         },
     },
     watch: {
         paginate: function ($value) {
-            this.getSuppliers();
+            this.getLocations();
         },
         search: function ($value) {
-            this.getSuppliers();
+            this.getLocations();
         },
     },
     components: {
         'Pagination': LaravelVuePagination
     },
     methods: {
-        getSuppliers(page = 1) {
+        getLocations(page = 1) {
             this.$Progress.start();
             axios.get(this.baseEndPoint
                 + '?page=' + page
@@ -147,7 +149,7 @@ export default {
                 + '&sortOrder=' + this.sortOrder
                 + '&orderBy=' + this.orderBy
             ).then(({ data }) => {
-                this.suppliers = data;
+                this.locations = data;
                 this.dataLoaded = true;
                 this.$Progress.finish();
             }).catch(error => {
@@ -159,22 +161,22 @@ export default {
         sort(col) {
             this.orderBy = col;
             this.sortOrder = this.sortOrder == 'desc' ? 'asc' : 'desc';
-            this.getSuppliers();
+            this.getLocations();
         },
         async destroy(id) {
-
+            console.log(id);
             Swal.fire(Notification.confirmDialogAtts()).then((result) => {
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    const originalSuppliers = this.suppliers.data;
+                    const originalLocations = this.locations.data;
 
-                    this.suppliers.data = this.suppliers.data.filter(supplier => supplier.id != id);
+                    this.locations.data = this.locations.data.filter(location => location.id != id);
                     axios.delete(this.baseEndPoint + '/' + id).then(() => {
 
-                        Notification.success('Supplier Deleted.');
+                        Notification.success('Location Deleted.');
                         this.$Progress.finish();
                     }).catch((error) => {
-                        this.suppliers.data = originalSuppliers;
+                        this.locations.data = originalLocations;
                         this.$Progress.fail();
                         Notification.error('Unexpected error occurred.');
                     });
@@ -184,7 +186,7 @@ export default {
     },
 
     created() {
-        this.getSuppliers();
+        this.getLocations();
     }
 }
 </script>

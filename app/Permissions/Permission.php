@@ -50,4 +50,12 @@ class Permission
     */
     public const CAN_VIEW_SETTINGS = 'view-settings';
     public const CAN_UPDATE_SETTINGS = 'update-settings';
+
+    /*
+    * Business Locations Permissions
+    */
+    public const CAN_VIEW_LOCATIONS = 'view-locations';
+    public const CAN_CREATE_LOCATIONS = 'create-locations';
+    public const CAN_UPDATE_LOCATIONS = 'update-locations';
+    public const CAN_DELETE_LOCATIONS = 'delete-locations';
 }

@@ -45,4 +45,12 @@ class Business extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+    /**
+     * Get the location details
+     */
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
 }

@@ -5,6 +5,9 @@ import Login from '../components/Auth/Login';
 import Dashboard from '../components/Dashboard';
 import Settings from '../components/Business/index';
 
+import Locations from '../components/Locations/index';
+import Location from '../components/Locations/create';
+
 import Categories from '../components/Categories/index';
 
 import Users from '../components/Users/index';
@@ -26,6 +29,11 @@ const Routes = new VueRouter({
         { path: '/dashboard', component: Dashboard, name: 'dashboard', meta: { requiresAuth: true } },
 
         { path: '/settings', component: Settings, name: 'settings.index', meta: { requiresAuth: true, authorize: ['view-settings'] } },
+
+        //Locations/Branches
+        { path: '/locations', component: Locations, name: 'locations.index', meta: { requiresAuth: true, authorize: ['view-locations'] } },
+        { path: '/locations/create', component: Location, name: 'locations.create', meta: { requiresAuth: true, authorize: ['create-locations'] } },
+        { path: '/locations/edit/:location', component: Location, name: 'locations.edit', meta: { requiresAuth: true, authorize: ['update-locations'] } },
 
         //Categories
         { path: '/categories', component: Categories, name: 'categories', authorize: ['create-categories'] },

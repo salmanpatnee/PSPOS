@@ -41,8 +41,13 @@ class RoleAndPermissionSeeder extends Seeder
         // Permission::create(['name' => Rights::CAN_UPDATE_PRODUCTS]);
         // Permission::create(['name' => Rights::CAN_DELETE_PRODUCTS]);
 
-        Permission::create(['name' => Rights::CAN_VIEW_SETTINGS]);
-        Permission::create(['name' => Rights::CAN_UPDATE_SETTINGS]);
+        // Permission::create(['name' => Rights::CAN_VIEW_SETTINGS]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_SETTINGS]);
+
+        Permission::create(['name' => Rights::CAN_VIEW_LOCATIONS]);
+        Permission::create(['name' => Rights::CAN_CREATE_LOCATIONS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_LOCATIONS]);
+        Permission::create(['name' => Rights::CAN_DELETE_LOCATIONS]);
 
 
         // $superAdminRole = Role::create(['name' => 'Super Admin']);
@@ -76,8 +81,12 @@ class RoleAndPermissionSeeder extends Seeder
             // Rights::CAN_CREATE_SUPPLIERS,
             // Rights::CAN_UPDATE_SUPPLIERS,
             // Rights::CAN_DELETE_SUPPLIERS,
-            Rights::CAN_VIEW_SETTINGS,
-            Rights::CAN_UPDATE_SETTINGS,
+            // Rights::CAN_VIEW_SETTINGS,
+            // Rights::CAN_UPDATE_SETTINGS,
+            Rights::CAN_VIEW_LOCATIONS,
+            Rights::CAN_CREATE_LOCATIONS,
+            Rights::CAN_UPDATE_LOCATIONS,
+            Rights::CAN_DELETE_LOCATIONS,
         ]);
 
         // $adminRole->givePermissionTo([

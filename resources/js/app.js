@@ -8,6 +8,13 @@ import Auth from './mixins/Auth';
 
 require('./bootstrap');
 
+Vue.use(VueProgressBar, {
+    color: 'rgb(69, 194, 3)',
+    failedColor: 'red',
+    height: '2px'
+});
+
+
 /* Helpers */
 import Notification from './Helpers/Notification';
 window.Notification = Notification;
@@ -22,11 +29,6 @@ import { Button, HasError, AlertErrors } from 'vform/src/components/bootstrap4';
 import App from './components/App';
 
 
-Vue.use(VueProgressBar, {
-    color: 'rgb(69, 194, 3)',
-    failedColor: 'red',
-    height: '2px'
-});
 
 Vue.component(Button.name, Button)
 Vue.component(HasError.name, HasError)
@@ -61,4 +63,3 @@ store.dispatch('getUser').then(() => {
         store
     });
 });
-

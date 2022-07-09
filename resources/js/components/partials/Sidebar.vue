@@ -172,6 +172,11 @@
                                 Business
                             </router-link>
                         </li>
+                        <li v-if="can('view-locations')">
+                            <router-link to="/locations">
+                                Locations
+                            </router-link>
+                        </li>
                     </ul>
 
                 </li>

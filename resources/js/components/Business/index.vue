@@ -78,7 +78,7 @@
                                                         id="logo" tabindex="3" />
                                                     <HasError :form="form" field="logo" />
                                                     <div id="image_preview" class="mt-2">
-                                                        <img class="elevation-2" :src="getProfileImage()">
+                                                        <!-- <img class="elevation-2" :src="getProfileImage()"> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -279,6 +279,7 @@ export default {
             this.$Progress.start();
             this.form.get(this.baseEndPoint
             ).then(({ data }) => {
+                console.log(data.data);
                 this.form.fill(data.data);
                 this.$Progress.finish();
             }).catch(error => {

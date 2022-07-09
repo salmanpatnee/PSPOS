@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BusinessController;
 use App\Http\Controllers\API\CategoriesController;
 use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\API\CustomersController;
+use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\SuppliersController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Resources\UserResource;
@@ -25,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::apiResource('suppliers', SuppliersController::class);
     Route::apiResource('business', BusinessController::class)->except(['store', 'destroy']);
+    Route::apiResource('locations', LocationController::class);
     Route::apiResource('currencies', CurrencyController::class)->except(['show', 'store', 'update', 'destroy']);
 });
 
