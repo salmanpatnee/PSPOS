@@ -17,7 +17,7 @@ class CreateBusinessesTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('currency_id')->constrained();
-            $table->foreignId('owner_id')->constrained('users', 'id');
+            $table->unsignedBigInteger('owner_id');
             $table->enum('currency_symbol_placement', ['before', 'after'])->default('before')->nullable();
             $table->string('tax_number', 100)->nullable();
             $table->string('logo')->nullable();

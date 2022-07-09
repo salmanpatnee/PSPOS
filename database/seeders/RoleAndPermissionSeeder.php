@@ -16,33 +16,33 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        // Permission::create(['name' => Rights::CAN_VIEW_USERS]);
-        // Permission::create(['name' => Rights::CAN_CREATE_USERS]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_USERS]);
-        // Permission::create(['name' => Rights::CAN_DELETE_USERS]);
+        Permission::create(['name' => Rights::CAN_VIEW_USERS]);
+        Permission::create(['name' => Rights::CAN_CREATE_USERS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_USERS]);
+        Permission::create(['name' => Rights::CAN_DELETE_USERS]);
 
-        // Permission::create(['name' => Rights::CAN_VIEW_CUSTOMERS]);
-        // Permission::create(['name' => Rights::CAN_CREATE_CUSTOMERS]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_CUSTOMERS]);
-        // Permission::create(['name' => Rights::CAN_DELETE_CUSTOMERS]);
+        Permission::create(['name' => Rights::CAN_VIEW_CUSTOMERS]);
+        Permission::create(['name' => Rights::CAN_CREATE_CUSTOMERS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_CUSTOMERS]);
+        Permission::create(['name' => Rights::CAN_DELETE_CUSTOMERS]);
 
-        // Permission::create(['name' => Rights::CAN_VIEW_SUPPLIERS]);
-        // Permission::create(['name' => Rights::CAN_CREATE_SUPPLIERS]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_SUPPLIERS]);
-        // Permission::create(['name' => Rights::CAN_DELETE_SUPPLIERS]);
+        Permission::create(['name' => Rights::CAN_VIEW_SUPPLIERS]);
+        Permission::create(['name' => Rights::CAN_CREATE_SUPPLIERS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_SUPPLIERS]);
+        Permission::create(['name' => Rights::CAN_DELETE_SUPPLIERS]);
 
-        // Permission::create(['name' =>  Rights::CAN_VIEW_CATEGORIES]);
-        // Permission::create(['name' =>  Rights::CAN_CREATE_CATEGORIES]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_CATEGORIES]);
-        // Permission::create(['name' => Rights::CAN_DELETE_CATEGORIES]);
+        Permission::create(['name' =>  Rights::CAN_VIEW_CATEGORIES]);
+        Permission::create(['name' =>  Rights::CAN_CREATE_CATEGORIES]);
+        Permission::create(['name' => Rights::CAN_UPDATE_CATEGORIES]);
+        Permission::create(['name' => Rights::CAN_DELETE_CATEGORIES]);
 
-        // Permission::create(['name' => Rights::CAN_VIEW_PRODUCTS]);
-        // Permission::create(['name' => Rights::CAN_CREATE_PRODUCTS]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_PRODUCTS]);
-        // Permission::create(['name' => Rights::CAN_DELETE_PRODUCTS]);
+        Permission::create(['name' => Rights::CAN_VIEW_PRODUCTS]);
+        Permission::create(['name' => Rights::CAN_CREATE_PRODUCTS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_PRODUCTS]);
+        Permission::create(['name' => Rights::CAN_DELETE_PRODUCTS]);
 
-        // Permission::create(['name' => Rights::CAN_VIEW_SETTINGS]);
-        // Permission::create(['name' => Rights::CAN_UPDATE_SETTINGS]);
+        Permission::create(['name' => Rights::CAN_VIEW_SETTINGS]);
+        Permission::create(['name' => Rights::CAN_UPDATE_SETTINGS]);
 
         Permission::create(['name' => Rights::CAN_VIEW_LOCATIONS]);
         Permission::create(['name' => Rights::CAN_CREATE_LOCATIONS]);
@@ -50,85 +50,85 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => Rights::CAN_DELETE_LOCATIONS]);
 
 
-        // $superAdminRole = Role::create(['name' => 'Super Admin']);
-        // $adminRole = Role::create(['name' => 'Admin']);
-        // $managerRole = Role::create(['name' => 'Manager']);
-        // $cashierRole = Role::create(['name' => 'Cashier']);
+        $superAdminRole = Role::create(['name' => 'Super Admin']);
+        $adminRole = Role::create(['name' => 'Admin']);
+        $managerRole = Role::create(['name' => 'Manager']);
+        $cashierRole = Role::create(['name' => 'Cashier']);
 
-        $superAdminRole = Role::find(1);
+        //$superAdminRole = Role::find(1);
         // $adminRole = Role::find(2);
         // $managerRole = Role::find(2);
 
 
         $superAdminRole->givePermissionTo([
-            // Rights::CAN_VIEW_USERS,
-            // Rights::CAN_CREATE_USERS,
-            // Rights::CAN_UPDATE_USERS,
-            // Rights::CAN_DELETE_USERS,
-            // Rights::CAN_VIEW_CATEGORIES,
-            // Rights::CAN_CREATE_CATEGORIES,
-            // Rights::CAN_UPDATE_CATEGORIES,
-            // Rights::CAN_DELETE_CATEGORIES,
-            // Rights::CAN_VIEW_PRODUCTS,
-            // Rights::CAN_CREATE_PRODUCTS,
-            // Rights::CAN_UPDATE_PRODUCTS,
-            // Rights::CAN_DELETE_PRODUCTS,
-            // Rights::CAN_VIEW_CUSTOMERS,
-            // Rights::CAN_CREATE_CUSTOMERS,
-            // Rights::CAN_UPDATE_CUSTOMERS,
-            // Rights::CAN_DELETE_CUSTOMERS,
-            // Rights::CAN_VIEW_SUPPLIERS,
-            // Rights::CAN_CREATE_SUPPLIERS,
-            // Rights::CAN_UPDATE_SUPPLIERS,
-            // Rights::CAN_DELETE_SUPPLIERS,
-            // Rights::CAN_VIEW_SETTINGS,
-            // Rights::CAN_UPDATE_SETTINGS,
+            Rights::CAN_VIEW_USERS,
+            Rights::CAN_CREATE_USERS,
+            Rights::CAN_UPDATE_USERS,
+            Rights::CAN_DELETE_USERS,
+            Rights::CAN_VIEW_CATEGORIES,
+            Rights::CAN_CREATE_CATEGORIES,
+            Rights::CAN_UPDATE_CATEGORIES,
+            Rights::CAN_DELETE_CATEGORIES,
+            Rights::CAN_VIEW_PRODUCTS,
+            Rights::CAN_CREATE_PRODUCTS,
+            Rights::CAN_UPDATE_PRODUCTS,
+            Rights::CAN_DELETE_PRODUCTS,
+            Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_CREATE_CUSTOMERS,
+            Rights::CAN_UPDATE_CUSTOMERS,
+            Rights::CAN_DELETE_CUSTOMERS,
+            Rights::CAN_VIEW_SUPPLIERS,
+            Rights::CAN_CREATE_SUPPLIERS,
+            Rights::CAN_UPDATE_SUPPLIERS,
+            Rights::CAN_DELETE_SUPPLIERS,
+            Rights::CAN_VIEW_SETTINGS,
+            Rights::CAN_UPDATE_SETTINGS,
             Rights::CAN_VIEW_LOCATIONS,
             Rights::CAN_CREATE_LOCATIONS,
             Rights::CAN_UPDATE_LOCATIONS,
             Rights::CAN_DELETE_LOCATIONS,
         ]);
 
-        // $adminRole->givePermissionTo([
-        //     Rights::CAN_VIEW_USERS,
-        //     Rights::CAN_CREATE_USERS,
-        //     Rights::CAN_UPDATE_USERS,
-        //     Rights::CAN_DELETE_USERS,
-        //     Rights::CAN_VIEW_CATEGORIES,
-        //     Rights::CAN_CREATE_CATEGORIES,
-        //     Rights::CAN_UPDATE_CATEGORIES,
-        //     Rights::CAN_DELETE_CATEGORIES,
-        //     Rights::CAN_VIEW_PRODUCTS,
-        //     Rights::CAN_CREATE_PRODUCTS,
-        //     Rights::CAN_UPDATE_PRODUCTS,
-        //     Rights::CAN_DELETE_PRODUCTS,
-        //     Rights::CAN_VIEW_CUSTOMERS,
-        //     Rights::CAN_CREATE_CUSTOMERS,
-        //     Rights::CAN_UPDATE_CUSTOMERS,
-        //     Rights::CAN_DELETE_CUSTOMERS,
-        //     Rights::CAN_VIEW_SUPPLIERS,
-        //     Rights::CAN_CREATE_SUPPLIERS,
-        //     Rights::CAN_UPDATE_SUPPLIERS,
-        //     Rights::CAN_DELETE_SUPPLIERS,
-        // ]);
+        $adminRole->givePermissionTo([
+            Rights::CAN_VIEW_USERS,
+            Rights::CAN_CREATE_USERS,
+            Rights::CAN_UPDATE_USERS,
+            Rights::CAN_DELETE_USERS,
+            Rights::CAN_VIEW_CATEGORIES,
+            Rights::CAN_CREATE_CATEGORIES,
+            Rights::CAN_UPDATE_CATEGORIES,
+            Rights::CAN_DELETE_CATEGORIES,
+            Rights::CAN_VIEW_PRODUCTS,
+            Rights::CAN_CREATE_PRODUCTS,
+            Rights::CAN_UPDATE_PRODUCTS,
+            Rights::CAN_DELETE_PRODUCTS,
+            Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_CREATE_CUSTOMERS,
+            Rights::CAN_UPDATE_CUSTOMERS,
+            Rights::CAN_DELETE_CUSTOMERS,
+            Rights::CAN_VIEW_SUPPLIERS,
+            Rights::CAN_CREATE_SUPPLIERS,
+            Rights::CAN_UPDATE_SUPPLIERS,
+            Rights::CAN_DELETE_SUPPLIERS,
+        ]);
 
-        // $managerRole->givePermissionTo([
-        //     Rights::CAN_VIEW_CATEGORIES,
-        //     Rights::CAN_CREATE_CATEGORIES,
-        //     Rights::CAN_UPDATE_CATEGORIES,
-        //     Rights::CAN_DELETE_CATEGORIES,
-        //     Rights::CAN_VIEW_PRODUCTS,
-        //     Rights::CAN_CREATE_PRODUCTS,
-        //     Rights::CAN_UPDATE_PRODUCTS,
-        //     Rights::CAN_DELETE_PRODUCTS,
-        //     Rights::CAN_VIEW_CUSTOMERS,
-        //     Rights::CAN_CREATE_CUSTOMERS,
-        //     Rights::CAN_UPDATE_CUSTOMERS,
-        //     Rights::CAN_DELETE_CUSTOMERS,
-        //     Rights::CAN_VIEW_SUPPLIERS,
-        //     Rights::CAN_CREATE_SUPPLIERS,
-        //     Rights::CAN_UPDATE_SUPPLIERS,
-        //     Rights::CAN_DELETE_SUPPLIERS,
-        // ]);
+        $managerRole->givePermissionTo([
+            Rights::CAN_VIEW_CATEGORIES,
+            Rights::CAN_CREATE_CATEGORIES,
+            Rights::CAN_UPDATE_CATEGORIES,
+            Rights::CAN_DELETE_CATEGORIES,
+            Rights::CAN_VIEW_PRODUCTS,
+            Rights::CAN_CREATE_PRODUCTS,
+            Rights::CAN_UPDATE_PRODUCTS,
+            Rights::CAN_DELETE_PRODUCTS,
+            Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_CREATE_CUSTOMERS,
+            Rights::CAN_UPDATE_CUSTOMERS,
+            Rights::CAN_DELETE_CUSTOMERS,
+            Rights::CAN_VIEW_SUPPLIERS,
+            Rights::CAN_CREATE_SUPPLIERS,
+            Rights::CAN_UPDATE_SUPPLIERS,
+            Rights::CAN_DELETE_SUPPLIERS,
+        ]);
     }
 }
