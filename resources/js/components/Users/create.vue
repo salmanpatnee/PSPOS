@@ -68,7 +68,7 @@
                                         <div class="col-sm-8">
                                             <input v-model="form.password_confirmation" name="password_confirmation"
                                                 class="form-control" type="password" placeholder="Confirm Password"
-                                                id="password_confirmation" required>
+                                                id="password_confirmation">
                                             <HasError :form="form" field="password_confirmation" />
                                         </div>
                                     </div>
@@ -103,14 +103,38 @@
                                 </div>
 
                             </div>
-
-                            <div class="form-group text-right">
-                                <button type="reset" class="btn btn-primary w-md m-b-5">Reset</button>
-                                <Button v-if="can('create-users')" :form="form" class="btn btn-success w-md m-b-5">{{
-                                        editMode ? "Update" : "Add"
-                                }}
-                                </Button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label text-d">Access
+                                            Locations</label>
+                                        <div class="col-sm-8">
+                                            <!-- <div class="mb-1">
+                                                <label for="access_all_locations">
+                                                    <input type="checkbox" id="access_all_location" />
+                                                    All Locations
+                                                </label>
+                                            </div> -->
+                                            <select v-model="form.location_id" id="location_id" class="form-control">
+                                                <option v-for="location in locations" :value="location.id"
+                                                    :key="location.id">
+                                                    {{ location.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group text-right">
+                                        <button type="reset" class="btn btn-primary w-md m-b-5">Reset</button>
+                                        <Button v-if="can('create-users')" :form="form"
+                                            class="btn btn-success w-md m-b-5">{{
+                                                    editMode ? "Update" : "Add"
+                                            }}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -126,9 +150,11 @@ export default {
     data: () => ({
         endPoint: '/api/users',
         users: {},
+        locations: {},
         editMode: false,
         form: new Form({
             id: '',
+            location_id: 1,
             name: '',
             email: '',
             password: '',
@@ -158,11 +184,24 @@ export default {
             }).catch((error) => {
                 this.$Progress.fail();
             });
-        }
+        },
+        getLocations() {
+            this.$Progress.start();
+            axios.get('/api/locations'
+            ).then(({ data }) => {
+                this.locations = data.data;
+                this.$Progress.finish();
+            }).catch(error => {
+                this.$Progress.fail();
+                console.log('Error: ' + error);
+            });
+        },
     },
     created() {
+        this.getLocations();
         if (this.$route.params.user) {
             this.form.fill(this.$route.params.user);
+            this.form.location_id = this.$route.params.user.business_location.id;
             this.editMode = true;
         }
     }

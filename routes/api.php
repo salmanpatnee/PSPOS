@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\BusinessController;
 use App\Http\Controllers\API\CategoriesController;
 use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\API\CustomersController;
 use App\Http\Controllers\API\LocationController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SuppliersController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Resources\UserResource;
@@ -18,6 +20,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('categories', CategoriesController::class);
+    Route::apiResource('brands', BrandController::class);
     Route::apiResource('users', UsersController::class);
 
     Route::get('/customers/selectAll', [CustomersController::class, 'selectAll']);
@@ -28,6 +31,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('business', BusinessController::class)->except(['store', 'destroy']);
     Route::apiResource('locations', LocationController::class);
     Route::apiResource('currencies', CurrencyController::class)->except(['show', 'store', 'update', 'destroy']);
+
+    Route::apiResource('products', ProductController::class);
 });
 
 

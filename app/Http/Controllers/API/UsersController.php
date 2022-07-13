@@ -46,6 +46,7 @@ class UsersController extends Controller
     {
         $attributes = request()->validate([
             'name'      => 'required|string|min:3|max:255',
+            'location_id' => 'required|integer|exists:locations,id',
             'email'     => 'required|email|max:255|unique:users,email',
             'password'  => 'required|min:6|max:255|confirmed',
             'status'    => 'required|string',
@@ -82,11 +83,12 @@ class UsersController extends Controller
     public function update(User $user, Request $request)
     {
         $attributes = request()->validate([
-            'name'      => 'required|string|min:3|max:255',
-            'email'     => ['required', 'email', 'min:3', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'password'  => 'sometimes|required|min:6|max:255|confirmed',
-            'status'    => 'required|string',
-            'role'      => 'required|string|exists:roles,name'
+            'name'        => 'required|string|min:3|max:255',
+            'location_id' => 'required|integer|exists:locations,id',
+            'email'       => ['required', 'email', 'min:3', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password'    => 'sometimes|required|min:6|max:255|confirmed',
+            'status'      => 'required|string',
+            'role'        => 'required|string|exists:roles,name'
         ]);
 
         $role = array_pop($attributes);

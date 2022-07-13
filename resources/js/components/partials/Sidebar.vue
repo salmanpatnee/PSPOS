@@ -90,9 +90,11 @@
                                 Categories
                             </router-link>
                         </li>
-
-
-                        <li><a href="units.html">Units</a></li>
+                        <li v-if="can('view-brands')">
+                            <router-link to="/brands">
+                                Brands
+                            </router-link>
+                        </li>
                         <li><a href="add_product.html">Add Product</a></li>
 
 

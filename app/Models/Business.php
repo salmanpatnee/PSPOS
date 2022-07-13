@@ -35,7 +35,7 @@ class Business extends Model
      */
     public function owner()
     {
-        return $this->hasOne(User::class, 'id', 'owner_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     /**

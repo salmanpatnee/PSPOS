@@ -17,8 +17,18 @@ class BusinessSeeder extends Seeder
         $business_settings = [
             "name" => "Pharma Square",
             "currency_id" => 91,
-            "owner_id" => 1,
+            "user_id" => 1,
             "currency_symbol_placement" => "before",
+            "email_settings" => '{
+                "driver": "SMTP",
+                "host": "localhost",
+                "port": 456,
+                "username": "",
+                "password": "",
+                "encryption": "SSL",
+                "from": "",
+                "name": ""
+            }'
         ];
 
         Business::create($business_settings);

@@ -16,8 +16,8 @@ class CreateBusinessesTable extends Migration
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('currency_id')->constrained();
-            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('currency_id')->default(91)->nullable(); // 91 => PKR
+            $table->foreignId('user_id')->constrained();
             $table->enum('currency_symbol_placement', ['before', 'after'])->default('before')->nullable();
             $table->string('tax_number', 100)->nullable();
             $table->string('logo')->nullable();

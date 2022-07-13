@@ -4,17 +4,17 @@
             <li>
                 <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
             </li>
-            <li class="active">Categories</li>
+            <li class="active">Brands</li>
         </ol>
         <div class="row">
             <div class="col-sm-12">
                 <panel>
-                    <template slot="title">Manage Categories</template>
+                    <template slot="title">Manage Brands</template>
 
                     <template slot="header-right">
-                        <button v-if="can('create-categories')" @click="create"
+                        <button v-if="can('create-brands')" @click="create"
                             class="d-inline-block pull-right btn btn-success text-white">Add
-                            Category</button>
+                            Brand</button>
                     </template>
                     <template name="before-content">
 
@@ -36,18 +36,17 @@
                                 @handleSort="sort($event)" />
                             <tbody>
 
-                                <tr v-for="category in categories.data" :key="category.id">
-                                    <td>{{ category.id }}</td>
-                                    <td>{{ category.name }}</td>
+                                <tr v-for="brand in brands.data" :key="brand.id">
+                                    <td>{{ brand.id }}</td>
+                                    <td>{{ brand.name }}</td>
                                     <td>
-                                        <action-button @action="edit(category)" class='btn-sm btn-info'
-                                            permission="update-categories" label="Update">
+                                        <action-button @action="edit(brand)" class='btn-sm btn-info'
+                                            permission="update-brands" label="Update">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </action-button>
-                                        <span v-if="category.id !== 1">
-                                            <delete-button @handleDelete="destroy(category.id)"
-                                                permission="delete-categories" />
-                                        </span>
+
+                                        <delete-button @handleDelete="destroy(brand.id)" permission="delete-brands" />
+
 
                                     </td>
                                 </tr>
@@ -58,17 +57,17 @@
                     <template name="footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <pagination-info :data="categories" />
+                                <pagination-info :data="brands" />
                             </div>
                             <div class="col-md-6 text-right">
-                                <Pagination :data="categories" @pagination-change-page="getCategories" />
+                                <Pagination :data="brands" @pagination-change-page="getBrands" />
                             </div>
                         </div>
                     </template>
                 </panel>
             </div>
         </div>
-        <div class="modal fade modal-success" id="category_modal" role="dialog">
+        <div class="modal fade modal-success" id="brand_modal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form class="form-vertical" @submit.prevent="editMode ? update() : store()"
@@ -76,7 +75,7 @@
                         <div class="modal-header">
                             <a href="#" class="close" data-dismiss="modal">&times;</a>
                             <h4 class="modal-title">
-                                {{ editMode ? "Update" : "Add" }} Category
+                                {{ editMode ? "Update" : "Add" }} Brand
                             </h4>
                         </div>
                         <div class="modal-body">
@@ -84,11 +83,11 @@
                             <div class="panel-body">
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-4 col-form-label">
-                                        Category Name <i class="text-danger">*</i>
+                                        Brand Name <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-6">
                                         <input v-model="form.name" class="form-control" name="name" id="name"
-                                            type="text" placeholder="Category Name" tabindex="1" required>
+                                            type="text" placeholder="Brand Name" tabindex="1">
                                         <HasError :form="form" field="name" />
                                     </div>
                                 </div>
@@ -115,16 +114,16 @@ import LaravelVuePagination from 'laravel-vue-pagination';
 export default {
 
     data: () => ({
-        modal: "#category_modal",
-        baseEndPoint: '/api/categories',
-        categories: {},
+        modal: "#brand_modal",
+        baseEndPoint: '/api/brands',
+        brands: {},
         columns: [
             {
                 title: 'SL',
                 name: ''
             },
             {
-                title: 'Category Name',
+                title: 'Brand Name',
                 name: 'name',
                 sort: true
             },
@@ -146,7 +145,7 @@ export default {
     }),
     computed: {
         total() {
-            return this.categories.meta.total;
+            return this.brands.meta.total;
         }
     },
     components: {
@@ -154,14 +153,14 @@ export default {
     },
     watch: {
         paginate: function ($value) {
-            this.getCategories();
+            this.getBrands();
         },
         search: function ($value) {
-            this.getCategories();
+            this.getBrands();
         },
     },
     methods: {
-        getCategories(page = 1) {
+        getBrands(page = 1) {
             this.$Progress.start();
             this.form.get(this.baseEndPoint
                 + '?page=' + page
@@ -170,7 +169,7 @@ export default {
                 + '&sortOrder=' + this.sortOrder
                 + '&orderBy=' + this.orderBy
             ).then(({ data }) => {
-                this.categories = data;
+                this.brands = data;
                 this.dataLoaded = true;
                 this.$Progress.finish();
             }).catch(error => {
@@ -182,7 +181,7 @@ export default {
         sort(col) {
             this.orderBy = col;
             this.sortOrder = this.sortOrder == 'desc' ? 'asc' : 'desc';
-            this.getCategories();
+            this.getBrands();
         },
         create() {
             this.resetModal();
@@ -190,25 +189,25 @@ export default {
         store() {
             this.$Progress.start();
             this.form.post(this.baseEndPoint).then(() => {
-                Fire.$emit('refreshCategories');
+                Fire.$emit('refreshBrands');
 
                 $(this.modal).modal('hide');
-                Notification.success('Category Added');
+                Notification.success('Brand Added');
                 this.$Progress.finish();
             }).catch((error) => this.$Progress.fail());
 
         },
-        edit(category) {
+        edit(brand) {
             this.resetModal(true);
-            this.form.fill(category);
+            this.form.fill(brand);
         },
         update() {
             this.$Progress.start();
             this.form.put(this.baseEndPoint + '/' + this.form.id).then(() => {
-                Fire.$emit('refreshCategories');
+                Fire.$emit('refreshBrands');
 
                 $(this.modal).modal('hide');
-                Notification.success('Category Updated');
+                Notification.success('Brand Updated');
 
                 this.$Progress.finish();
             }).catch((error) => this.$Progress.fail());
@@ -218,19 +217,19 @@ export default {
             Swal.fire(Notification.confirmDialogAtts()).then((result) => {
                 if (result.isConfirmed) {
                     this.$Progress.start();
-                    const originalCategories = this.categories.data;
+                    const refreshBrands = this.brands.data;
 
-                    this.categories.data = this.categories.data.filter(category => category.id != id);
+                    this.brands.data = this.brands.data.filter(brand => brand.id != id);
 
                     this.form.delete(this.baseEndPoint + '/' + id).then(() => {
 
-                        Notification.success('Category Deleted');
+                        Notification.success('Brand Deleted');
 
-                        Fire.$emit('refreshCategories');
+                        Fire.$emit('refreshBrands');
 
                         this.$Progress.finish();
                     }).catch((error) => {
-                        this.categories.data = originalCategories;
+                        this.brands.data = refreshBrands;
                         this.$Progress.fail();
                         Notification.error('Unexpected error occurred.');
                         console.log('Error', error);
@@ -245,9 +244,9 @@ export default {
         },
     },
     created() {
-        this.getCategories();
-        Fire.$on('refreshCategories', () => {
-            this.getCategories();
+        this.getBrands();
+        Fire.$on('refreshBrands', () => {
+            this.getBrands();
         });
     }
 }

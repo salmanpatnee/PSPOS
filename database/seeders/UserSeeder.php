@@ -18,7 +18,8 @@ class UserSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'salmanpatni92@gmail.com',
             'password' => '123123',
-            'status' => 'Active'
+            'status' => 'Active',
+            'access_all_locations' => 1
         ]);
 
         $superAdmin->assignRole('Super Admin');

@@ -38,6 +38,14 @@ class Permission
     public const CAN_DELETE_CATEGORIES = 'delete-categories';
 
     /*
+    * Brands Permission
+    */
+    public const CAN_VIEW_BRANDS = 'view-brands';
+    public const CAN_CREATE_BRANDS = 'create-brands';
+    public const CAN_UPDATE_BRANDS = 'update-brands';
+    public const CAN_DELETE_BRANDS = 'delete-brands';
+
+    /*
     * Product Permission
     */
     public const CAN_VIEW_PRODUCTS = 'view-products';

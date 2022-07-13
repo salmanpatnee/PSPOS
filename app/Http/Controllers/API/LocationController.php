@@ -46,7 +46,7 @@ class LocationController extends Controller
             'city'        => 'nullable|string',
             'mobile'      => 'required|string|min:11|unique:locations,mobile',
             'email'       => 'required|email|unique:locations,email',
-            'status'   => 'nullable|string',
+            'status'      => 'nullable|string',
         ]);
 
         $attributes['business_id'] = 1;

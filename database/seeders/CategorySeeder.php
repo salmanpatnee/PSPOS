@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Cream', 'Drop', 'Gel', 'General', 'Herbal', 'Injection', 'Lotion', 'Ointment', 'Sachet', 'Surgical', 'Solution', 'Spray', 'Syrup', 'Tablet'];
+        $categories = ['Uncategorized', 'Cream', 'Drop', 'Gel', 'General', 'Herbal', 'Injection', 'Lotion', 'Ointment', 'Sachet', 'Surgical', 'Solution', 'Spray', 'Syrup', 'Tablet'];
 
         foreach ($categories as $category) {
             Category::create([

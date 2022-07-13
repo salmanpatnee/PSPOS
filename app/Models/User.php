@@ -67,6 +67,14 @@ class User extends Authenticatable
         return $this->belongsTo(Business::class);
     }
 
+    /**
+     * Get the location that assigned to the user.
+     */
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'id', 'location_id');
+    }
+
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";

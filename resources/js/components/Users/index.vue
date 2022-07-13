@@ -40,14 +40,16 @@
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.role }}</td>
+                                    <td>{{ user.location_name }}</td>
                                     <td>{{ user.status }}</td>
                                     <td>{{ user.joining_date }}</td>
                                     <td>{{ user.last_login }}</td>
                                     <td>
-                                        <edit-button routeName="users.edit" :data="{ user: user }"
-                                            permission="update-users" />
-
-                                        <delete-button @handleDelete="destroy(user.id)" permission="delete-users" />
+                                        <span v-if="user.id !== 1">
+                                            <edit-button routeName="users.edit" :data="{ user: user }"
+                                                permission="update-users" />
+                                            <delete-button @handleDelete="destroy(user.id)" permission="delete-users" />
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -96,6 +98,9 @@ export default {
             },
             {
                 title: 'Role',
+            },
+            {
+                title: 'Location',
             },
             {
                 title: 'Status',

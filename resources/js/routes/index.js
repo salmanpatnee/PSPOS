@@ -9,6 +9,7 @@ import Locations from '../components/Locations/index';
 import Location from '../components/Locations/create';
 
 import Categories from '../components/Categories/index';
+import Brands from '../components/Brands/index';
 
 import Users from '../components/Users/index';
 import User from '../components/Users/create';
@@ -36,7 +37,11 @@ const Routes = new VueRouter({
         { path: '/locations/edit/:location', component: Location, name: 'locations.edit', meta: { requiresAuth: true, authorize: ['update-locations'] } },
 
         //Categories
-        { path: '/categories', component: Categories, name: 'categories', authorize: ['create-categories'] },
+        { path: '/categories', component: Categories, name: 'categories', meta: { requiresAuth: true, authorize: ['view-categories'] } },
+
+        //Brands
+        { path: '/brands', component: Brands, name: 'brands', meta: { requiresAuth: true, authorize: ['view-brands'] } },
+
 
         //Users
         { path: '/users', component: Users, name: 'users.index', meta: { requiresAuth: true, authorize: ['view-users'] } },

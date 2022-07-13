@@ -279,8 +279,7 @@ export default {
             this.$Progress.start();
             this.form.get(this.baseEndPoint
             ).then(({ data }) => {
-                console.log(data.data);
-                this.form.fill(data.data);
+                this.form.fill(data.data[0]);
                 this.$Progress.finish();
             }).catch(error => {
                 this.$Progress.fail();

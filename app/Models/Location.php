@@ -25,14 +25,20 @@ class Location extends Model
         $this->attributes['status'] = $value == 'Active' ? 1 : 0;
     }
 
-
-
     /**
      * Get the business details
      */
     public function business()
     {
         return $this->hasOne(Business::class, 'id', 'business_id');
+    }
+
+    /**
+     * Get the business details
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 
     public function scopeSearch($query, $term)
