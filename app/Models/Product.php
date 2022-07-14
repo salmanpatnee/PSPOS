@@ -25,6 +25,11 @@ class Product extends Model
         'created_by'
     ];
 
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = $value == 'Active' ? 1 : 0;
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

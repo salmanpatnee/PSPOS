@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         $superAdmin = User::factory()->create([
             'name' => 'Super Admin',
+            'location_id' => null,
             'email' => 'salmanpatni92@gmail.com',
             'password' => '123123',
             'status' => 'Active',

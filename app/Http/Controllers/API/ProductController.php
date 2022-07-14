@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
@@ -35,24 +38,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $attributes = request()->validate([
-            'name'            => 'required|string|min:3|unique:products,name',
-            'category_id'     => 'required|integer|exists:categories,id',
-            'brand_id'        => 'required|integer|exists:brands,id',
-            'product_id'      => 'required|string|min:3|unique:products,product_id',
-            'image'           => 'nullable|string',
-            'description'     => 'nullable|string',
-            'price'           => 'nullable|numeric',
-            'vat'             => 'nullable|numeric',
-            'stock_threshold' => 'nullable|integer',
-            'status'          => 'nullable|string',
-        ]);
+        $request->merge(['created_by' => auth()->id()]);
 
-        $attributes['created_by'] = auth()->id();
+        $this->uploadImage($request);
 
-        $product = Product::create($attributes);
+        $product = Product::create($request->all());
 
         return new ProductResource($product);
     }
@@ -75,9 +67,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Product $product, ProductRequest $request)
     {
-        //
+        $this->uploadImage($request);
+
+        $product->update($request->all());
+
+        return new productResource($product);
     }
 
     /**
@@ -91,5 +87,29 @@ class ProductController extends Controller
         $product->delete();
 
         return response([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function selectAll()
+    {
+        return Product::pluck('id');
+    }
+
+    public function export($products)
+    {
+        $products = explode(',', $products);
+
+        return (new ProductExport($products));
+    }
+
+    protected function uploadImage(Request $request)
+    {
+
+        if ($request->image) {
+
+            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            \Image::make($request->image)->save(public_path('images/products/') . $name);
+
+            $request->merge(['image' => $name]);
+        }
     }
 }

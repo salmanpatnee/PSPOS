@@ -32,6 +32,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('locations', LocationController::class);
     Route::apiResource('currencies', CurrencyController::class)->except(['show', 'store', 'update', 'destroy']);
 
+    Route::get('/products/selectAll', [ProductController::class, 'selectAll']);
+    Route::get('/products/export/{products}', [ProductController::class, 'export']);
     Route::apiResource('products', ProductController::class);
 });
 

@@ -20,6 +20,8 @@ import Customer from '../components/Customers/create';
 import Suppliers from '../components/Suppliers/index';
 import Supplier from '../components/Suppliers/create';
 
+import Products from '../components/Products/index';
+import Product from '../components/Products/create';
 
 Vue.use(VueRouter);
 
@@ -57,6 +59,11 @@ const Routes = new VueRouter({
         { path: '/suppliers', component: Suppliers, name: 'suppliers.index', meta: { requiresAuth: true, authorize: ['view-suppliers'] } },
         { path: '/suppliers/create', component: Supplier, name: 'suppliers.create', meta: { requiresAuth: true, authorize: ['create-suppliers'] } },
         { path: '/suppliers/edit/:supplier', component: Supplier, name: 'suppliers.edit', meta: { requiresAuth: true, authorize: ['update-suppliers'] } },
+
+        //Products
+        { path: '/products', component: Products, name: 'products.index', meta: { requiresAuth: true, authorize: ['view-products'] } },
+        { path: '/products/create', component: Product, name: 'products.create', meta: { requiresAuth: true, authorize: ['create-products'] } },
+        { path: '/products/edit/:product', component: Product, name: 'products.edit', meta: { requiresAuth: true, authorize: ['update-products'] } },
     ],
     mode: 'history'
 });

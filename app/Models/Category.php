@@ -11,6 +11,16 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        Category::deleting(function ($category) {
+            $productIds = $category->products->pluck('id');
+            Product::whereIn('id', $productIds)->update(['category_id' => 1]);
+        });
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

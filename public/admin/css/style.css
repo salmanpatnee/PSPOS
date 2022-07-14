@@ -1107,6 +1107,28 @@ html {
     padding: 0;
 }
 
+.branch {
+    margin-top: .5em;
+    color: #fff;
+}
+
+.dropdown-menu.action-btns {
+    font-size: 13px;
+}
+
+.action-btns i {
+    padding-right: .3em;
+    display: inline-block;
+}
+
+.product-thumbnail {
+    max-width: 60px;
+}
+
+table#products_table td {
+    vertical-align: middle;
+}
+
 /* Helper Classes */
 .level {
     display: flex;
@@ -1116,6 +1138,10 @@ html {
 
 .d-inline-block {
     display: inline-block;
+}
+
+.mt-1 {
+    margin-top: 1em;
 }
 
 .mt-2 {

@@ -11,7 +11,8 @@
 
                 <div class="info">
                     <p>{{ user.data.name }}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Admin</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> {{ user.data.role }}</a>
+                    <div class="branch" v-show="user.data.location_name">({{ user.data.location_name }})</div>
                 </div>
 
             </div>
@@ -95,36 +96,16 @@
                                 Brands
                             </router-link>
                         </li>
-                        <li><a href="add_product.html">Add Product</a></li>
-
-
-                        <li class="">
-                            <a href="http://erp.test\/bulk_products">
-
-                                Add Product (CSV)
-                            </a>
-
+                        <li v-if="can('create-products')">
+                            <router-link to="/products/create">
+                                Add Product
+                            </router-link>
                         </li>
-
-
-
-                        <li class="">
-                            <a href="http://erp.test\/product_list">
-
-                                Manage Product
-                            </a>
-
+                        <li v-if="can('view-products')">
+                            <router-link to="/products">
+                                Products
+                            </router-link>
                         </li>
-
-                        <li class="">
-                            <a href="http://erp.test\/barcode_management">
-
-                                Barcode Management
-
-                            </a>
-
-                        </li>
-
 
 
                     </ul>
