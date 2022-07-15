@@ -26,11 +26,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="product_id" class="col-sm-4 col-form-label text-d">Product ID <span
+                                        <label for="product_id" class="col-sm-4 col-form-label text-d">Barcode <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.product_id" class="form-control" type="text"
-                                                placeholder="Product ID" id="product_id" autofocus>
+                                                placeholder="Barcode" id="product_id" autofocus>
                                             <HasError :form="form" field="product_id" />
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@ export default {
             product_id: '',
             category_id: 1,
             brand_id: '',
-            image: null,
+            image_src: null,
             description: '',
             price: '',
             vat: '',
@@ -239,7 +239,7 @@ export default {
                 let reader = new FileReader()
 
                 reader.onloadend = (file) => {
-                    this.form.image = reader.result;
+                    this.form.image_src = reader.result;
                 }
 
                 reader.readAsDataURL(file);
@@ -248,20 +248,26 @@ export default {
             }
         },
         getProfileImage() {
-            if (!this.form.image) return;
-            return (this.form.image.length > 200)
-                ? this.form.image
-                : '/images/products/' + this.form.image;
+            if (!this.form.image_src) return;
+            return (this.form.image_src.length > 200)
+                ? this.form.image_src
+                : this.form.image_src;
         },
     },
     created() {
         this.getCategories();
         this.getBrands();
-        if (this.$route.params.product) {
-            console.log(this.$route.params.product);
+
+        if (this.$route.params.action === 'duplicate') {
             this.form.fill(this.$route.params.product);
-            this.editMode = true;
+            this.editMode = false;
+        } else {
+            if (this.$route.params.product) {
+                this.form.fill(this.$route.params.product);
+                this.editMode = true;
+            }
         }
+
     }
 }
 </script>

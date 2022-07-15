@@ -78,7 +78,7 @@
                                                         id="logo" tabindex="3" />
                                                     <HasError :form="form" field="logo" />
                                                     <div id="image_preview" class="mt-2">
-                                                        <!-- <img class="elevation-2" :src="getProfileImage()"> -->
+                                                        <img class="elevation-2" :src="getProfileImage()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -287,6 +287,7 @@ export default {
             });
         },
         getProfileImage() {
+            if (!this.form.logo) return;
             return (this.form.logo.length > 200)
                 ? this.form.logo
                 : 'images/' + this.form.logo;

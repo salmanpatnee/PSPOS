@@ -7,10 +7,13 @@ use App\Http\Resources\BusinessCollection;
 use App\Http\Resources\BusinessResource;
 use App\Models\Business;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use App\Traits\UploadImageTrait;
+
 
 class BusinessController extends Controller
 {
+    use UploadImageTrait;
+
     public function __construct()
     {
         $this->authorizeResource(Business::class, 'business');
@@ -44,14 +47,9 @@ class BusinessController extends Controller
     {
         $attributes = $this->validateAttributes();
 
-        $attributes['owner_id'] = 1;
+        if ($attributes['logo'] != $business->logo) {
 
-        if ($request->logo && $request->logo != $business->logo) {
-
-            $name = time() . '.' . explode('/', explode(':', substr($request->logo, 0, strpos($request->logo, ';')))[1])[1];
-            \Image::make($request->logo)->save(public_path('images/') . $name);
-
-            $attributes['logo'] = $name;
+            $attributes['logo'] = $this->uploadTheImage($request, "logo", "images/");
         }
 
         $business->update($attributes);

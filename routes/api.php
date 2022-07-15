@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/products/selectAll', [ProductController::class, 'selectAll']);
     Route::get('/products/export/{products}', [ProductController::class, 'export']);
+    Route::put('/products/barcode/{product}', [ProductController::class, 'updateBarcode']);
     Route::apiResource('products', ProductController::class);
 });
 

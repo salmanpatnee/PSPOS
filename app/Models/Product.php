@@ -22,12 +22,25 @@ class Product extends Model
         'units_sold',
         'stock_threshold',
         'status',
-        'created_by'
+        'created_by',
+        'updated_by'
     ];
 
     public function setStatusAttribute($value)
     {
         $this->attributes['status'] = $value == 'Active' ? 1 : 0;
+    }
+
+    public function getBrandNameAttribute()
+    {
+        return isset($this->brand) ? $this->brand->name : '';
+    }
+
+    public function getImagePathAttribute()
+    {
+        return !is_null($this->image)
+            ? asset('images/products/' . $this->image)
+            : null;
     }
 
     public function category()
@@ -37,13 +50,14 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
+
 
     public function scopeSearch($query, $term)
     {

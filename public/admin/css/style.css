@@ -1,15 +1,3 @@
-html,
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-    font-family: 'Open Sans';
-}
-
 html {
     font-size: 1rem;
 }
@@ -1129,7 +1117,19 @@ table#products_table td {
     vertical-align: middle;
 }
 
+.product-view .img-thumbnail {
+    width: 120px;
+}
+
 /* Helper Classes */
+.d-flex {
+    display: flex;
+}
+
+.flex-y-center {
+    align-items: center;
+}
+
 .level {
     display: flex;
     align-items: center;

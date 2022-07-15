@@ -30,6 +30,13 @@ class Business extends Model
         'email_settings' => 'array',
     ];
 
+    public function getLogoPathAttribute()
+    {
+        return !is_null($this->logo)
+            ? asset('images/' . $this->logo)
+            : null;
+    }
+
     /**
      * Get the owner details
      */

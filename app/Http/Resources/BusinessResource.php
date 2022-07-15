@@ -21,7 +21,7 @@ class BusinessResource extends JsonResource
             'currency_symbol_placement' => $this->currency_symbol_placement,
             'owner' => $this->owner->name,
             'tax_number' => $this->when(!is_null($this->tax_number), $this->tax_number),
-            'logo' => $this->when(!is_null($this->logo), $this->logo),
+            'logo' => $this->logoPath,
             'email_settings' => $this->email_settings
         ];
     }

@@ -81,11 +81,11 @@
                                     :class="{ 'info': isRowSelected(product.id) }">
                                     <td><input type="checkbox" :value="product.id" v-model="checked"></td>
                                     <td>{{ product.product_id }}</td>
-                                    <td><img v-show="product.image" class="img-thumbnail product-thumbnail"
-                                            :src="'/images/products/' + product.image" /></td>
+                                    <td><img v-show="product.image_src" class="img-thumbnail product-thumbnail"
+                                            :src="product.image_src" /></td>
                                     <td>{{ product.name }}</td>
                                     <td>{{ product.category }}</td>
-                                    <td>{{ product.brand }}</td>
+                                    <td><span v-if="product.brand">{{ product.brand }}</span></td>
                                     <td>{{ product.price }}</td>
                                     <td>{{ product.status }}</td>
                                     <td>
@@ -96,26 +96,43 @@
                                                 Actions <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu action-btns">
-                                                <li><a href=""><i class="fa fa-eye" aria-hidden="true"></i> View</a>
+                                                <li v-if="can('view-products')">
+                                                    <router-link
+                                                        :to="{ name: 'products.show', params: { product: product.id } }">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i> View
+                                                    </router-link>
                                                 </li>
-                                                <li>
+                                                <li v-if="can('update-products')">
                                                     <router-link
                                                         :to="{ name: 'products.edit', params: { product: product } }"><i
                                                             class="fa fa-pencil" aria-hidden="true"></i> Edit
                                                     </router-link>
                                                 </li>
-                                                <li><a @click.prevent="destroy(product.id)" href="">
+                                                <li v-if="can('delete-products')">
+                                                    <a @click.prevent="destroy(product.id)" href="">
                                                         <i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
                                                 </li>
                                                 <li role="separator" class="divider"></li>
-                                                <li><a href=""><i class="fa fa-barcode" aria-hidden="true"></i>
+                                                <li><a @click.prevent="showBarcodeModal(product.id)" href=""><i
+                                                            class="fa fa-barcode" aria-hidden="true"></i>
                                                         Barcode</a></li>
-                                                <li><a href=""><i class="fa fa-database" aria-hidden="true"></i> Stock
+                                                <li><a @click.prevent="showStockModal(product.id)" href=""><i
+                                                            class="fa fa-database" aria-hidden="true"></i> Stock
                                                         Management</a></li>
-                                                <li><a href=""><i class="fa fa-history" aria-hidden="true"></i> Stock
-                                                        History</a></li>
-                                                <li><a href=""><i class="fa fa-clone" aria-hidden="true"></i>
-                                                        Duplicate</a></li>
+                                                <li>
+                                                    <router-link
+                                                        :to="{ name: 'products.stock.show', params: { product: product.id } }">
+                                                        <i class="fa fa-history" aria-hidden="true"></i> Stock
+                                                        History
+                                                    </router-link>
+                                                </li>
+                                                <li>
+                                                    <router-link
+                                                        :to="{ name: 'products.create', params: { product: product, action: 'duplicate' } }">
+                                                        <i class="fa fa-clone" aria-hidden="true"></i>
+                                                        Duplicate
+                                                    </router-link>
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -143,7 +160,112 @@
 
             </div>
         </div>
+
+        <!-- Barcode Modal -->
+        <div class="modal fade modal-success" id="barcode_modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-vertical" @submit.prevent="updateBarcode()"
+                        @keydown="barcodeForm.onKeydown($event)">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h4 class="modal-title">
+                                Update Barcode
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="panel-body">
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">
+                                        Barcode/Product ID <i class="text-danger">*</i>
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input v-model="barcodeForm.product_id" class="form-control" id="barode"
+                                            type="text" placeholder="Barcode/Product ID" required>
+                                        <HasError :form="barcodeForm" field="product_id" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-danger" tabindex="5" data-dismiss="modal">Close</a>
+                            <button type="submit" tabindex="6" class="btn btn-success" :disabled="barcodeForm.busy">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- Stock Management Modal -->
+        <div class="modal fade modal-success" id="stock_modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-vertical" @submit.prevent="updateStock()" @keydown="stockForm.onKeydown($event)">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h4 class="modal-title">
+                                Add/Edit Stock
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="panel-body">
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">
+                                        Product
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input v-model="stockForm.name" class="form-control" id="name" type="text"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">
+                                        Current Stock
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input v-model="stockForm.currentStock" class="form-control" id="currentStock"
+                                            type="text" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">
+                                        Stock after Adjustment
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input v-model="stockForm.adjustedStock" class="form-control" id="adjustedStock"
+                                            type="text" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">
+                                        Stock
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input v-model="stockForm.stock" class="form-control" id="stock" type="number"
+                                            autofocus>
+                                        <HasError :form="stockForm" field="stock" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-danger" tabindex="5" data-dismiss="modal">Close</a>
+                            <button type="submit" tabindex="6" class="btn btn-success" :disabled="stockForm.busy">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
+
+
+
 </template>
 
 <script>
@@ -151,17 +273,26 @@ import LaravelVuePagination from 'laravel-vue-pagination';
 export default {
 
     data: () => ({
+        barcodeForm: new Form({
+            product_id: ''
+        }),
         baseEndPoint: '/api/products',
         checked: [],
         checkAll: false,
         dataLoaded: false,
         exportUrl: '',
+        id: '',
+        modal: "#barcode_modal",
         orderBy: 'created_at',
         paginate: 10,
         products: {},
         search: '',
         isAllSelected: false,
         sortOrder: 'desc',
+        stockModal: "#stock_modal",
+        stockForm: new Form({
+            stock: ''
+        }),
     }),
     computed: {
         total() {
@@ -252,6 +383,28 @@ export default {
                 }
             })
         },
+        showBarcodeModal(id) {
+            this.barcodeForm.reset();
+            this.id = id;
+            $(this.modal).modal('show');
+        },
+        showStockModal(id) {
+            this.stockForm.reset();
+            this.id = id;
+            $(this.stockModal).modal('show');
+        },
+        updateBarcode() {
+            this.$Progress.start();
+            this.barcodeForm.put('/api/products/barcode/' + this.barcodeForm.id).then(() => {
+                this.getProducts();
+                $(this.modal).modal('hide');
+                Notification.success('Barcode Updated');
+                this.$Progress.finish();
+            }).catch((error) => this.$Progress.fail());
+        },
+        updateStock() {
+            console.log('updated');
+        }
     },
 
     created() {

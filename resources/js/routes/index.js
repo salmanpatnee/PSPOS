@@ -22,6 +22,8 @@ import Supplier from '../components/Suppliers/create';
 
 import Products from '../components/Products/index';
 import Product from '../components/Products/create';
+import ProductView from '../components/Products/show';
+import ProductStockHistory from '../components/Products/stock-history';
 
 Vue.use(VueRouter);
 
@@ -62,8 +64,10 @@ const Routes = new VueRouter({
 
         //Products
         { path: '/products', component: Products, name: 'products.index', meta: { requiresAuth: true, authorize: ['view-products'] } },
-        { path: '/products/create', component: Product, name: 'products.create', meta: { requiresAuth: true, authorize: ['create-products'] } },
+        { path: '/products/create/:product?/action/:action', component: Product, name: 'products.create', meta: { requiresAuth: true, authorize: ['create-products'] } },
+        { path: '/products/product/:product', component: ProductView, name: 'products.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
         { path: '/products/edit/:product', component: Product, name: 'products.edit', meta: { requiresAuth: true, authorize: ['update-products'] } },
+        { path: '/products/stock-history/:product', component: ProductStockHistory, name: 'products.stock.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
     ],
     mode: 'history'
 });

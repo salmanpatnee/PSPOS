@@ -8,11 +8,14 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\UploadImageTrait;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+    use UploadImageTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -40,11 +43,12 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $request->merge(['created_by' => auth()->id()]);
+        $attributes = $request->all();
 
-        $this->uploadImage($request);
+        $attributes['created_by']   = auth()->id();
+        $attributes['image']        = $this->uploadTheImage($request, "image", "images/products/");
 
-        $product = Product::create($request->all());
+        $product = Product::create($attributes);
 
         return new ProductResource($product);
     }
@@ -69,9 +73,16 @@ class ProductController extends Controller
      */
     public function update(Product $product, ProductRequest $request)
     {
-        $this->uploadImage($request);
+        $attributes = $request->all();
 
-        $product->update($request->all());
+        if ($request->image != $product->image) {
+
+            $attributes['image'] = $this->uploadTheImage($request, "image", "images/products/");
+        }
+
+        $attributes['updated_by']   = auth()->id();
+
+        $product->update($attributes);
 
         return new productResource($product);
     }
@@ -101,15 +112,14 @@ class ProductController extends Controller
         return (new ProductExport($products));
     }
 
-    protected function uploadImage(Request $request)
+    public function updateBarcode(Product $product, Request $request)
     {
+        $attributes = $request->validate([
+            'product_id' => ['required', 'string', 'min:3', 'max:100', Rule::unique('products')->ignore($product->id)],
+        ]);
 
-        if ($request->image) {
+        $product->update($attributes);
 
-            $name = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            \Image::make($request->image)->save(public_path('images/products/') . $name);
-
-            $request->merge(['image' => $name]);
-        }
+        return new productResource($product);
     }
 }

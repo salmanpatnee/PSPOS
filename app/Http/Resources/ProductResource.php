@@ -15,21 +15,21 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'product_id' => $this->product_id,
-            'category' => $this->category->name,
-            'category_id' => $this->category_id,
-            'brand' => $this->brand->name,
-            'brand_id' => $this->brand_id,
-            'name' => $this->name,
-            'image' => $this->when(!is_null($this->image), $this->image),
-            'description' => $this->when(!is_null($this->description), $this->description),
-            'price' => $this->when(!is_null($this->price), $this->price),
-            'vat' => $this->when(!is_null($this->vat), $this->vat),
-            'units_sold' => $this->units_sold,
-            'stock_threshold' => $this->stock_threshold,
-            'status' => $this->status ? 'Active' : 'Inactive',
-            'added_by' => $this->creator->name,
+            'id'                => $this->id,
+            'product_id'        => $this->product_id,
+            'category'          => $this->category->name,
+            'category_id'       => $this->category_id,
+            'brand'             => $this->brandName,
+            'brand_id'          => $this->brand_id,
+            'name'              => $this->name,
+            'image_src'             => $this->imagePath,
+            'description'       => $this->when(!is_null($this->description), $this->description),
+            'price'             => $this->when(!is_null($this->price), $this->price),
+            'vat'               => $this->when(!is_null($this->vat), $this->vat),
+            'units_sold'        => $this->units_sold,
+            'stock_threshold'   => $this->stock_threshold,
+            'status'            => $this->status ? 'Active' : 'Inactive',
+            'added_by'          => $this->creator->name,
         ];
     }
 }
