@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CustomerResource;
+use App\Http\Requests\LocationRequest;
 use App\Http\Resources\LocationResource;
 use App\Models\Location;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class LocationController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Location::class, 'location');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +22,10 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $paginate      = request('paginate', 10);
-        $term          = request('search', '');
-        $sortOrder     = request('sortOrder', 'desc');
-        $orderBy       = request('orderBy', 'created_at');
+        $paginate   = request('paginate', 10);
+        $term       = request('search', '');
+        $sortOrder  = request('sortOrder', 'desc');
+        $orderBy    = request('orderBy', 'created_at');
 
         $locations = Location::search($term)
             ->orderBy($orderBy, $sortOrder)
@@ -37,17 +40,9 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LocationRequest $request)
     {
-        $attributes = request()->validate([
-            'name'        => 'required|string|min:3|unique:locations,name',
-            'location_id' => 'required|string|min:3|unique:locations,location_id',
-            'landmark'    => 'nullable|string',
-            'city'        => 'nullable|string',
-            'mobile'      => 'required|string|min:11|unique:locations,mobile',
-            'email'       => 'required|email|unique:locations,email',
-            'status'      => 'nullable|string',
-        ]);
+        $attributes = $request->all();
 
         $attributes['business_id'] = 1;
 
@@ -74,17 +69,9 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Location $location, Request $request)
+    public function update(Location $location, LocationRequest $request)
     {
-        $attributes = request()->validate([
-            'name'        => ['required', 'string', 'min:3', Rule::unique('locations')->ignore($location->id)],
-            'location_id' => ['required', 'string', 'min:3', Rule::unique('locations')->ignore($location->id)],
-            'landmark'    => 'nullable|string',
-            'city'        => 'nullable|string',
-            'mobile'      => ['required', 'string', 'min:11', Rule::unique('locations')->ignore($location->id)],
-            'email'       => ['required', 'email', Rule::unique('locations')->ignore($location->id)],
-            'status'   => 'nullable|string',
-        ]);
+        $attributes = $request->all();
 
         $location = Location::find($location->id);
         $location->update($attributes);

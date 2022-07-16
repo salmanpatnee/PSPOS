@@ -157,7 +157,7 @@
                         </li>
                         <li v-if="can('view-locations')">
                             <router-link to="/locations">
-                                Locations
+                                Location / Branches
                             </router-link>
                         </li>
                     </ul>

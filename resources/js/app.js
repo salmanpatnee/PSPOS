@@ -5,6 +5,7 @@ import { Form } from 'vform';
 import Moment from 'moment';
 import VueProgressBar from 'vue-progressbar'
 import Auth from './mixins/Auth';
+import Settings from './mixins/Settings';
 
 require('./bootstrap');
 
@@ -18,6 +19,7 @@ Vue.use(VueProgressBar, {
 /* Helpers */
 import Notification from './Helpers/Notification';
 window.Notification = Notification;
+
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -52,6 +54,7 @@ window.Form = Form;
 window.Fire = new Vue();
 
 Vue.mixin(Auth);
+Vue.mixin(Settings);
 
 store.dispatch('getUser').then(() => {
     const app = new Vue({

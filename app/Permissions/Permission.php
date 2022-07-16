@@ -14,7 +14,7 @@ class Permission
     public const CAN_DELETE_CUSTOMERS = 'delete-customers';
 
     /*
-    * Customers Permission
+    * Suppliers Permission
     */
     public const CAN_VIEW_SUPPLIERS   = 'view-suppliers';
     public const CAN_CREATE_SUPPLIERS = 'create-suppliers';

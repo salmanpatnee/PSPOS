@@ -11,6 +11,7 @@ use App\Http\Controllers\API\CustomersController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SuppliersController;
+use App\Http\Controllers\API\TaxController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Resources\UserResource;
 
@@ -21,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('categories', CategoriesController::class);
     Route::apiResource('brands', BrandController::class);
+    Route::apiResource('taxes', TaxController::class);
     Route::apiResource('users', UsersController::class);
 
     Route::get('/customers/selectAll', [CustomersController::class, 'selectAll']);

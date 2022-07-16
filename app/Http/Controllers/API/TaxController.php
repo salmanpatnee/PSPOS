@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CurrencyResource;
-use App\Models\Currency;
+use App\Http\Resources\TaxResource;
+use App\Models\Tax;
 use Illuminate\Http\Request;
 
-class CurrencyController extends Controller
+class TaxController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,8 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        $currencies = cache()->remember('currencies', 60 * 60 * 24, function () {
-            return Currency::all();
-        });
-
-        return CurrencyResource::collection($currencies);
+        $taxes = Tax::paginate(20);
+        return TaxResource::collection($taxes);
     }
 
     /**
@@ -40,9 +37,9 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Currency $currency)
+    public function show($id)
     {
-        return new CurrencyResource($currency);
+        //
     }
 
     /**

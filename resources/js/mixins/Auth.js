@@ -7,6 +7,6 @@ export default {
         can: (key) => {
             const permissions = store.getters.user.data.permissions;
             return permissions.includes(key)
-        }
+        },
     },
 };

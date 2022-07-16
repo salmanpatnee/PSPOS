@@ -2767,7 +2767,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2829,9 +2828,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Error: ' + error);
       });
     },
-    getProfileImage: function getProfileImage() {
+    getImage: function getImage() {
       if (!this.form.logo) return;
-      return this.form.logo.length > 200 ? this.form.logo : 'images/' + this.form.logo;
+      return this.form.logo.length > 200 ? this.form.logo : this.form.logo;
     },
     uploadFile: function uploadFile(e) {
       var _this3 = this;
@@ -4043,6 +4042,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {}
 });
@@ -4061,7 +4061,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_masked_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-masked-input */ "./node_modules/vue-masked-input/dist/maskedInput.js");
-//
 //
 //
 //
@@ -6935,7 +6934,7 @@ var Notification = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes/index */ "./resources/js/routes/index.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
@@ -6944,12 +6943,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _mixins_Auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mixins/Auth */ "./resources/js/mixins/Auth.js");
-/* harmony import */ var _Helpers_Notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Helpers/Notification */ "./resources/js/Helpers/Notification.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
+/* harmony import */ var _mixins_Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mixins/Settings */ "./resources/js/mixins/Settings.js");
+/* harmony import */ var _Helpers_Notification__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Helpers/Notification */ "./resources/js/Helpers/Notification.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vform/src/components/bootstrap4 */ "./node_modules/vform/src/components/bootstrap4/index.js");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
+
 
 
 
@@ -6960,7 +6961,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].use((vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default()), {
   color: 'rgb(69, 194, 3)',
   failedColor: 'red',
   height: '2px'
@@ -6968,36 +6969,37 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].use((vue_progressbar__WEBPACK_IMPORT
 /* Helpers */
 
 
-window.Notification = _Helpers_Notification__WEBPACK_IMPORTED_MODULE_7__["default"];
+window.Notification = _Helpers_Notification__WEBPACK_IMPORTED_MODULE_8__["default"];
 
-(axios__WEBPACK_IMPORTED_MODULE_8___default().defaults.withCredentials) = true;
-(axios__WEBPACK_IMPORTED_MODULE_8___default().defaults.baseURL) = process.env.APP_URL;
+(axios__WEBPACK_IMPORTED_MODULE_9___default().defaults.withCredentials) = true;
+(axios__WEBPACK_IMPORTED_MODULE_9___default().defaults.baseURL) = process.env.APP_URL;
 /* Components */
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.Button);
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.HasError);
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.AlertErrors.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_9__.AlertErrors);
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('paginate-dropdown', (__webpack_require__(/*! ./components/Common/PaginateDropdown.vue */ "./resources/js/components/Common/PaginateDropdown.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('pagination-info', (__webpack_require__(/*! ./components/Common/PaginationInfo.vue */ "./resources/js/components/Common/PaginationInfo.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('search', (__webpack_require__(/*! ./components/Common/Search.vue */ "./resources/js/components/Common/Search.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('action-button', (__webpack_require__(/*! ./components/Common/ActionButton.vue */ "./resources/js/components/Common/ActionButton.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('edit-button', (__webpack_require__(/*! ./components/Common/EditButton.vue */ "./resources/js/components/Common/EditButton.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('delete-button', (__webpack_require__(/*! ./components/Common/DeleteButton.vue */ "./resources/js/components/Common/DeleteButton.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('table-header', (__webpack_require__(/*! ./components/Common/TableHeader.vue */ "./resources/js/components/Common/TableHeader.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('panel', (__webpack_require__(/*! ./components/Common/Panel.vue */ "./resources/js/components/Common/Panel.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].filter('formatteddDate', function (date) {
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.Button.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.Button);
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.HasError.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.HasError);
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component(vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.AlertErrors.name, vform_src_components_bootstrap4__WEBPACK_IMPORTED_MODULE_10__.AlertErrors);
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('paginate-dropdown', (__webpack_require__(/*! ./components/Common/PaginateDropdown.vue */ "./resources/js/components/Common/PaginateDropdown.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('pagination-info', (__webpack_require__(/*! ./components/Common/PaginationInfo.vue */ "./resources/js/components/Common/PaginationInfo.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('search', (__webpack_require__(/*! ./components/Common/Search.vue */ "./resources/js/components/Common/Search.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('action-button', (__webpack_require__(/*! ./components/Common/ActionButton.vue */ "./resources/js/components/Common/ActionButton.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('edit-button', (__webpack_require__(/*! ./components/Common/EditButton.vue */ "./resources/js/components/Common/EditButton.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('delete-button', (__webpack_require__(/*! ./components/Common/DeleteButton.vue */ "./resources/js/components/Common/DeleteButton.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('table-header', (__webpack_require__(/*! ./components/Common/TableHeader.vue */ "./resources/js/components/Common/TableHeader.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].component('panel', (__webpack_require__(/*! ./components/Common/Panel.vue */ "./resources/js/components/Common/Panel.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].filter('formatteddDate', function (date) {
   return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format('MMMM Do YYYY');
 });
 window.Form = vform__WEBPACK_IMPORTED_MODULE_2__.Form;
-window.Fire = new vue__WEBPACK_IMPORTED_MODULE_6__["default"]();
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].mixin(_mixins_Auth__WEBPACK_IMPORTED_MODULE_5__["default"]);
+window.Fire = new vue__WEBPACK_IMPORTED_MODULE_7__["default"]();
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].mixin(_mixins_Auth__WEBPACK_IMPORTED_MODULE_5__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].mixin(_mixins_Settings__WEBPACK_IMPORTED_MODULE_6__["default"]);
 _store_index__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('getUser').then(function () {
-  var app = new vue__WEBPACK_IMPORTED_MODULE_6__["default"]({
+  var app = new vue__WEBPACK_IMPORTED_MODULE_7__["default"]({
     el: '#app',
     components: {
-      App: _components_App__WEBPACK_IMPORTED_MODULE_10__["default"]
+      App: _components_App__WEBPACK_IMPORTED_MODULE_11__["default"]
     },
     router: _routes_index__WEBPACK_IMPORTED_MODULE_0__["default"],
     store: _store_index__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -7055,6 +7057,30 @@ __webpack_require__.r(__webpack_exports__);
     can: function can(key) {
       var permissions = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.user.data.permissions;
       return permissions.includes(key);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/Settings.js":
+/*!*****************************************!*\
+  !*** ./resources/js/mixins/Settings.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    business: function business(key) {
+      var settings = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.settings.data;
+      return settings[0].includes(key);
     }
   }
 });
@@ -7363,8 +7389,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_1_
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     authenticated: false,
-    user: null // accessToken: null
-
+    user: null,
+    settings: null
   },
   getters: {
     authenticated: function authenticated(state) {
@@ -7372,10 +7398,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     user: function user(state) {
       return state.user;
-    } // accessToken: state => {
-    //     return state.accessToken;
-    // },
-
+    },
+    settings: function settings(state) {
+      return state.settings;
+    }
   },
   mutations: {
     setAuthenticated: function setAuthenticated(state, payload) {
@@ -7383,10 +7409,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     setUser: function setUser(state, payload) {
       state.user = payload;
-    } // setAccessToken: (state, payload) => {
-    //     state.accessToken = payload;
-    // }
-
+    },
+    setSettings: function setSettings(state, payload) {
+      state.settings = payload;
+    }
   },
   actions: {
     login: function login(_ref, payload) {
@@ -7440,13 +7466,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
                 commit = _ref2.commit;
                 _context2.next = 3;
                 return axios.get('/api/user').then(function (response) {
-                  console.log(response);
                   commit('setUser', response.data);
-                  commit('setAuthenticated', true); // commit('setAccessToken', payload.access_token);
+                  commit('setAuthenticated', true);
                 })["catch"](function (error) {
                   console.log(error);
                   commit('setUser', null);
-                  commit('setAuthenticated', false); // commit('setAccessToken', null);
+                  commit('setAuthenticated', false);
                 });
 
               case 3:
@@ -7468,10 +7493,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
                 _context3.next = 3;
                 return axios.post('/api/logout').then(function (response) {
                   commit('setUser', null);
-                  commit('setAuthenticated', false); // commit('setAccessToken', null);
+                  commit('setAuthenticated', false);
                 })["catch"](function (error) {
                   commit('setUser', null);
-                  commit('setAuthenticated', false); // commit('setAccessToken', null);
+                  commit('setAuthenticated', false);
                 });
 
               case 3:
@@ -76354,7 +76379,7 @@ var render = function () {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                                Business Symbol Placement\n                                            "
+                                        "\n                                                Currency Symbol Placement\n                                            "
                                       ),
                                     ]
                                   ),
@@ -76460,7 +76485,7 @@ var render = function () {
                                         attrs: {
                                           type: "file",
                                           id: "logo",
-                                          tabindex: "3",
+                                          tabindex: "4",
                                         },
                                         on: { change: _vm.uploadFile },
                                       }),
@@ -76481,9 +76506,7 @@ var render = function () {
                                         [
                                           _c("img", {
                                             staticClass: "elevation-2",
-                                            attrs: {
-                                              src: _vm.getProfileImage(),
-                                            },
+                                            attrs: { src: _vm.getImage() },
                                           }),
                                         ]
                                       ),
@@ -76537,7 +76560,7 @@ var render = function () {
                                           id: "tax_number",
                                           type: "text",
                                           placeholder: "Tax Number",
-                                          tabindex: "4",
+                                          tabindex: "5",
                                         },
                                         domProps: {
                                           value: _vm.form.tax_number,
@@ -76616,6 +76639,7 @@ var render = function () {
                                           id: "mail_driver",
                                           type: "text",
                                           placeholder: "SMTP",
+                                          tabindex: "6",
                                         },
                                         domProps: {
                                           value: _vm.form.email_settings.driver,
@@ -76680,6 +76704,7 @@ var render = function () {
                                           id: "host",
                                           type: "text",
                                           placeholder: "localhost",
+                                          tabindex: "7",
                                         },
                                         domProps: {
                                           value: _vm.form.email_settings.host,
@@ -76744,6 +76769,7 @@ var render = function () {
                                           id: "port",
                                           type: "number",
                                           placeholder: "456",
+                                          tabindex: "8",
                                         },
                                         domProps: {
                                           value: _vm.form.email_settings.port,
@@ -76811,6 +76837,7 @@ var render = function () {
                                           id: "username",
                                           type: "email",
                                           placeholder: "Username",
+                                          tabindex: "9",
                                         },
                                         domProps: {
                                           value:
@@ -76877,7 +76904,7 @@ var render = function () {
                                           id: "password",
                                           type: "text",
                                           placeholder: "Password",
-                                          tabindex: "5",
+                                          tabindex: "10",
                                         },
                                         domProps: {
                                           value:
@@ -76943,7 +76970,10 @@ var render = function () {
                                             },
                                           ],
                                           staticClass: "form-control",
-                                          attrs: { id: "encryption" },
+                                          attrs: {
+                                            id: "encryption",
+                                            tabindex: "11",
+                                          },
                                           on: {
                                             change: function ($event) {
                                               var $$selectedVal =
@@ -77040,6 +77070,7 @@ var render = function () {
                                           id: "from",
                                           type: "email",
                                           placeholder: "From Email",
+                                          tabindex: "12",
                                         },
                                         domProps: {
                                           value: _vm.form.email_settings.from,
@@ -77104,6 +77135,7 @@ var render = function () {
                                           id: "from_name",
                                           type: "text",
                                           placeholder: "From Name",
+                                          tabindex: "13",
                                         },
                                         domProps: {
                                           value: _vm.form.email_settings.name,
@@ -77139,18 +77171,20 @@ var render = function () {
                       ]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        attrs: { type: "submit", disabled: _vm.form.busy },
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Save\n                        "
-                        ),
-                      ]
-                    ),
+                    _c("div", { staticClass: "text-right" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success",
+                          attrs: { type: "submit", disabled: _vm.form.busy },
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Update Settings\n                            "
+                          ),
+                        ]
+                      ),
+                    ]),
                   ],
                   1
                 ),
@@ -79392,6 +79426,7 @@ var render = function () {
                               type: "text",
                               placeholder: "Name",
                               id: "name",
+                              required: "",
                             },
                             domProps: { value: _vm.form.name },
                             on: {
@@ -79415,7 +79450,14 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(1),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-d",
+                          attrs: { for: "email" },
+                        },
+                        [_vm._v("Location ID ")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -79552,7 +79594,7 @@ var render = function () {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "form-group row" }, [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -79598,7 +79640,7 @@ var render = function () {
                         staticClass: "form-group row",
                       },
                       [
-                        _vm._m(3),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -79618,6 +79660,7 @@ var render = function () {
                                 type: "email",
                                 placeholder: "Email",
                                 id: "email",
+                                required: "",
                               },
                               domProps: { value: _vm.form.email },
                               on: {
@@ -79757,22 +79800,6 @@ var staticRenderFns = [
       { staticClass: "col-sm-4 col-form-label text-d", attrs: { for: "name" } },
       [
         _vm._v("Name "),
-        _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "col-sm-4 col-form-label text-d",
-        attrs: { for: "email" },
-      },
-      [
-        _vm._v("Location ID "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
       ]
     )
@@ -84508,7 +84535,7 @@ var render = function () {
                           [
                             _c("router-link", { attrs: { to: "/locations" } }, [
                               _vm._v(
-                                "\n                            Locations\n                        "
+                                "\n                            Location / Branches\n                        "
                               ),
                             ]),
                           ],

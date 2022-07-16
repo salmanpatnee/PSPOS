@@ -15,14 +15,15 @@ class BusinessResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'currency_id' => $this->currency_id,
+            'id'                        => $this->id,
+            'name'                      => $this->name,
+            'currency_id'               => $this->currency_id,
+            'currency'                  => $this->businessCurrency,
             'currency_symbol_placement' => $this->currency_symbol_placement,
-            'owner' => $this->owner->name,
-            'tax_number' => $this->when(!is_null($this->tax_number), $this->tax_number),
-            'logo' => $this->logoPath,
-            'email_settings' => $this->email_settings
+            'owner'                     => $this->owner->name,
+            'tax_number'                => $this->when(!is_null($this->tax_number), $this->tax_number),
+            'logo'                      => $this->logoPath,
+            'email_settings'            => $this->email_settings
         ];
     }
 }

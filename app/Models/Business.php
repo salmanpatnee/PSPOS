@@ -32,9 +32,16 @@ class Business extends Model
 
     public function getLogoPathAttribute()
     {
-        return !is_null($this->logo)
-            ? asset('images/' . $this->logo)
-            : null;
+        return !is_null($this->logo) ? asset('images/' . $this->logo) : null;
+    }
+
+    public function getBusinessCurrencyAttribute()
+    {
+        return [
+            'currency'  => $this->currency->currency,
+            'code'      => $this->currency->code,
+            'symbol'    => $this->currency->symbol
+        ];
     }
 
     /**

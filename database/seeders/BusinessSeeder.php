@@ -15,20 +15,11 @@ class BusinessSeeder extends Seeder
     public function run()
     {
         $business_settings = [
-            "name" => "Pharma Square",
-            "currency_id" => 91,
-            "user_id" => 1,
+            "name"                      => "Pharma Square",
+            "currency_id"               => 91,
+            "user_id"                   => 1,
             "currency_symbol_placement" => "before",
-            "email_settings" => '{
-                "driver": "SMTP",
-                "host": "localhost",
-                "port": 456,
-                "username": "",
-                "password": "",
-                "encryption": "SSL",
-                "from": "",
-                "name": ""
-            }'
+            "email_settings"            => '{"driver": "SMTP","host": "localhost","port": 456,"username": "","password": "","encryption": "SSL","from": "","name": ""}'
         ];
 
         Business::create($business_settings);

@@ -30,15 +30,14 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.name" class="form-control" type="text"
-                                                placeholder="Name" id="name">
+                                                placeholder="Name" id="name" required>
                                             <HasError :form="form" field="name" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="email" class="col-sm-4 col-form-label text-d">Location ID <span
-                                                class="text-danger">*</span></label>
+                                        <label for="email" class="col-sm-4 col-form-label text-d">Location ID </label>
                                         <div class="col-sm-8">
                                             <input v-model="form.location_id" class="form-control" type="text"
                                                 placeholder="Location ID" id="location_id">
@@ -87,7 +86,7 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-8">
                                             <input v-model="form.email" class="form-control" type="email"
-                                                placeholder="Email" id="email">
+                                                placeholder="Email" id="email" required>
                                             <HasError :form="form" field="email" />
                                         </div>
                                     </div>

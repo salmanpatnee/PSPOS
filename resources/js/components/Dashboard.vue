@@ -57,6 +57,7 @@
                         <i class="fa fa-money"></i>
                     </div>
                     <a href="" class="small-box-footer">Total Sale </a>
+
                 </div>
             </div>
         </div>

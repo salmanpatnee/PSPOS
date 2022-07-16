@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BusinessCollection;
 use App\Http\Resources\BusinessResource;
 use App\Models\Business;
 use Illuminate\Http\Request;
@@ -22,7 +21,8 @@ class BusinessController extends Controller
     public function index()
     {
         $businesses = Business::all();
-        return new BusinessCollection($businesses);
+
+        return BusinessResource::collection($businesses);
     }
 
     /**
@@ -47,9 +47,10 @@ class BusinessController extends Controller
     {
         $attributes = $this->validateAttributes();
 
-        if ($attributes['logo'] != $business->logo) {
-
-            $attributes['logo'] = $this->uploadTheImage($request, "logo", "images/");
+        if ($this->isNewUpload($attributes['logo'], $business->logo)) {
+            $attributes['logo'] = $this->uploadTheImage($request, "logo");
+        } else {
+            unset($attributes['logo']);
         }
 
         $business->update($attributes);

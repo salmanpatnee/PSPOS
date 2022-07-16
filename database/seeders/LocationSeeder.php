@@ -16,28 +16,28 @@ class LocationSeeder extends Seeder
     {
         $locations = [
             [
-                'business_id' => 1,
-                'name' => 'Malir Branch',
-                'location_id' => 'PS001',
-                'city' => 'Karachi',
-                'mobile'    => '03313623653',
-                'email' => 'malirbranch@gmail.com'
+                'business_id'   => 1,
+                'name'          => 'Malir Branch',
+                'location_id'   => 'PS001',
+                'city'          => 'Karachi',
+                'mobile'        => '03313623653',
+                'email'         => 'malirbranch@gmail.com'
             ],
             [
-                'business_id' => 1,
-                'name' => 'Defence Branch',
-                'location_id' => 'PS002',
-                'city' => 'Karachi',
-                'mobile'    => '03353623653',
-                'email' => 'defencebranch@gmail.com'
+                'business_id'   => 1,
+                'name'          => 'Defence Branch',
+                'location_id'   => 'PS002',
+                'city'          => 'Karachi',
+                'mobile'        => '03353623653',
+                'email'         => 'defencebranch@gmail.com'
             ],
             [
-                'business_id' => 1,
-                'name' => 'Saddar Branch',
-                'location_id' => 'PS003',
-                'city' => 'Karachi',
-                'mobile'    => '03013665653',
-                'email' => 'saddarbranch@gmail.com'
+                'business_id'   => 1,
+                'name'          => 'Saddar Branch',
+                'location_id'   => 'PS003',
+                'city'          => 'Karachi',
+                'mobile'        => '03013665653',
+                'email'         => 'saddarbranch@gmail.com'
             ]
 
         ];

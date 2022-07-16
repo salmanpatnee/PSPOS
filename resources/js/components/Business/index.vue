@@ -55,7 +55,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label for="currency_symbol_placement" class="col-sm-4 col-form-label">
-                                                    Business Symbol Placement
+                                                    Currency Symbol Placement
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <select v-model="form.currency_symbol_placement"
@@ -75,10 +75,10 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input type="file" @change="uploadFile" class="form-control"
-                                                        id="logo" tabindex="3" />
+                                                        id="logo" tabindex="4" />
                                                     <HasError :form="form" field="logo" />
                                                     <div id="image_preview" class="mt-2">
-                                                        <img class="elevation-2" :src="getProfileImage()">
+                                                        <img class="elevation-2" :src="getImage()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -95,7 +95,7 @@
                                                 <div class="col-sm-8">
                                                     <input v-model="form.tax_number" class="form-control"
                                                         id="tax_number" type="text" placeholder="Tax Number"
-                                                        tabindex="4">
+                                                        tabindex="5">
                                                     <HasError :form="form" field="tax_number" />
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.driver" class="form-control"
-                                                        id="mail_driver" type="text" placeholder="SMTP">
+                                                        id="mail_driver" type="text" placeholder="SMTP" tabindex="6">
                                                     <HasError :form="form" field="email_settings.driver" />
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.host" class="form-control"
-                                                        id="host" type="text" placeholder="localhost">
+                                                        id="host" type="text" placeholder="localhost" tabindex="7">
                                                     <HasError :form="form" field="email_settings.host" />
                                                 </div>
                                             </div>
@@ -138,7 +138,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.port" class="form-control"
-                                                        id="port" type="number" placeholder="456">
+                                                        id="port" type="number" placeholder="456" tabindex="8">
                                                     <HasError :form="form" field="email_settings.port" />
                                                 </div>
                                             </div>
@@ -153,7 +153,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.username" class="form-control"
-                                                        id="username" type="email" placeholder="Username">
+                                                        id="username" type="email" placeholder="Username" tabindex="9">
                                                     <HasError :form="form" field="email_settings.username" />
                                                 </div>
                                             </div>
@@ -165,7 +165,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.password" class="form-control"
-                                                        id="password" type="text" placeholder="Password" tabindex="5">
+                                                        id="password" type="text" placeholder="Password" tabindex="10">
                                                     <HasError :form="form" field="email_settings.password" />
                                                 </div>
                                             </div>
@@ -177,7 +177,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <select v-model="form.email_settings.encryption"
-                                                        class="form-control" id="encryption">
+                                                        class="form-control" id="encryption" tabindex="11">
                                                         <option value="SSL">SSL</option>
                                                         <option value="TLS">TLS</option>
                                                         <option value="STARTTLS">STARTTLS</option>
@@ -196,7 +196,7 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.from" class="form-control"
-                                                        id="from" type="email" placeholder="From Email">
+                                                        id="from" type="email" placeholder="From Email" tabindex="12">
                                                     <HasError :form="form" field="email_settings.from" />
                                                 </div>
                                             </div>
@@ -208,7 +208,8 @@
                                                 </label>
                                                 <div class="col-sm-8">
                                                     <input v-model="form.email_settings.name" class="form-control"
-                                                        id="from_name" type="text" placeholder="From Name">
+                                                        id="from_name" type="text" placeholder="From Name"
+                                                        tabindex="13">
                                                     <HasError :form="form" field="email_settings.name" />
                                                 </div>
                                             </div>
@@ -217,18 +218,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success" :disabled="form.busy">
-                                Save
-                            </button>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-success" :disabled="form.busy">
+                                    Update Settings
+                                </button>
+                            </div>
                         </form>
-
                     </div>
-
                 </panel>
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -286,11 +285,11 @@ export default {
                 console.log('Error: ' + error);
             });
         },
-        getProfileImage() {
+        getImage() {
             if (!this.form.logo) return;
             return (this.form.logo.length > 200)
                 ? this.form.logo
-                : 'images/' + this.form.logo;
+                : this.form.logo;
         },
         uploadFile(e) {
             let file = e.target.files[0];
@@ -304,6 +303,7 @@ export default {
 
                 reader.readAsDataURL(file);
             } else {
+
                 Notification.error('You are uploading a large file.');
             }
         },
