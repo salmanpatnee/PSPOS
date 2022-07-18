@@ -16,17 +16,15 @@ class TaxSeeder extends Seeder
     {
         $taxes = [
             [
-                'name'          => 'VAT',
+                'name'          => 'GST@5%',
                 'rate'          => 5,
-                'is_group'      => 0,
                 'status'        => 1,
                 'created_by'    => 1
 
             ],
             [
-                'name'          => 'Salex Tax',
-                'rate'          => 10,
-                'is_group'      => 1,
+                'name'          => 'VAT@7%',
+                'rate'          => 7,
                 'status'        => 1,
                 'created_by'    => 1
             ]

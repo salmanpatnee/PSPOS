@@ -160,6 +160,11 @@
                                 Location / Branches
                             </router-link>
                         </li>
+                        <li v-if="can('view-taxes')">
+                            <router-link to="/taxes">
+                                Tax
+                            </router-link>
+                        </li>
                     </ul>
 
                 </li>

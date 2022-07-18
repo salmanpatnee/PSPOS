@@ -17,7 +17,6 @@ class CreateTaxesTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('rate', 22, 2);
-            $table->boolean('is_group')->default('0');
             $table->boolean('status')->default('1');
             $table->foreignId('created_by')->constrained('users');
             $table->timestamps();

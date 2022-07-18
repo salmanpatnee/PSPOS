@@ -30,6 +30,15 @@ class Permission
     public const CAN_DELETE_USERS = 'delete-users';
 
     /*
+    * Taxes Permission
+    */
+    public const CAN_VIEW_TAXES = 'view-taxes';
+    public const CAN_CREATE_TAXES = 'create-taxes';
+    public const CAN_UPDATE_TAXES = 'update-taxes';
+    public const CAN_DELETE_TAXES = 'delete-taxes';
+
+
+    /*
     * Categories Permission
     */
     public const CAN_VIEW_CATEGORIES = 'view-categories';

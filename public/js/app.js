@@ -6054,6 +6054,243 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      modal: "#tax_modal",
+      baseEndPoint: '/api/taxes',
+      taxes: {},
+      columns: [{
+        title: 'SL',
+        name: ''
+      }, {
+        title: 'Name',
+        name: 'name'
+      }, {
+        title: 'Rate',
+        name: 'rate'
+      }, {
+        title: 'Action',
+        name: ''
+      }],
+      dataLoaded: false,
+      editMode: false,
+      form: new Form({
+        id: '',
+        name: '',
+        rate: ''
+      })
+    };
+  },
+  computed: {},
+  methods: {
+    getTaxes: function getTaxes() {
+      var _this = this;
+
+      this.$Progress.start();
+      this.form.get(this.baseEndPoint).then(function (_ref) {
+        var data = _ref.data;
+        _this.taxes = data.data;
+
+        _this.$Progress.finish();
+      })["catch"](function (error) {
+        _this.$Progress.fail();
+
+        console.log('Error: ' + error);
+      });
+    },
+    create: function create() {
+      this.resetModal();
+    },
+    store: function store() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.post(this.baseEndPoint).then(function () {
+        Fire.$emit('refreshTaxes');
+        $(_this2.modal).modal('hide');
+        Notification.success('Tax Added');
+
+        _this2.$Progress.finish();
+      })["catch"](function (error) {
+        return _this2.$Progress.fail();
+      });
+    },
+    edit: function edit(tax) {
+      this.resetModal(true);
+      this.form.fill(tax);
+    },
+    update: function update() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.form.put(this.baseEndPoint + '/' + this.form.id).then(function () {
+        Fire.$emit('refreshTaxes');
+        $(_this3.modal).modal('hide');
+        Notification.success('Tax Updated');
+
+        _this3.$Progress.finish();
+      })["catch"](function (error) {
+        return _this3.$Progress.fail();
+      });
+    },
+    destroy: function destroy(id) {
+      var _this4 = this;
+
+      Swal.fire(Notification.confirmDialogAtts()).then(function (result) {
+        if (result.isConfirmed) {
+          _this4.$Progress.start();
+
+          var originalTaxes = _this4.taxes;
+          _this4.taxes = _this4.taxes.filter(function (tax) {
+            return tax.id != id;
+          });
+
+          _this4.form["delete"](_this4.baseEndPoint + '/' + id).then(function () {
+            Notification.success('Tax Deleted');
+            Fire.$emit('refreshTaxes');
+
+            _this4.$Progress.finish();
+          })["catch"](function (error) {
+            _this4.taxes = originalTaxes;
+
+            _this4.$Progress.fail();
+
+            Notification.error('Unexpected error occurred.');
+            console.log('Error', error);
+          });
+        }
+      });
+    },
+    resetModal: function resetModal() {
+      var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      this.editMode = mode;
+      this.form.reset();
+      $(this.modal).modal('show');
+    }
+  },
+  created: function created() {
+    var _this5 = this;
+
+    this.getTaxes();
+    Fire.$on('refreshTaxes', function () {
+      _this5.getTaxes();
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Users/create.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Users/create.vue?vue&type=script&lang=js& ***!
@@ -6844,6 +7081,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['authenticated', 'user'])),
@@ -7098,8 +7340,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _components_Auth_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Auth/Login */ "./resources/js/components/Auth/Login.vue");
 /* harmony import */ var _components_Dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Dashboard */ "./resources/js/components/Dashboard.vue");
@@ -7108,16 +7350,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Locations_create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Locations/create */ "./resources/js/components/Locations/create.vue");
 /* harmony import */ var _components_Categories_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Categories/index */ "./resources/js/components/Categories/index.vue");
 /* harmony import */ var _components_Brands_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Brands/index */ "./resources/js/components/Brands/index.vue");
-/* harmony import */ var _components_Users_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Users/index */ "./resources/js/components/Users/index.vue");
-/* harmony import */ var _components_Users_create__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Users/create */ "./resources/js/components/Users/create.vue");
-/* harmony import */ var _components_Customers_index__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Customers/index */ "./resources/js/components/Customers/index.vue");
-/* harmony import */ var _components_Customers_create__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/Customers/create */ "./resources/js/components/Customers/create.vue");
-/* harmony import */ var _components_Suppliers_index__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/Suppliers/index */ "./resources/js/components/Suppliers/index.vue");
-/* harmony import */ var _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Suppliers/create */ "./resources/js/components/Suppliers/create.vue");
-/* harmony import */ var _components_Products_index__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/Products/index */ "./resources/js/components/Products/index.vue");
-/* harmony import */ var _components_Products_create__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/Products/create */ "./resources/js/components/Products/create.vue");
-/* harmony import */ var _components_Products_show__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/Products/show */ "./resources/js/components/Products/show.vue");
-/* harmony import */ var _components_Products_stock_history__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/Products/stock-history */ "./resources/js/components/Products/stock-history.vue");
+/* harmony import */ var _components_Taxes_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Taxes/index */ "./resources/js/components/Taxes/index.vue");
+/* harmony import */ var _components_Users_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Users/index */ "./resources/js/components/Users/index.vue");
+/* harmony import */ var _components_Users_create__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Users/create */ "./resources/js/components/Users/create.vue");
+/* harmony import */ var _components_Customers_index__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/Customers/index */ "./resources/js/components/Customers/index.vue");
+/* harmony import */ var _components_Customers_create__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/Customers/create */ "./resources/js/components/Customers/create.vue");
+/* harmony import */ var _components_Suppliers_index__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Suppliers/index */ "./resources/js/components/Suppliers/index.vue");
+/* harmony import */ var _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/Suppliers/create */ "./resources/js/components/Suppliers/create.vue");
+/* harmony import */ var _components_Products_index__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/Products/index */ "./resources/js/components/Products/index.vue");
+/* harmony import */ var _components_Products_create__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/Products/create */ "./resources/js/components/Products/create.vue");
+/* harmony import */ var _components_Products_show__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/Products/show */ "./resources/js/components/Products/show.vue");
+/* harmony import */ var _components_Products_stock_history__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/Products/stock-history */ "./resources/js/components/Products/stock-history.vue");
 
 
 
@@ -7138,8 +7381,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_18__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]);
-var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
+
+vue__WEBPACK_IMPORTED_MODULE_19__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_20__["default"]);
+var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_20__["default"]({
   routes: [{
     path: '/',
     component: _components_Auth_Login__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -7189,6 +7433,15 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
       requiresAuth: true,
       authorize: ['update-locations']
     }
+  }, //Taxes
+  {
+    path: '/taxes',
+    component: _components_Taxes_index__WEBPACK_IMPORTED_MODULE_8__["default"],
+    name: 'taxes',
+    meta: {
+      requiresAuth: true,
+      authorize: ['view-taxes']
+    }
   }, //Categories
   {
     path: '/categories',
@@ -7210,7 +7463,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
   }, //Users
   {
     path: '/users',
-    component: _components_Users_index__WEBPACK_IMPORTED_MODULE_8__["default"],
+    component: _components_Users_index__WEBPACK_IMPORTED_MODULE_9__["default"],
     name: 'users.index',
     meta: {
       requiresAuth: true,
@@ -7218,7 +7471,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/users/create',
-    component: _components_Users_create__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _components_Users_create__WEBPACK_IMPORTED_MODULE_10__["default"],
     name: 'users.create',
     meta: {
       requiresAuth: true,
@@ -7226,7 +7479,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/users/edit/:user',
-    component: _components_Users_create__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _components_Users_create__WEBPACK_IMPORTED_MODULE_10__["default"],
     name: 'users.edit',
     meta: {
       requiresAuth: true,
@@ -7235,7 +7488,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
   }, //Customers
   {
     path: '/customers',
-    component: _components_Customers_index__WEBPACK_IMPORTED_MODULE_10__["default"],
+    component: _components_Customers_index__WEBPACK_IMPORTED_MODULE_11__["default"],
     name: 'customers.index',
     meta: {
       requiresAuth: true,
@@ -7243,7 +7496,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/customers/create',
-    component: _components_Customers_create__WEBPACK_IMPORTED_MODULE_11__["default"],
+    component: _components_Customers_create__WEBPACK_IMPORTED_MODULE_12__["default"],
     name: 'customers.create',
     meta: {
       requiresAuth: true,
@@ -7251,7 +7504,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/customers/edit/:customer',
-    component: _components_Customers_create__WEBPACK_IMPORTED_MODULE_11__["default"],
+    component: _components_Customers_create__WEBPACK_IMPORTED_MODULE_12__["default"],
     name: 'customers.edit',
     meta: {
       requiresAuth: true,
@@ -7260,7 +7513,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
   }, //Suppliers
   {
     path: '/suppliers',
-    component: _components_Suppliers_index__WEBPACK_IMPORTED_MODULE_12__["default"],
+    component: _components_Suppliers_index__WEBPACK_IMPORTED_MODULE_13__["default"],
     name: 'suppliers.index',
     meta: {
       requiresAuth: true,
@@ -7268,7 +7521,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/suppliers/create',
-    component: _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_13__["default"],
+    component: _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_14__["default"],
     name: 'suppliers.create',
     meta: {
       requiresAuth: true,
@@ -7276,7 +7529,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/suppliers/edit/:supplier',
-    component: _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_13__["default"],
+    component: _components_Suppliers_create__WEBPACK_IMPORTED_MODULE_14__["default"],
     name: 'suppliers.edit',
     meta: {
       requiresAuth: true,
@@ -7285,7 +7538,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
   }, //Products
   {
     path: '/products',
-    component: _components_Products_index__WEBPACK_IMPORTED_MODULE_14__["default"],
+    component: _components_Products_index__WEBPACK_IMPORTED_MODULE_15__["default"],
     name: 'products.index',
     meta: {
       requiresAuth: true,
@@ -7293,7 +7546,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/products/create/:product?/action/:action',
-    component: _components_Products_create__WEBPACK_IMPORTED_MODULE_15__["default"],
+    component: _components_Products_create__WEBPACK_IMPORTED_MODULE_16__["default"],
     name: 'products.create',
     meta: {
       requiresAuth: true,
@@ -7301,7 +7554,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/products/product/:product',
-    component: _components_Products_show__WEBPACK_IMPORTED_MODULE_16__["default"],
+    component: _components_Products_show__WEBPACK_IMPORTED_MODULE_17__["default"],
     name: 'products.show',
     meta: {
       requiresAuth: true,
@@ -7309,7 +7562,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/products/edit/:product',
-    component: _components_Products_create__WEBPACK_IMPORTED_MODULE_15__["default"],
+    component: _components_Products_create__WEBPACK_IMPORTED_MODULE_16__["default"],
     name: 'products.edit',
     meta: {
       requiresAuth: true,
@@ -7317,7 +7570,7 @@ var Routes = new vue_router__WEBPACK_IMPORTED_MODULE_19__["default"]({
     }
   }, {
     path: '/products/stock-history/:product',
-    component: _components_Products_stock_history__WEBPACK_IMPORTED_MODULE_17__["default"],
+    component: _components_Products_stock_history__WEBPACK_IMPORTED_MODULE_18__["default"],
     name: 'products.stock.show',
     meta: {
       requiresAuth: true,
@@ -73963,6 +74216,45 @@ component.options.__file = "resources/js/components/Suppliers/index.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Taxes/index.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/Taxes/index.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=ccaf5c7e& */ "./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/js/components/Taxes/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Taxes/index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Users/create.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/Users/create.vue ***!
@@ -74522,6 +74814,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Suppliers/index.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Taxes/index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Taxes/index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
@@ -75175,6 +75483,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_f98e8762___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_f98e8762___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=f98e8762& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Suppliers/index.vue?vue&type=template&id=f98e8762&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ccaf5c7e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./index.vue?vue&type=template&id=ccaf5c7e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e&");
 
 
 /***/ }),
@@ -83282,6 +83607,365 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Taxes/index.vue?vue&type=template&id=ccaf5c7e& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("ol", { staticClass: "breadcrumb" }, [
+      _c(
+        "li",
+        [
+          _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
+            _vm._v("dashboard"),
+          ]),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("li", { staticClass: "active" }, [_vm._v("Taxes")]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm-12" },
+        [
+          _c(
+            "panel",
+            [
+              _c("template", { slot: "title" }, [_vm._v("Manage Taxes")]),
+              _vm._v(" "),
+              _c("template", { slot: "header-right" }, [
+                _vm.can("create-taxes")
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "d-inline-block pull-right btn btn-success text-white",
+                        on: { click: _vm.create },
+                      },
+                      [_vm._v("Add\n                        Tax")]
+                    )
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              void 0,
+              _vm._v(" "),
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass:
+                      "table table-bordered table-striped table-hover",
+                    attrs: { id: "taxes_table" },
+                  },
+                  [
+                    _c("table-header", {
+                      attrs: { columns: _vm.columns },
+                      on: {
+                        handleSort: function ($event) {
+                          return _vm.sort($event)
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.taxes, function (tax) {
+                        return _c("tr", { key: tax.id }, [
+                          _c("td", [_vm._v(_vm._s(tax.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tax.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tax.rate))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "action-button",
+                                {
+                                  staticClass: "btn-sm btn-info",
+                                  attrs: {
+                                    permission: "update-taxes",
+                                    label: "Update",
+                                  },
+                                  on: {
+                                    action: function ($event) {
+                                      return _vm.edit(tax)
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-pencil",
+                                    attrs: { "aria-hidden": "true" },
+                                  }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("delete-button", {
+                                attrs: { permission: "delete-taxes" },
+                                on: {
+                                  handleDelete: function ($event) {
+                                    return _vm.destroy(tax.id)
+                                  },
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                        ])
+                      }),
+                      0
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+              _vm._v(" "),
+              void 0,
+            ],
+            2
+          ),
+        ],
+        1
+      ),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade modal-success",
+        attrs: { id: "tax_modal", role: "dialog" },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "form-vertical",
+                  on: {
+                    submit: function ($event) {
+                      $event.preventDefault()
+                      _vm.editMode ? _vm.update() : _vm.store()
+                    },
+                    keydown: function ($event) {
+                      return _vm.form.onKeydown($event)
+                    },
+                  },
+                },
+                [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "close",
+                        attrs: { href: "#", "data-dismiss": "modal" },
+                      },
+                      [_vm._v("×")]
+                    ),
+                    _vm._v(" "),
+                    _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm.editMode ? "Update" : "Add") +
+                          " Tax\n                        "
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-6" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.name,
+                                  expression: "form.name",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "name",
+                                type: "text",
+                                placeholder: "Tax Name",
+                                tabindex: "1",
+                                required: "",
+                              },
+                              domProps: { value: _vm.form.name },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("HasError", {
+                              attrs: { form: _vm.form, field: "name" },
+                            }),
+                          ],
+                          1
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group row" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-6" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.rate,
+                                  expression: "form.rate",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "rate",
+                                type: "number",
+                                placeholder: "Rate",
+                                tabindex: "2",
+                                required: "",
+                              },
+                              domProps: { value: _vm.form.rate },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "rate",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("HasError", {
+                              attrs: { form: _vm.form, field: "rate" },
+                            }),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: {
+                          href: "#",
+                          tabindex: "5",
+                          "data-dismiss": "modal",
+                        },
+                      },
+                      [_vm._v("Close")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        attrs: {
+                          type: "submit",
+                          tabindex: "6",
+                          disabled: _vm.form.busy,
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.editMode ? "Update" : "Save") +
+                            "\n                        "
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]
+              ),
+            ]),
+          ]
+        ),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col-sm-4 col-form-label", attrs: { for: "name" } },
+      [
+        _vm._v("\n                                    Tax Name "),
+        _c("i", { staticClass: "text-danger" }, [_vm._v("*")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col-sm-4 col-form-label", attrs: { for: "name" } },
+      [
+        _vm._v("\n                                    Rate "),
+        _c("i", { staticClass: "text-danger" }, [_vm._v("*")]),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Users/create.vue?vue&type=template&id=4f46e54e&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Users/create.vue?vue&type=template&id=4f46e54e& ***!
@@ -84536,6 +85220,20 @@ var render = function () {
                             _c("router-link", { attrs: { to: "/locations" } }, [
                               _vm._v(
                                 "\n                            Location / Branches\n                        "
+                              ),
+                            ]),
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.can("view-taxes")
+                      ? _c(
+                          "li",
+                          [
+                            _c("router-link", { attrs: { to: "/taxes" } }, [
+                              _vm._v(
+                                "\n                            Tax\n                        "
                               ),
                             ]),
                           ],

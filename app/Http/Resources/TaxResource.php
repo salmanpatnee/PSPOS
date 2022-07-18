@@ -15,11 +15,10 @@ class TaxResource extends JsonResource
     public function toArray($request)
     {
         return [
-            // 'id'        => $this->id,
-            'name'      => $this->name,
-            'rate'      => $this->rate,
-            'is_group'  => $this->is_group ? 'Yes' : 'No',
-            'status'    => $this->status ? 'Active' : 'Inactive',
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'rate'   => $this->rate,
+            'status' => $this->status ? 'Active' : 'Inactive',
         ];
     }
 }

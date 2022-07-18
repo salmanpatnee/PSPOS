@@ -10,6 +10,7 @@ import Location from '../components/Locations/create';
 
 import Categories from '../components/Categories/index';
 import Brands from '../components/Brands/index';
+import Taxes from '../components/Taxes/index';
 
 import Users from '../components/Users/index';
 import User from '../components/Users/create';
@@ -39,6 +40,9 @@ const Routes = new VueRouter({
         { path: '/locations', component: Locations, name: 'locations.index', meta: { requiresAuth: true, authorize: ['view-locations'] } },
         { path: '/locations/create', component: Location, name: 'locations.create', meta: { requiresAuth: true, authorize: ['create-locations'] } },
         { path: '/locations/edit/:location', component: Location, name: 'locations.edit', meta: { requiresAuth: true, authorize: ['update-locations'] } },
+
+        //Taxes
+        { path: '/taxes', component: Taxes, name: 'taxes', meta: { requiresAuth: true, authorize: ['view-taxes'] } },
 
         //Categories
         { path: '/categories', component: Categories, name: 'categories', meta: { requiresAuth: true, authorize: ['view-categories'] } },

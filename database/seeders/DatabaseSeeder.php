@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             // CurrencySeeder::class,
             // BusinessSeeder::class,
             // LocationSeeder::class,
-            TaxSeeder::class,
+            // TaxSeeder::class,
         ]);
     }
 }
