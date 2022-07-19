@@ -53,12 +53,22 @@ const store = new Vuex.Store({
                 .then(response => {
                     commit('setUser', response.data);
                     commit('setAuthenticated', true);
+                    return this.dispatch('getSettings');
                 })
                 .catch(error => {
                     console.log(error);
                     commit('setUser', null);
                     commit('setAuthenticated', false);
+                    commit('setSettings', null);
                 })
+        },
+        async getSettings({ commit }) {
+
+            await axios.get('/api/business')
+                .then(response => {
+                    commit('setSettings', response.data.data[0]);
+                })
+                .catch(error => console.log(error));
         },
         async logout({ commit }) {
             await axios.post('/api/logout')

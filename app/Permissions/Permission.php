@@ -63,6 +63,14 @@ class Permission
     public const CAN_DELETE_PRODUCTS = 'delete-products';
 
     /*
+    * Purchase Permission
+    */
+    public const CAN_VIEW_PURCHASES   = 'view-purchases';
+    public const CAN_CREATE_PURCHASES = 'create-purchases';
+    public const CAN_UPDATE_PURCHASES = 'update-purchases';
+    public const CAN_DELETE_PURCHASES = 'delete-purchases';
+
+    /*
     * Business Settings Permissions
     */
     public const CAN_VIEW_SETTINGS = 'view-settings';

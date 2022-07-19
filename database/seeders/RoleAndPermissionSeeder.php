@@ -41,10 +41,15 @@ class RoleAndPermissionSeeder extends Seeder
         // Permission::create(['name' => Rights::CAN_UPDATE_BRANDS]);
         // Permission::create(['name' => Rights::CAN_DELETE_BRANDS]);
 
-        Permission::create(['name' =>  Rights::CAN_VIEW_TAXES]);
-        Permission::create(['name' =>  Rights::CAN_CREATE_TAXES]);
-        Permission::create(['name' => Rights::CAN_UPDATE_TAXES]);
-        Permission::create(['name' => Rights::CAN_DELETE_TAXES]);
+        // Permission::create(['name' =>  Rights::CAN_VIEW_TAXES]);
+        // Permission::create(['name' =>  Rights::CAN_CREATE_TAXES]);
+        // Permission::create(['name' => Rights::CAN_UPDATE_TAXES]);
+        // Permission::create(['name' => Rights::CAN_DELETE_TAXES]);
+
+        Permission::create(['name' =>  Rights::CAN_VIEW_PURCHASES]);
+        Permission::create(['name' =>  Rights::CAN_CREATE_PURCHASES]);
+        Permission::create(['name' => Rights::CAN_UPDATE_PURCHASES]);
+        Permission::create(['name' => Rights::CAN_DELETE_PURCHASES]);
 
         // Permission::create(['name' => Rights::CAN_VIEW_PRODUCTS]);
         // Permission::create(['name' => Rights::CAN_CREATE_PRODUCTS]);
@@ -83,10 +88,14 @@ class RoleAndPermissionSeeder extends Seeder
             // Rights::CAN_CREATE_BRANDS,
             // Rights::CAN_UPDATE_BRANDS,
             // Rights::CAN_DELETE_BRANDS,
-            Rights::CAN_VIEW_TAXES,
-            Rights::CAN_CREATE_TAXES,
-            Rights::CAN_UPDATE_TAXES,
-            Rights::CAN_DELETE_TAXES,
+            // Rights::CAN_VIEW_TAXES,
+            // Rights::CAN_CREATE_TAXES,
+            // Rights::CAN_UPDATE_TAXES,
+            // Rights::CAN_DELETE_TAXES,
+            Rights::CAN_VIEW_PURCHASES,
+            Rights::CAN_CREATE_PURCHASES,
+            Rights::CAN_UPDATE_PURCHASES,
+            Rights::CAN_DELETE_PURCHASES,
             // Rights::CAN_VIEW_PRODUCTS,
             // Rights::CAN_CREATE_PRODUCTS,
             // Rights::CAN_UPDATE_PRODUCTS,
@@ -120,15 +129,19 @@ class RoleAndPermissionSeeder extends Seeder
             // Rights::CAN_CREATE_BRANDS,
             // Rights::CAN_UPDATE_BRANDS,
             // Rights::CAN_DELETE_BRANDS,
-            Rights::CAN_VIEW_TAXES,
-            Rights::CAN_CREATE_TAXES,
-            Rights::CAN_UPDATE_TAXES,
-            Rights::CAN_DELETE_TAXES,
+            // Rights::CAN_VIEW_TAXES,
+            // Rights::CAN_CREATE_TAXES,
+            // Rights::CAN_UPDATE_TAXES,
+            // Rights::CAN_DELETE_TAXES,
             // Rights::CAN_VIEW_PRODUCTS,
             // Rights::CAN_CREATE_PRODUCTS,
             // Rights::CAN_UPDATE_PRODUCTS,
             // Rights::CAN_DELETE_PRODUCTS,
             // Rights::CAN_VIEW_CUSTOMERS,
+            Rights::CAN_VIEW_PURCHASES,
+            Rights::CAN_CREATE_PURCHASES,
+            Rights::CAN_UPDATE_PURCHASES,
+            Rights::CAN_DELETE_PURCHASES,
             // Rights::CAN_CREATE_CUSTOMERS,
             // Rights::CAN_UPDATE_CUSTOMERS,
             // Rights::CAN_DELETE_CUSTOMERS,
@@ -159,10 +172,14 @@ class RoleAndPermissionSeeder extends Seeder
             // Rights::CAN_CREATE_SUPPLIERS,
             // Rights::CAN_UPDATE_SUPPLIERS,
             // Rights::CAN_DELETE_SUPPLIERS,
-            Rights::CAN_VIEW_TAXES,
-            Rights::CAN_CREATE_TAXES,
-            Rights::CAN_UPDATE_TAXES,
-            Rights::CAN_DELETE_TAXES,
+            // Rights::CAN_VIEW_TAXES,
+            // Rights::CAN_CREATE_TAXES,
+            // Rights::CAN_UPDATE_TAXES,
+            // Rights::CAN_DELETE_TAXES,
+            Rights::CAN_VIEW_PURCHASES,
+            Rights::CAN_CREATE_PURCHASES,
+            Rights::CAN_UPDATE_PURCHASES,
+            Rights::CAN_DELETE_PURCHASES,
         ]);
     }
 }

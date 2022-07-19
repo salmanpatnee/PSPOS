@@ -35,6 +35,9 @@
         "vue-masked-input": "^0.5.2",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.4",
+        "vue-select": "^3.20.0",
+        "vue-underscore": "^0.1.4",
+        "vuejs-datepicker": "^1.6.2",
         "vuex": "^3.6.2"
     }
 }

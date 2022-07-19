@@ -7,7 +7,7 @@ use App\Http\Resources\BusinessResource;
 use App\Models\Business;
 use Illuminate\Http\Request;
 use App\Traits\UploadImageTrait;
-
+use Illuminate\Support\Facades\Cache;
 
 class BusinessController extends Controller
 {
@@ -20,7 +20,9 @@ class BusinessController extends Controller
 
     public function index()
     {
-        $businesses = Business::all();
+        $businesses = cache()->remember('businesses', 60 * 60 * 24, function () {
+            return Business::all();
+        });
 
         return BusinessResource::collection($businesses);
     }
@@ -54,6 +56,8 @@ class BusinessController extends Controller
         }
 
         $business->update($attributes);
+
+        Cache::forget('businesses');
 
         return new BusinessResource($business);
     }

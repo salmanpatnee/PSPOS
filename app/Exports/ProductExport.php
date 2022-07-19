@@ -44,7 +44,7 @@ class ProductExport implements FromQuery, Responsable, WithHeadings, WithMapping
             $product->product_id,
             $product->name,
             $product->category->name,
-            $product->brand->name,
+            ($product->brand_id) ? $product->brand->name : '',
             $product->price,
             $product->vat,
             $product->units_sold,

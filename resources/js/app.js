@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import underscore from 'vue-underscore';
 import router from './routes/index';
 import store from './store/index';
 import { Form } from 'vform';
@@ -6,6 +7,7 @@ import Moment from 'moment';
 import VueProgressBar from 'vue-progressbar'
 import Auth from './mixins/Auth';
 import Settings from './mixins/Settings';
+import vSelect from "vue-select";
 
 require('./bootstrap');
 
@@ -15,6 +17,7 @@ Vue.use(VueProgressBar, {
     height: '2px'
 });
 
+Vue.use(underscore);
 
 /* Helpers */
 import Notification from './Helpers/Notification';
@@ -35,6 +38,7 @@ import App from './components/App';
 Vue.component(Button.name, Button)
 Vue.component(HasError.name, HasError)
 Vue.component(AlertErrors.name, AlertErrors)
+Vue.component("v-select", vSelect);
 
 Vue.component('paginate-dropdown', require('./components/Common/PaginateDropdown.vue').default);
 Vue.component('pagination-info', require('./components/Common/PaginationInfo.vue').default);

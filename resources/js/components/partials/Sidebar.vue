@@ -112,6 +112,30 @@
 
                 </li>
 
+                <!-- purchase menu part -->
+                <li class="treeview" v-if="can('view-purchases')">
+                    <a href="javascript:void(0)">
+                        <i class="ti-shopping-cart"></i> <span>Purchases</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+
+                    <ul class="treeview-menu">
+                        <li v-if="can('create-purchases')">
+                            <router-link to="/purchases/create">
+                                Add Purchase
+                            </router-link>
+                        </li>
+                        <li v-if="can('view-purchases')">
+                            <router-link to="/purchases">
+                                Manage Purchases
+                            </router-link>
+                        </li>
+                    </ul>
+
+                </li>
+
                 <!-- user menu part -->
                 <li class="treeview" v-if="can('view-users')">
 
@@ -179,8 +203,6 @@ export default {
         ...mapGetters([
             'authenticated', 'user'
         ])
-    },
-    created() {
     }
 }
 </script>

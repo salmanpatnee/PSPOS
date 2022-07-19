@@ -76,6 +76,7 @@ class AuthController extends Controller
                 'last_login_ip' => $request->getClientIp()
             ]);
 
+
             return response()->json([
                 'status_code'  => Response::HTTP_OK,
                 'access_token' => $token,

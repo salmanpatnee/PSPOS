@@ -26,6 +26,9 @@ import Product from '../components/Products/create';
 import ProductView from '../components/Products/show';
 import ProductStockHistory from '../components/Products/stock-history';
 
+import Purchases from '../components/Purchases/index';
+import Purchase from '../components/Purchases/create';
+
 Vue.use(VueRouter);
 
 const Routes = new VueRouter({
@@ -72,6 +75,13 @@ const Routes = new VueRouter({
         { path: '/products/product/:product', component: ProductView, name: 'products.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
         { path: '/products/edit/:product', component: Product, name: 'products.edit', meta: { requiresAuth: true, authorize: ['update-products'] } },
         { path: '/products/stock-history/:product', component: ProductStockHistory, name: 'products.stock.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
+
+        //Purchases
+        { path: '/purchases', component: Purchases, name: 'purchases.index', meta: { requiresAuth: true, authorize: ['view-purchases'] } },
+        { path: '/purchases/create/', component: Purchase, name: 'purchases.create', meta: { requiresAuth: true, authorize: ['create-purchases'] } },
+        //  { path: '/products/product/:product', component: ProductView, name: 'products.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
+        //  { path: '/products/edit/:product', component: Product, name: 'products.edit', meta: { requiresAuth: true, authorize: ['update-products'] } },
+        //  { path: '/products/stock-history/:product', component: ProductStockHistory, name: 'products.stock.show', meta: { requiresAuth: true, authorize: ['view-products'] } },
     ],
     mode: 'history'
 });
