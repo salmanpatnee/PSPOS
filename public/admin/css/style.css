@@ -1121,6 +1121,20 @@ table#products_table td {
     width: 120px;
 }
 
+span.vdp-datepicker__calendar-button {
+    float: right;
+}
+
+.vdp-datepicker.form-control input {
+    width: 90%;
+    border: none;
+}
+
+.vs__dropdown-toggle {
+    border: 1px solid #e4e5e7;
+    border-radius: 0;
+}
+
 /* Helper Classes */
 .d-flex {
     display: flex;

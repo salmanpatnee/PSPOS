@@ -10,6 +10,7 @@ use App\Http\Controllers\API\CurrencyController;
 use App\Http\Controllers\API\CustomersController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\PurchaseController;
 use App\Http\Controllers\API\SuppliersController;
 use App\Http\Controllers\API\TaxController;
 use App\Http\Controllers\API\UsersController;
@@ -39,6 +40,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/products/export/{products}', [ProductController::class, 'export']);
     Route::put('/products/barcode/{product}', [ProductController::class, 'updateBarcode']);
     Route::apiResource('products', ProductController::class);
+
+    Route::apiResource('purchases', PurchaseController::class);
 });
 
 

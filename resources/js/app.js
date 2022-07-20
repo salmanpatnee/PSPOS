@@ -9,6 +9,7 @@ import Auth from './mixins/Auth';
 import Settings from './mixins/Settings';
 import vSelect from "vue-select";
 
+
 require('./bootstrap');
 
 Vue.use(VueProgressBar, {
@@ -32,7 +33,6 @@ axios.defaults.baseURL = process.env.APP_URL;
 /* Components */
 import { Button, HasError, AlertErrors } from 'vform/src/components/bootstrap4';
 import App from './components/App';
-
 
 
 Vue.component(Button.name, Button)

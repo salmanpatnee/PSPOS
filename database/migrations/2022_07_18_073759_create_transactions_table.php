@@ -18,9 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('business_id')->constrained();
             $table->foreignId('location_id')->constrained();
             $table->foreignId('supplier_id')->constrained();
-            $table->string('ref_no')->nullable();
             $table->text('purchase_order_ids')->nullable();
-            $table->dateTime('transaction_date');
+            $table->string('reference_no')->nullable();
 
             $table->enum('type', ['purchase', 'sell']);
             $table->enum('payment_status', ['paid', 'due']);
@@ -28,20 +27,22 @@ class CreateTransactionsTable extends Migration
 
 
             $table->foreignId('tax_id')->constrained();
-            $table->decimal('tax_amount', 22, 4)->default(0);
+            $table->decimal('tax_amount', 22, 2)->default(0);
 
             $table->enum('discount_type', ['fixed', 'percentage'])->nullable();
-            $table->decimal('discount_amount', 22, 4)->default(0);
+            $table->decimal('discount_amount', 22, 2)->default(0);
 
             $table->string('shipping_details')->nullable();
-            $table->decimal('shipping_charges', 22, 4)->default(0);
+            $table->decimal('shipping_charges', 22, 2)->default(0);
 
-            $table->decimal('total_before_tax', 22, 4)->default(0);
-            $table->decimal('final_total', 22, 4)->default(0);
+            $table->decimal('total_before_tax', 22, 2)->default(0);
+            $table->decimal('final_total', 22, 2)->default(0);
 
             $table->text('additional_notes')->nullable();
             $table->string('document')->nullable();
+
             $table->foreignId('created_by')->constrained('users', 'id');
+            $table->timestamp('transaction_date');
             $table->timestamps();
 
             //Indexing

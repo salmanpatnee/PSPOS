@@ -5639,15 +5639,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /* harmony import */ var vue_underscore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-underscore */ "./node_modules/vue-underscore/index.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
 //
 //
 //
@@ -6018,28 +6009,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       taxes: {},
       totalItems: 5.00,
       netTotal: 150,
-      discountRate: 0,
+      discountRate: null,
       form: new Form({
-        id: '',
         supplier_id: '',
-        ref_no: '',
-        transaction_date: new Date(),
-        status: '',
         location_id: '',
-        document: null,
-        total_before_tax: 0,
-        totalAmount: 0.00,
+        reference_no: '',
+        status: 'received',
         discount_type: '',
         discount_amount: 0.00,
         tax_id: '',
         tax_amount: 0.00,
-        additional_notes: '',
         shipping_details: '',
-        shipping_charges: 0.00,
-        amount: 0.00,
-        paid_on: new Date(),
+        shipping_charges: null,
         payment_method: '',
+        transaction_date: new Date(),
+        paid_on: new Date(),
         payment_note: '',
+        additional_notes: '',
+        total_before_tax: 0.00,
+        final_total: 0.00,
         due_amount: 0.00
       })
     };
@@ -6054,92 +6042,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     totalDiscountDisplay: function totalDiscountDisplay() {
       return this.form.discount_amount.toFixed(2);
     },
+    // totalBeforeTaxDisplay(){
+    //     return this.form.total_before_tax.toFixed(2);
+    // },
     taxAmountDisplay: function taxAmountDisplay() {
       return this.form.tax_amount.toFixed(2);
     },
     purchaseAmountDisplay: function purchaseAmountDisplay() {
-      this.totalAmount = this.form.due_amount = (this.netTotal + this.form.tax_amount + this.form.shipping_charges - this.form.discount_amount).toFixed(2);
-      return this.totalAmount;
+      return this.form.netTotal = this.form.final_total = this.form.due_amount = (this.netTotal + this.form.tax_amount + this.form.shipping_charges - this.form.discount_amount).toFixed(2);
     }
   },
   watch: {
     'form.discount_type': function formDiscount_type($value) {
-      if ($value === 'fixed') {
-        this.form.discount_amount = this.discountRate;
-      } else if ($value === 'percentage') {
-        this.form.discount_amount = this.discountRate * this.netTotal / 100;
-      } else {
-        this.form.discount_amount = 0;
-      }
+      this.calculateDiscount($value);
     },
     discountRate: function discountRate($value) {
-      var discountType = this.form.discount_type;
-
-      if (discountType === 'fixed') {
+      this.calculateDiscount(this.form.discount_type);
+    },
+    'form.tax_id': function formTax_id($value) {
+      if ($value !== "") {
+        var tax = this.taxes.filter(function (tax) {
+          return tax.id == $value;
+        });
+        this.form.tax_amount = tax[0].rate * this.netTotal / 100;
+        this.form.total_before_tax = this.netTotal - this.form.tax_amount;
+      } else {
+        this.form.tax_amount = 0;
+      }
+    },
+    'form.amount': function formAmount($value) {
+      this.form.total_before_tax = this.netTotal - this.tax_amount;
+      this.form.due_amount = this.form.netTotal - $value;
+    }
+  },
+  methods: {
+    calculateDiscount: function calculateDiscount(type) {
+      if (type === 'fixed') {
         this.form.discount_amount = this.discountRate;
-      } else if (discountType === 'percentage') {
+      } else if (type === 'percentage') {
         this.form.discount_amount = this.discountRate * this.netTotal / 100;
       } else {
         this.form.discount_amount = 0;
       }
     },
-    'form.tax_id': function () {
-      var _formTax_id = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee($value) {
-        var tax;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if ($value !== "") {
-                  tax = this.taxes.filter(function (tax) {
-                    return tax.id == $value;
-                  });
-                  this.form.tax_amount = tax[0].rate * this.netTotal / 100;
-                } else {
-                  this.form.tax_amount = 0;
-                }
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function formTax_id(_x) {
-        return _formTax_id.apply(this, arguments);
-      }
-
-      return formTax_id;
-    }(),
-    'form.amount': function () {
-      var _formAmount = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2($value) {
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                this.form.due_amount = this.totalAmount - $value;
-
-              case 1:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function formAmount(_x2) {
-        return _formAmount.apply(this, arguments);
-      }
-
-      return formAmount;
-    }()
-  },
-  components: {
-    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  methods: {
     fetchSuppliers: function fetchSuppliers(search, loading) {
       if (search.length) {
         loading(true);
@@ -6185,11 +6130,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.form.post(this.endPoint).then(function () {
         Notification.success('Purchase Added');
 
-        _this3.$Progress.finish();
+        _this3.$Progress.finish(); // this.$router.push({ name: 'purchases.index' })
 
-        _this3.$router.push({
-          name: 'purchases.index'
-        });
       })["catch"](function (error) {
         _this3.$Progress.fail();
       });
@@ -6206,28 +6148,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (error) {
         _this4.$Progress.fail();
       });
-    },
-    uploadFile: function uploadFile(e) {
-      var _this5 = this;
-
-      var file = e.target.files[0];
-
-      if (file['size'] <= '2097152') {
-        var reader = new FileReader();
-
-        reader.onloadend = function (file) {
-          _this5.form.image_src = reader.result;
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-        Notification.error('You are uploading a large file.');
-      }
-    },
-    getProfileImage: function getProfileImage() {
-      if (!this.form.image_src) return;
-      return this.form.image_src.length > 200 ? this.form.image_src : this.form.image_src;
     }
+  },
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
     this.getLocations();
@@ -84382,7 +84306,7 @@ var render = function () {
                           "label",
                           {
                             staticClass: "col-sm-4 col-form-label text-d",
-                            attrs: { for: "ref_no" },
+                            attrs: { for: "reference_no" },
                           },
                           [
                             _vm._v("Reference No "),
@@ -84415,17 +84339,17 @@ var render = function () {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.form.ref_no,
-                                  expression: "form.ref_no",
+                                  value: _vm.form.reference_no,
+                                  expression: "form.reference_no",
                                 },
                               ],
                               staticClass: "form-control",
                               attrs: {
                                 type: "text",
                                 placeholder: "Reference No",
-                                id: "ref_no",
+                                id: "reference_no",
                               },
-                              domProps: { value: _vm.form.ref_no },
+                              domProps: { value: _vm.form.reference_no },
                               on: {
                                 input: function ($event) {
                                   if ($event.target.composing) {
@@ -84433,7 +84357,7 @@ var render = function () {
                                   }
                                   _vm.$set(
                                     _vm.form,
-                                    "ref_no",
+                                    "reference_no",
                                     $event.target.value
                                   )
                                 },
@@ -84441,7 +84365,7 @@ var render = function () {
                             }),
                             _vm._v(" "),
                             _c("HasError", {
-                              attrs: { form: _vm.form, field: "ref_no" },
+                              attrs: { form: _vm.form, field: "reference_no" },
                             }),
                           ],
                           1
@@ -84475,8 +84399,9 @@ var render = function () {
                           [
                             _c("datepicker", {
                               attrs: {
+                                "wrapper-class": "form-control",
+                                "calendar-button": true,
                                 placeholder: "Select Date",
-                                "input-class": "form-control",
                                 "calendar-button-icon": "fa fa-calendar",
                               },
                               model: {
@@ -84537,62 +84462,68 @@ var render = function () {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-8" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.form.status,
-                                  expression: "form.status",
-                                },
-                              ],
-                              staticClass: "form-control",
-                              attrs: { id: "status" },
-                              on: {
-                                change: function ($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function (o) {
-                                      return o.selected
-                                    })
-                                    .map(function (o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.form,
-                                    "status",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
+                        _c(
+                          "div",
+                          { staticClass: "col-sm-8" },
+                          [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.status,
+                                    expression: "form.status",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { id: "status" },
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "status",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
                                 },
                               },
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { value: "", selected: "" } },
-                                [_vm._v("Select Status")]
-                              ),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "received" } }, [
-                                _vm._v("Received"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "pending" } }, [
-                                _vm._v("Pending"),
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "ordered" } }, [
-                                _vm._v("Ordered"),
-                              ]),
-                            ]
-                          ),
-                        ]),
+                              [
+                                _c("option", { attrs: { value: "received" } }, [
+                                  _vm._v("Received"),
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "pending" } }, [
+                                  _vm._v("Pending"),
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "ordered" } }, [
+                                  _vm._v("Ordered"),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("HasError", {
+                              attrs: { form: _vm.form, field: "status" },
+                            }),
+                          ],
+                          1
+                        ),
                       ]),
                     ]),
                   ]),
@@ -84708,39 +84639,7 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col-sm-4 col-form-label text-d",
-                            attrs: { for: "document" },
-                          },
-                          [
-                            _vm._v(
-                              "Attach\n                                    Document"
-                            ),
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-sm-8" },
-                          [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: { type: "file", id: "document" },
-                              on: { change: _vm.uploadFile },
-                            }),
-                            _vm._v(" "),
-                            _c("HasError", {
-                              attrs: { form: _vm.form, field: "document" },
-                            }),
-                          ],
-                          1
-                        ),
-                      ]),
-                    ]),
+                    _c("div", { staticClass: "col-md-6" }),
                   ]),
                 ],
                 2
@@ -84753,7 +84652,17 @@ var render = function () {
                     _vm._v("Select Products"),
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "row" }),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "table-responsive" }, [
+                        _c("table", { staticClass: "table" }),
+                      ]),
+                    ]),
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }),
                   _vm._v(" "),
@@ -84769,27 +84678,6 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(_vm.totalItemsDisplay))]),
                             ]),
-                            _vm._v(" "),
-                            _c(
-                              "tr",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.form.total_before_tax,
-                                    expression: "form.total_before_tax",
-                                  },
-                                ],
-                              },
-                              [
-                                _c("th", [_vm._v("Total Before Tax:")]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(_vm.form.total_before_tax)),
-                                ]),
-                              ]
-                            ),
                             _vm._v(" "),
                             _c("tr", [
                               _c("th", [_vm._v("Total Amount:")]),
@@ -84911,51 +84799,42 @@ var render = function () {
                           },
                           [
                             _vm._v(
-                              "Discount\n                                    Amount"
+                              "Discount\n                                    Rate"
                             ),
                           ]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-sm-7" },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model.number",
-                                  value: _vm.discountRate,
-                                  expression: "discountRate",
-                                  modifiers: { number: true },
-                                },
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                placeholder: "0",
-                                id: "discount_rate",
+                        _c("div", { staticClass: "col-sm-7" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model.number",
+                                value: _vm.discountRate,
+                                expression: "discountRate",
+                                modifiers: { number: true },
                               },
-                              domProps: { value: _vm.discountRate },
-                              on: {
-                                input: function ($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.discountRate = _vm._n($event.target.value)
-                                },
-                                blur: function ($event) {
-                                  return _vm.$forceUpdate()
-                                },
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "number",
+                              placeholder: "0",
+                              id: "discount_rate",
+                            },
+                            domProps: { value: _vm.discountRate },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.discountRate = _vm._n($event.target.value)
                               },
-                            }),
-                            _vm._v(" "),
-                            _c("HasError", {
-                              attrs: { form: _vm.form, field: "discount_rate" },
-                            }),
-                          ],
-                          1
-                        ),
+                              blur: function ($event) {
+                                return _vm.$forceUpdate()
+                              },
+                            },
+                          }),
+                        ]),
                       ]),
                     ]),
                     _vm._v(" "),
@@ -85360,7 +85239,7 @@ var render = function () {
                               staticClass: "form-control",
                               attrs: {
                                 type: "text",
-                                placeholder: "Purchase Date",
+                                placeholder: "Amount",
                                 id: "amount",
                               },
                               domProps: { value: _vm.form.amount },
@@ -85409,8 +85288,9 @@ var render = function () {
                           [
                             _c("datepicker", {
                               attrs: {
+                                "wrapper-class": "form-control",
+                                "calendar-button": true,
                                 placeholder: "Select Date",
-                                "input-class": "form-control",
                                 "calendar-button-icon": "fa fa-calendar",
                               },
                               model: {

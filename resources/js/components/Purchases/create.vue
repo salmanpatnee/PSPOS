@@ -41,14 +41,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label for="ref_no" class="col-sm-4 col-form-label text-d">Reference No <span
+                                    <label for="reference_no" class="col-sm-4 col-form-label text-d">Reference No <span
                                             class="text-info" data-toggle="tooltip" data-placement="top"
                                             title="Leave empty to autogenerate."><i class="fa fa-info-circle"
                                                 aria-hidden="true"></i></span></label>
                                     <div class="col-sm-8">
-                                        <input v-model="form.ref_no" class="form-control" type="text"
-                                            placeholder="Reference No" id="ref_no">
-                                        <HasError :form="form" field="ref_no" />
+                                        <input v-model="form.reference_no" class="form-control" type="text"
+                                            placeholder="Reference No" id="reference_no">
+                                        <HasError :form="form" field="reference_no" />
                                     </div>
                                 </div>
                             </div>
@@ -60,8 +60,9 @@
                                     <label for="transaction_date" class="col-sm-4 col-form-label text-d">Purchase
                                         Date <span class="text-danger">*</span></label>
                                     <div class="col-sm-8">
-                                        <datepicker placeholder="Select Date" input-class="form-control"
-                                            calendar-button-icon="fa fa-calendar" v-model="form.transaction_date">
+                                        <datepicker wrapper-class="form-control" :calendar-button="true"
+                                            placeholder="Select Date" calendar-button-icon="fa fa-calendar"
+                                            v-model="form.transaction_date">
                                         </datepicker>
                                         <HasError :form="form" field="transaction_date" />
                                     </div>
@@ -76,11 +77,11 @@
                                                 class="fa fa-info-circle" aria-hidden="true"></i></span></label>
                                     <div class="col-sm-8">
                                         <select v-model="form.status" id="status" class="form-control">
-                                            <option value="" selected>Select Status</option>
                                             <option value="received">Received</option>
                                             <option value="pending">Pending</option>
                                             <option value="ordered">Ordered</option>
                                         </select>
+                                        <HasError :form="form" field="status" />
                                     </div>
                                 </div>
                             </div>
@@ -105,28 +106,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label for="document" class="col-sm-4 col-form-label text-d">Attach
-                                        Document</label>
-                                    <div class="col-sm-8">
-                                        <input type="file" @change="uploadFile" class="form-control" id="document" />
-                                        <HasError :form="form" field="document" />
-                                        <!-- <div id="image_preview" class="mt-2">
-                                                <img class="elevation-2" :src="getProfileImage()">
-                                            </div> -->
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-md-6"></div>
                         </div>
                     </panel>
 
                     <!-- Products -->
                     <panel>
                         <template slot="title">Select Products</template>
-
                         <div class="row">
+                            <div class="col-md-12">
 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
 
@@ -140,10 +139,10 @@
                                             <th>Total Items:</th>
                                             <td>{{ totalItemsDisplay }}</td>
                                         </tr>
-                                        <tr v-show="form.total_before_tax">
+                                        <!-- <tr v-show="form.total_before_tax">
                                             <th>Total Before Tax:</th>
                                             <td>{{ form.total_before_tax }}</td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <th>Total Amount:</th>
                                             <td>{{ getFormattedPrice(netTotalDisplay) }}</td>
@@ -176,11 +175,10 @@
                             <div class="col-md-5">
                                 <div class="form-group row">
                                     <label for="discount_rate" class="col-sm-5 col-form-label text-d">Discount
-                                        Amount</label>
+                                        Rate</label>
                                     <div class="col-sm-7">
                                         <input v-model.number="discountRate" class="form-control" type="number"
                                             placeholder="0" id="discount_rate">
-                                        <HasError :form="form" field="discount_rate" />
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +283,7 @@
                                             class="text-danger">*</span></label>
                                     <div class="col-sm-8">
                                         <input v-model="form.amount" class="form-control" type="text"
-                                            placeholder="Purchase Date" id="amount">
+                                            placeholder="Amount" id="amount">
                                         <HasError :form="form" field="amount" />
                                     </div>
                                 </div>
@@ -295,8 +293,9 @@
                                     <label for="paid_on" class="col-sm-4 col-form-label text-d">Paid On <span
                                             class="text-danger">*</span></label>
                                     <div class="col-sm-8">
-                                        <datepicker placeholder="Select Date" input-class="form-control"
-                                            calendar-button-icon="fa fa-calendar" v-model="form.paid_on">
+                                        <datepicker wrapper-class="form-control" :calendar-button="true"
+                                            placeholder="Select Date" calendar-button-icon="fa fa-calendar"
+                                            v-model="form.paid_on">
                                         </datepicker>
                                         <HasError :form="form" field="paid_on" />
                                     </div>
@@ -371,28 +370,29 @@ export default {
         taxes: {},
         totalItems: 5.00,
         netTotal: 150,
-        discountRate: 0,
+        discountRate: null,
         form: new Form({
-            id: '',
             supplier_id: '',
-            ref_no: '',
-            transaction_date: new Date(),
-            status: '',
             location_id: '',
-            document: null,
-            total_before_tax: 0,
-            totalAmount: 0.00,
+            reference_no: '',
+            status: 'received',
+
             discount_type: '',
             discount_amount: 0.00,
             tax_id: '',
             tax_amount: 0.00,
-            additional_notes: '',
+
             shipping_details: '',
-            shipping_charges: 0.00,
-            amount: 0.00,
-            paid_on: new Date(),
+            shipping_charges: null,
+
             payment_method: '',
+            transaction_date: new Date(),
+            paid_on: new Date(),
             payment_note: '',
+
+            additional_notes: '',
+            total_before_tax: 0.00,
+            final_total: 0.00,
             due_amount: 0.00
         })
     }),
@@ -406,54 +406,51 @@ export default {
         totalDiscountDisplay() {
             return this.form.discount_amount.toFixed(2);
         },
+        // totalBeforeTaxDisplay(){
+        //     return this.form.total_before_tax.toFixed(2);
+        // },
         taxAmountDisplay() {
             return this.form.tax_amount.toFixed(2);
         },
         purchaseAmountDisplay() {
-            this.totalAmount = this.form.due_amount = ((this.netTotal + this.form.tax_amount + this.form.shipping_charges) - this.form.discount_amount).toFixed(2);
-            return this.totalAmount;
+            return this.form.netTotal = this.form.final_total = this.form.due_amount
+                = ((this.netTotal + this.form.tax_amount + this.form.shipping_charges) - this.form.discount_amount).toFixed(2);
+
         }
     },
     watch: {
         'form.discount_type': function ($value) {
-            if ($value === 'fixed') {
-                this.form.discount_amount = this.discountRate;
-            } else if ($value === 'percentage') {
-                this.form.discount_amount = (this.discountRate * this.netTotal) / 100;
-            } else {
-                this.form.discount_amount = 0;
-            }
+            this.calculateDiscount($value);
         },
         discountRate: function ($value) {
-            let discountType = this.form.discount_type;
-            if (discountType === 'fixed') {
-                this.form.discount_amount = this.discountRate;
-            } else if (discountType === 'percentage') {
-                this.form.discount_amount = (this.discountRate * this.netTotal) / 100;
-            } else {
-                this.form.discount_amount = 0;
-            }
+            this.calculateDiscount(this.form.discount_type);
         },
-        'form.tax_id': async function ($value) {
+        'form.tax_id': function ($value) {
             if ($value !== "") {
                 const tax = this.taxes.filter(tax => tax.id == $value);
                 this.form.tax_amount = (tax[0].rate * this.netTotal) / 100;
+                this.form.total_before_tax = this.netTotal - this.form.tax_amount;
             } else {
                 this.form.tax_amount = 0;
             }
         },
-        'form.amount': async function ($value) {
-            this.form.due_amount = this.totalAmount - $value;
+        'form.amount': function ($value) {
+            this.form.total_before_tax = this.netTotal - this.tax_amount;
+            this.form.due_amount = this.form.netTotal - $value;
         }
     },
-
-    components: {
-        Datepicker
-    },
     methods: {
+        calculateDiscount(type) {
+            if (type === 'fixed') {
+                this.form.discount_amount = this.discountRate;
+            } else if (type === 'percentage') {
+                this.form.discount_amount = (this.discountRate * this.netTotal) / 100;
+            } else {
+                this.form.discount_amount = 0;
+            }
+        },
         fetchSuppliers(search, loading) {
             if (search.length) {
-
                 loading(true);
                 this.searchSuppliers(loading, search, this);
             }
@@ -486,7 +483,7 @@ export default {
             this.form.post(this.endPoint).then(() => {
                 Notification.success('Purchase Added');
                 this.$Progress.finish();
-                this.$router.push({ name: 'purchases.index' })
+                // this.$router.push({ name: 'purchases.index' })
             }).catch((error) => {
                 this.$Progress.fail();
             });
@@ -500,28 +497,9 @@ export default {
                 this.$Progress.fail();
             });
         },
-
-        uploadFile(e) {
-            let file = e.target.files[0];
-            if (file['size'] <= '2097152') {
-
-                let reader = new FileReader()
-
-                reader.onloadend = (file) => {
-                    this.form.image_src = reader.result;
-                }
-
-                reader.readAsDataURL(file);
-            } else {
-                Notification.error('You are uploading a large file.');
-            }
-        },
-        getProfileImage() {
-            if (!this.form.image_src) return;
-            return (this.form.image_src.length > 200)
-                ? this.form.image_src
-                : this.form.image_src;
-        },
+    },
+    components: {
+        Datepicker
     },
     created() {
         this.getLocations();
