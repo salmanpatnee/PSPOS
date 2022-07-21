@@ -14,10 +14,10 @@ class Product extends Model
         'category_id',
         'brand_id',
         'product_id',
+        'sku',
         'name',
         'image',
         'description',
-        'price',
         'vat',
         'units_sold',
         'stock_threshold',
@@ -59,6 +59,19 @@ class Product extends Model
     }
 
 
+    /**
+     * Get the variations associated with the product.
+     */
+    public function variations()
+    {
+        return $this->hasMany(\App\Variation::class);
+    }
+
+    public function product_variations()
+    {
+        return $this->hasMany(ProductVariation::class);
+    }
+
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
@@ -66,6 +79,7 @@ class Product extends Model
         $query->where(function ($query) use ($term) {
             $query->where('name', 'like', $term)
                 ->orWhere('description', 'like', $term)
+                ->where('status', 1)
                 ->orWhereHas('category', function ($query) use ($term) {
                     $query->where('name', 'like', $term);
                 })
@@ -73,5 +87,16 @@ class Product extends Model
                     $query->where('name', 'like', $term);
                 });
         });
+    }
+
+    /**
+     * Scope a query to only include active products.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 }

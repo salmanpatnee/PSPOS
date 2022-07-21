@@ -17,11 +17,11 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('brand_id')->nullable()->constrained();
-            $table->string('product_id');
-            $table->string('name');
+            $table->string('product_id')->unique()->index();
+            $table->string('sku')->nullable();
+            $table->string('name')->unique();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->double('price', 9, 0)->nullable();
             $table->double('vat', 9, 0)->default(0)->nullable();
             $table->integer('units_sold')->default(0)->nullable();
             $table->integer('stock_threshold')->default(0)->nullable();

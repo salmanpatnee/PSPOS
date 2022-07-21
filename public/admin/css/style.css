@@ -1135,6 +1135,12 @@ span.vdp-datepicker__calendar-button {
     border-radius: 0;
 }
 
+.input-group-addon,
+#product-table thead {
+    background-color: #37a000;
+    color: #fff;
+}
+
 /* Helper Classes */
 .d-flex {
     display: flex;

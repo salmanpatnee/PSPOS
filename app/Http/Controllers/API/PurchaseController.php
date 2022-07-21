@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PurchaseRequest;
+use App\Models\Product;
 use App\Models\Reference;
 use App\Models\Transaction;
 use App\Utils\Utils;

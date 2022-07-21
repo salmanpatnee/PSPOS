@@ -97,7 +97,7 @@
                             </router-link>
                         </li>
                         <li v-if="can('create-products')">
-                            <router-link to="/products/create">
+                            <router-link :to="{ name: 'products.create' }">
                                 Add Product
                             </router-link>
                         </li>

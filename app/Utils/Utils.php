@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use App\Models\Product;
 use App\Models\Reference;
 use Carbon\Carbon;
 
@@ -42,5 +43,28 @@ class Utils
         $ref_day    = Carbon::now()->day;
 
         return $prefix . $ref_year . $ref_month . $ref_day . '/' . $ref_digits;
+    }
+
+    public function createVariation(Product $product, float $defaultPurchasePrice = null, float $defaultSellingPrice = null)
+    {
+
+        $productVariationData = [
+            'name'      => 'DUMMY',
+            'is_dummy'  => 1
+        ];
+
+        $productVariation = $product->product_variations()->create($productVariationData);
+
+        $variationData = [
+            'name'                   => 'DUMMY',
+            'product_id'             => $product->id,
+            'sku'                    => $product->sku,
+            'default_purchase_price' => $defaultPurchasePrice,
+            'default_selling_price'  => $defaultSellingPrice
+        ];
+
+        $productVariation->variations()->create($variationData);
+
+        return true;
     }
 }

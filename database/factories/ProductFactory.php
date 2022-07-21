@@ -18,7 +18,6 @@ class ProductFactory extends Factory
             'brand_id' => $this->faker->numberBetween(1, 10),
             'product_id' => $this->faker->unique()->randomNumber(),
             'name' => $this->faker->unique()->word,
-            'price' => $this->faker->numberBetween(10, 1000),
             'stock_threshold' => $this->faker->numberBetween(3, 10),
             'created_by' => 1,
         ];

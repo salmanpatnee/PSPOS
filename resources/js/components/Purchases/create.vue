@@ -115,14 +115,77 @@
                         <template slot="title">Select Products</template>
                         <div class="row">
                             <div class="col-md-12">
-
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-search"
+                                            aria-hidden="true"></i></span>
+                                    <v-select v-model="productSearch" ref="productSearch"
+                                        placeholder="Enter Product Name / Code" @option:selected="productSelected"
+                                        id="product_search" @search="fetchProducts" @input="selectProduct" label="name"
+                                        :options="products">
+                                        <template slot="no-options">
+                                            Type to search Products.
+                                        </template>
+                                    </v-select>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table">
-
+                                    <table class="m-t-20 table table-bordered table-striped text-center"
+                                        id="product-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Qty</th>
+                                                <th>Cost (Before Dis)</th>
+                                                <th>Dis %</th>
+                                                <th>Cost (Before Tax)</th>
+                                                <th>Tax %</th>
+                                                <th>Total</th>
+                                                <th>Price</th>
+                                                <th>Profit %</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(product, index) in form.selected_products" :key="product.id">
+                                                <td>
+                                                    {{ product.name }}
+                                                    <br>
+                                                    <small class="text-muted"> Current stock: 0</small>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="1">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="1">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="0">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="1">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="0">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" placeholder="0" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" placeholder="0">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" placeholder="0" readonly>
+                                                </td>
+                                                <td>
+                                                    <a @click.prevent="removeProduct(index)" href="#">
+                                                        <i class="fa fa-trash color-red" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -366,11 +429,13 @@ export default {
     data: () => ({
         endPoint: '/api/purchases',
         suppliers: [],
+        products: [],
         locations: {},
         taxes: {},
         totalItems: 5.00,
         netTotal: 150,
         discountRate: null,
+        productSearch: null,
         form: new Form({
             supplier_id: '',
             location_id: '',
@@ -393,12 +458,14 @@ export default {
             additional_notes: '',
             total_before_tax: 0.00,
             final_total: 0.00,
-            due_amount: 0.00
+            due_amount: 0.00,
+
+            selected_products: []
         })
     }),
     computed: {
         totalItemsDisplay() {
-            return this.totalItems.toFixed(2);
+            return this.form.selected_products.length.toFixed(2);
         },
         netTotalDisplay() {
             return this.netTotal.toFixed(2);
@@ -468,6 +535,33 @@ export default {
         selectSupplier(supplier) {
             this.form.supplier_id = supplier.id;
         },
+        fetchProducts(search, loading) {
+            if (search.length) {
+                loading(true);
+                this.searchProducts(loading, search, this);
+            }
+        },
+        searchProducts: _.debounce((loading, search, vm) => {
+
+            axios.get("/api/products?search=" + search
+            ).then(({ data }) => {
+                vm.products = data.data;
+                loading(false);
+            }
+            ).catch(error => console.log('Error: ' + error));
+
+        }, 350),
+        selectProduct(product) {
+            //
+            this.form.selected_products.push(product);
+        },
+        productSelected() {
+            this.productSearch = null;
+            this.$refs.productSearch.$el.focus();
+        },
+        removeProduct(index) {
+            this.form.selected_products.splice(this.form.selected_products.indexOf(index), 1);
+        },
         getLocations() {
             axios.get("/api/locations?paginate=100"
             ).then(({ data }) => this.locations = data.data
@@ -505,5 +599,3 @@ export default {
         this.getLocations();
         this.getTaxes();
     }
-}
-</script>

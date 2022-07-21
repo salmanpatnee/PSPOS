@@ -7,14 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Traits\UploadImageTrait;
+use App\Utils\Utils;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
     use UploadImageTrait;
+
+    protected $productUtil;
+
+    public function __construct(Utils $productUtil)
+    {
+        $this->productUtil = $productUtil;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -29,6 +40,7 @@ class ProductController extends Controller
         $orderBy       = request('orderBy', 'created_at');
 
         $products = Product::search($term)
+            ->active()
             ->orderBy($orderBy, $sortOrder)
             ->paginate($paginate);
 
@@ -43,14 +55,29 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $attributes = $request->all();
+        try {
+            $product    = new Product();
+            $variation  = new Variation();
 
-        $attributes['created_by']   = auth()->id();
-        $attributes['image']        = $this->uploadTheImage($request, "image", "images/products/");
+            $productAttributes = $request->only($product->getFillable());
+            $variationAttributes = $request->only($variation->getFillable());
 
-        $product = Product::create($attributes);
+            $productAttributes['created_by']   = auth()->id();
+            $productAttributes['image']        = $this->uploadTheImage($request, "image", "images/products/");
 
-        return new ProductResource($product);
+            DB::beginTransaction();
+
+            $product = Product::create($productAttributes);
+
+            $this->productUtil->createVariation($product, $variationAttributes['default_purchase_price'], $variationAttributes['default_selling_price']);
+
+            DB::commit();
+
+            return new ProductResource($product);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
