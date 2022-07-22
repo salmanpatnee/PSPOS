@@ -21,6 +21,8 @@ class Product extends Model
         'vat',
         'units_sold',
         'stock_threshold',
+        'default_purchase_price',
+        'default_selling_price',
         'status',
         'created_by',
         'updated_by'
@@ -58,6 +60,13 @@ class Product extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+    /**
+     * Get the location wise details of the the product.
+     */
+    public function product_locations()
+    {
+        return $this->hasMany(PurchaseProductLocation::class, 'location_id', 'product_id');
+    }
 
     /**
      * Get the variations associated with the product.

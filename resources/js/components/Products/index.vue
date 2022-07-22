@@ -67,9 +67,11 @@
                                     <th>Category</th>
                                     <th>Brand</th>
                                     <th>
-                                        <a href="" @click.prevent="sort('price')">Price</a>
-                                        <span v-show="sortOrder == 'desc' && orderBy == 'price'">&uarr;</span>
-                                        <span v-show="sortOrder == 'asc' && orderBy == 'price'">&darr;</span>
+                                        <a href="" @click.prevent="sort('default_selling_price')">Price</a>
+                                        <span
+                                            v-show="sortOrder == 'desc' && orderBy == 'default_selling_price'">&uarr;</span>
+                                        <span
+                                            v-show="sortOrder == 'asc' && orderBy == 'default_selling_price'">&darr;</span>
                                     </th>
 
                                     <th>Status</th>
@@ -86,7 +88,7 @@
                                     <td>{{ product.name }}</td>
                                     <td>{{ product.category }}</td>
                                     <td><span v-if="product.brand">{{ product.brand }}</span></td>
-                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.default_selling_price }}</td>
                                     <td>{{ product.status }}</td>
                                     <td>
 

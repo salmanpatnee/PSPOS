@@ -118,10 +118,10 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-search"
                                             aria-hidden="true"></i></span>
-                                    <v-select v-model="productSearch" ref="productSearch"
-                                        placeholder="Enter Product Name / Code" @option:selected="productSelected"
-                                        id="product_search" @search="fetchProducts" @input="selectProduct" label="name"
-                                        :options="products">
+                                    <v-select :disabled="form.location_id === ''" v-model="productSearch"
+                                        ref="productSearch" placeholder="Enter Product Name / Code"
+                                        @option:selected="productSelected" id="product_search" @search="fetchProducts"
+                                        @input="selectProduct" label="name" :options="products">
                                         <template slot="no-options">
                                             Type to search Products.
                                         </template>
@@ -136,7 +136,7 @@
                                         id="product-table">
                                         <thead>
                                             <tr>
-                                                <th>Product</th>
+                                                <th>Product Name</th>
                                                 <th>Qty</th>
                                                 <th>Cost (Before Dis)</th>
                                                 <th>Dis %</th>
@@ -151,9 +151,12 @@
                                         <tbody>
                                             <tr v-for="(product, index) in form.selected_products" :key="product.id">
                                                 <td>
-                                                    {{ product.name }}
+                                                    {{ product.data.name }}
                                                     <br>
-                                                    <small class="text-muted"> Current stock: 0</small>
+                                                    <small v-if="product.data.product_locations.length"
+                                                        class="text-muted"> Current stock:
+                                                        {{ product.data.product_locations[0].quantity_available
+                                                        }}</small>
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control" placeholder="1">
@@ -467,6 +470,11 @@ export default {
         totalItemsDisplay() {
             return this.form.selected_products.length.toFixed(2);
         },
+        rowIndex() {
+            return this.form.selected_products.length === 0
+                ? 1
+                : this.form.selected_products.length;
+        },
         netTotalDisplay() {
             return this.netTotal.toFixed(2);
         },
@@ -552,8 +560,12 @@ export default {
 
         }, 350),
         selectProduct(product) {
-            //
-            this.form.selected_products.push(product);
+            axios.get("/api/purchases/product?product_id=" + product.id
+                + "&location_id=" + this.form.location_id
+                + "&row_index=" + this.rowIndex
+            ).then(({ data }) => {
+                this.form.selected_products.push(data);
+            }).catch(error => console.log('Error: ' + error));
         },
         productSelected() {
             this.productSearch = null;
@@ -599,3 +611,5 @@ export default {
         this.getLocations();
         this.getTaxes();
     }
+}
+</script>

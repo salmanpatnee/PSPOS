@@ -45,6 +45,7 @@ class Utils
         return $prefix . $ref_year . $ref_month . $ref_day . '/' . $ref_digits;
     }
 
+    /*
     public function createVariation(Product $product, float $defaultPurchasePrice = null, float $defaultSellingPrice = null)
     {
 
@@ -67,4 +68,5 @@ class Utils
 
         return true;
     }
+    */
 }

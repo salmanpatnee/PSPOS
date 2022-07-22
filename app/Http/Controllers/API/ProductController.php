@@ -55,29 +55,14 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        try {
-            $product    = new Product();
-            $variation  = new Variation();
+        $attributes = $request->all();
 
-            $productAttributes = $request->only($product->getFillable());
-            $variationAttributes = $request->only($variation->getFillable());
+        $attributes['created_by']   = auth()->id();
+        $attributes['image']        = $this->uploadTheImage($request, "image", "images/products/");
 
-            $productAttributes['created_by']   = auth()->id();
-            $productAttributes['image']        = $this->uploadTheImage($request, "image", "images/products/");
+        $product = Product::create($attributes);
 
-            DB::beginTransaction();
-
-            $product = Product::create($productAttributes);
-
-            $this->productUtil->createVariation($product, $variationAttributes['default_purchase_price'], $variationAttributes['default_selling_price']);
-
-            DB::commit();
-
-            return new ProductResource($product);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return $th;
-        }
+        return new ProductResource($product);
     }
 
     /**
@@ -107,7 +92,7 @@ class ProductController extends Controller
             $attributes['image'] = $this->uploadTheImage($request, "image", "images/products/");
         }
 
-        $attributes['updated_by']   = auth()->id();
+        $attributes['updated_by'] = auth()->id();
 
         $product->update($attributes);
 

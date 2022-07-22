@@ -23,7 +23,7 @@ class BusinessResource extends JsonResource
             'owner'                     => $this->owner->name,
             'tax_number'                => $this->when(!is_null($this->tax_number), $this->tax_number),
             'logo'                      => $this->logoPath,
-            'email_settings'            => $this->email_settings
+            'email_settings'            => $this->email_settings,
         ];
     }
 }

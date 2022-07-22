@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/products/barcode/{product}', [ProductController::class, 'updateBarcode']);
     Route::apiResource('products', ProductController::class);
 
+    Route::get('/purchases/product', [PurchaseController::class, 'getProductDetails']);
     Route::apiResource('purchases', PurchaseController::class);
 });
 

@@ -5105,6 +5105,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -6094,6 +6096,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6135,6 +6140,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     totalItemsDisplay: function totalItemsDisplay() {
       return this.form.selected_products.length.toFixed(2);
+    },
+    rowIndex: function rowIndex() {
+      return this.form.selected_products.length === 0 ? 1 : this.form.selected_products.length;
     },
     netTotalDisplay: function netTotalDisplay() {
       return this.netTotal.toFixed(2);
@@ -6219,7 +6227,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     }, 350),
     selectProduct: function selectProduct(product) {
-      this.form.selected_products.push(product);
+      var _this = this;
+
+      axios.get("/api/purchases/product?product_id=" + product.id + "&location_id=" + this.form.location_id + "&row_index=" + this.rowIndex).then(function (_ref3) {
+        var data = _ref3.data;
+
+        _this.form.selected_products.push(data);
+      })["catch"](function (error) {
+        return console.log('Error: ' + error);
+      });
     },
     productSelected: function productSelected() {
       this.productSearch = null;
@@ -6229,49 +6245,49 @@ __webpack_require__.r(__webpack_exports__);
       this.form.selected_products.splice(this.form.selected_products.indexOf(index), 1);
     },
     getLocations: function getLocations() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.get("/api/locations?paginate=100").then(function (_ref3) {
-        var data = _ref3.data;
-        return _this.locations = data.data;
+      axios.get("/api/locations?paginate=100").then(function (_ref4) {
+        var data = _ref4.data;
+        return _this2.locations = data.data;
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
     },
     getTaxes: function getTaxes() {
-      var _this2 = this;
+      var _this3 = this;
 
-      axios.get("/api/taxes?paginate=100").then(function (_ref4) {
-        var data = _ref4.data;
-        return _this2.taxes = data.data;
+      axios.get("/api/taxes?paginate=100").then(function (_ref5) {
+        var data = _ref5.data;
+        return _this3.taxes = data.data;
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
     },
     store: function store() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.post(this.endPoint).then(function () {
         Notification.success('Purchase Added');
 
-        _this3.$Progress.finish(); // this.$router.push({ name: 'purchases.index' })
+        _this4.$Progress.finish(); // this.$router.push({ name: 'purchases.index' })
 
       })["catch"](function (error) {
-        _this3.$Progress.fail();
+        _this4.$Progress.fail();
       });
     },
     update: function update() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.form.put(this.endPoint + '/' + this.form.id).then(function () {
         Notification.success('Purchase Updated');
 
-        _this4.$router.push({
+        _this5.$router.push({
           name: 'purchases.index'
         });
       })["catch"](function (error) {
-        _this4.$Progress.fail();
+        _this5.$Progress.fail();
       });
     }
   },
@@ -82965,7 +82981,7 @@ var render = function () {
                               on: {
                                 click: function ($event) {
                                   $event.preventDefault()
-                                  return _vm.sort("price")
+                                  return _vm.sort("default_selling_price")
                                 },
                               },
                             },
@@ -82981,9 +82997,9 @@ var render = function () {
                                   rawName: "v-show",
                                   value:
                                     _vm.sortOrder == "desc" &&
-                                    _vm.orderBy == "price",
+                                    _vm.orderBy == "default_selling_price",
                                   expression:
-                                    "sortOrder == 'desc' && orderBy == 'price'",
+                                    "sortOrder == 'desc' && orderBy == 'default_selling_price'",
                                 },
                               ],
                             },
@@ -82999,9 +83015,9 @@ var render = function () {
                                   rawName: "v-show",
                                   value:
                                     _vm.sortOrder == "asc" &&
-                                    _vm.orderBy == "price",
+                                    _vm.orderBy == "default_selling_price",
                                   expression:
-                                    "sortOrder == 'asc' && orderBy == 'price'",
+                                    "sortOrder == 'asc' && orderBy == 'default_selling_price'",
                                 },
                               ],
                             },
@@ -83094,7 +83110,9 @@ var render = function () {
                                 : _vm._e(),
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(product.price))]),
+                            _c("td", [
+                              _vm._v(_vm._s(product.default_selling_price)),
+                            ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(product.status))]),
                             _vm._v(" "),
@@ -84945,6 +84963,7 @@ var render = function () {
                             {
                               ref: "productSearch",
                               attrs: {
+                                disabled: _vm.form.location_id === "",
                                 placeholder: "Enter Product Name / Code",
                                 id: "product_search",
                                 label: "name",
@@ -84991,7 +85010,7 @@ var render = function () {
                           [
                             _c("thead", [
                               _c("tr", [
-                                _c("th", [_vm._v("Product")]),
+                                _c("th", [_vm._v("Product Name")]),
                                 _vm._v(" "),
                                 _c("th", [_vm._v("Qty")]),
                                 _vm._v(" "),
@@ -85022,16 +85041,27 @@ var render = function () {
                                     _c("td", [
                                       _vm._v(
                                         "\n                                                " +
-                                          _vm._s(product.name) +
+                                          _vm._s(product.data.name) +
                                           "\n                                                "
                                       ),
                                       _c("br"),
                                       _vm._v(" "),
-                                      _c(
-                                        "small",
-                                        { staticClass: "text-muted" },
-                                        [_vm._v(" Current stock: 0")]
-                                      ),
+                                      product.data.product_locations.length
+                                        ? _c(
+                                            "small",
+                                            { staticClass: "text-muted" },
+                                            [
+                                              _vm._v(
+                                                " Current stock:\n                                                    " +
+                                                  _vm._s(
+                                                    product.data
+                                                      .product_locations[0]
+                                                      .quantity_available
+                                                  )
+                                              ),
+                                            ]
+                                          )
+                                        : _vm._e(),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [

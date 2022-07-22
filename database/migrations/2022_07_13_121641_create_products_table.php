@@ -22,9 +22,11 @@ class CreateProductsTable extends Migration
             $table->string('name')->unique();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->double('vat', 9, 0)->default(0)->nullable();
+            $table->float('vat', 22, 2)->default(0)->nullable();
             $table->integer('units_sold')->default(0)->nullable();
             $table->integer('stock_threshold')->default(0)->nullable();
+            $table->double('default_purchase_price', 9, 0)->default(0)->nullable();
+            $table->double('default_selling_price', 9, 0)->default(0)->nullable();
             // $table->integer('quantity')->default(0)->nullable();
             $table->boolean('status')->default(1)->nullable();
             $table->foreignId('created_by')->constrained('users');

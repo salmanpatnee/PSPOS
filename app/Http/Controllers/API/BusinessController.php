@@ -20,11 +20,12 @@ class BusinessController extends Controller
 
     public function index()
     {
-        $businesses = cache()->remember('businesses', 60 * 60 * 24, function () {
-            return Business::all();
+        $settings = cache()->remember('settings', 60 * 60 * 24, function () {
+            $settings = Business::all();
+            return BusinessResource::collection($settings);
         });
 
-        return BusinessResource::collection($businesses);
+        return BusinessResource::collection($settings);
     }
 
     /**

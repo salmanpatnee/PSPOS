@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PurchaseRequest;
+use App\Models\Business;
 use App\Models\Product;
 use App\Models\Reference;
+use App\Models\Tax;
 use App\Models\Transaction;
 use App\Utils\Utils;
 use Carbon\Carbon;
@@ -101,5 +103,25 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getProductDetails()
+    {
+        $productId  = request('product_id');
+        $locationId = request('location_id');
+        $rowIndex   = request('row_index');
+
+        if (!empty($productId)) {
+
+            $product = Product::where('id', $productId)->first();
+
+            $product->product_locations;
+
+            return  [
+                'data'  => $product
+            ];
+        }
+
+        return [$productId, $locationId];
     }
 }
