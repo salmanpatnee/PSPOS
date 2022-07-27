@@ -63,23 +63,12 @@ class Product extends Model
     /**
      * Get the location wise details of the the product.
      */
-    public function product_locations()
+    public function locations()
     {
-        return $this->hasMany(PurchaseProductLocation::class, 'location_id', 'product_id');
+        return $this->belongsToMany(Location::class)->withPivot('quantity_available');
     }
 
-    /**
-     * Get the variations associated with the product.
-     */
-    public function variations()
-    {
-        return $this->hasMany(\App\Variation::class);
-    }
 
-    public function product_variations()
-    {
-        return $this->hasMany(ProductVariation::class);
-    }
 
     public function scopeSearch($query, $term)
     {

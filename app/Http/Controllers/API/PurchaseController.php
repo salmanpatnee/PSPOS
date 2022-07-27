@@ -109,19 +109,17 @@ class PurchaseController extends Controller
     {
         $productId  = request('product_id');
         $locationId = request('location_id');
-        $rowIndex   = request('row_index');
 
         if (!empty($productId)) {
 
-            $product = Product::where('id', $productId)->first();
+            $product = Product::select('id', 'name', 'vat', 'default_purchase_price', 'default_selling_price')->where('id', $productId)->with(['locations' => function ($query) use ($locationId) {
+                $query->where('location_product.location_id', $locationId);
+            }])->get();
 
-            $product->product_locations;
-
-            return  [
-                'data'  => $product
-            ];
+            // return $product[0]->locations[0]->pivot->quantity_available;
+            return $product[0];
         }
 
-        return [$productId, $locationId];
+        return [];
     }
 }

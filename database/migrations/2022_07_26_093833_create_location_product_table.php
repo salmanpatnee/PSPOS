@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchaseProductLocationsTable extends Migration
+class CreateLocationProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePurchaseProductLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_product_locations', function (Blueprint $table) {
+        Schema::create('location_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('location_id')->constrained();
+            $table->foreignId('location_id');
+            $table->foreignId('product_id');
             $table->decimal('quantity_available', 22, 2)->default(0);
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ class CreatePurchaseProductLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_product_locations');
+        Schema::dropIfExists('location_product');
     }
 }

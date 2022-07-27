@@ -119,9 +119,9 @@
                                     <span class="input-group-addon"><i class="fa fa-search"
                                             aria-hidden="true"></i></span>
                                     <v-select :disabled="form.location_id === ''" v-model="productSearch"
-                                        ref="productSearch" placeholder="Enter Product Name / Code"
-                                        @option:selected="productSelected" id="product_search" @search="fetchProducts"
-                                        @input="selectProduct" label="name" :options="products">
+                                        placeholder="Enter Product Name / Code" @option:selected="productSelected"
+                                        id="product_search" @search="fetchProducts" @input="selectProduct" label="name"
+                                        :options="products">
                                         <template slot="no-options">
                                             Type to search Products.
                                         </template>
@@ -137,7 +137,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Product Name</th>
-                                                <th>Qty</th>
+                                                <th>Purchase Quantity</th>
                                                 <th>Cost (Before Dis)</th>
                                                 <th>Dis %</th>
                                                 <th>Cost (Before Tax)</th>
@@ -151,18 +151,20 @@
                                         <tbody>
                                             <tr v-for="(product, index) in form.selected_products" :key="product.id">
                                                 <td>
-                                                    {{ product.data.name }}
+                                                    {{ product.name }}
                                                     <br>
-                                                    <small v-if="product.data.product_locations.length"
-                                                        class="text-muted"> Current stock:
-                                                        {{ product.data.product_locations[0].quantity_available
+                                                    <small v-if="product.locations.length" class="text-muted"> Current
+                                                        stock:
+                                                        {{ product.locations[0].pivot.quantity_available
                                                         }}</small>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" placeholder="1">
+                                                    <input v-model="form.quantity[index]" type="number"
+                                                        class="form-control" placeholder="1">
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" placeholder="1">
+                                                    <input v-model="form.unit_cost[index]" type="number"
+                                                        class="form-control" placeholder="1">
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control" placeholder="0">
@@ -177,7 +179,8 @@
                                                     <input type="text" class="form-control" placeholder="0" readonly>
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" placeholder="0">
+                                                    <input v-model="form.unit_price[index]" type="number"
+                                                        class="form-control" placeholder="0">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" placeholder="0" readonly>
@@ -463,7 +466,10 @@ export default {
             final_total: 0.00,
             due_amount: 0.00,
 
-            selected_products: []
+            selected_products: [],
+            quantity: [],
+            unit_cost: [],
+            unit_price: []
         })
     }),
     computed: {
@@ -565,11 +571,12 @@ export default {
                 + "&row_index=" + this.rowIndex
             ).then(({ data }) => {
                 this.form.selected_products.push(data);
+                this.form.unit_cost.push(data.default_purchase_price);
+                this.form.unit_price.push(data.default_selling_price);
             }).catch(error => console.log('Error: ' + error));
         },
         productSelected() {
             this.productSearch = null;
-            this.$refs.productSearch.$el.focus();
         },
         removeProduct(index) {
             this.form.selected_products.splice(this.form.selected_products.indexOf(index), 1);

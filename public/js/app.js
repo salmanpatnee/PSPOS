@@ -6099,6 +6099,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6133,7 +6136,10 @@ __webpack_require__.r(__webpack_exports__);
         total_before_tax: 0.00,
         final_total: 0.00,
         due_amount: 0.00,
-        selected_products: []
+        selected_products: [],
+        quantity: [],
+        unit_cost: [],
+        unit_price: []
       })
     };
   },
@@ -6233,13 +6239,16 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref3.data;
 
         _this.form.selected_products.push(data);
+
+        _this.form.unit_cost.push(data.default_purchase_price);
+
+        _this.form.unit_price.push(data.default_selling_price);
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
     },
     productSelected: function productSelected() {
       this.productSearch = null;
-      this.$refs.productSearch.$el.focus();
     },
     removeProduct: function removeProduct(index) {
       this.form.selected_products.splice(this.form.selected_products.indexOf(index), 1);
@@ -84961,7 +84970,6 @@ var render = function () {
                           _c(
                             "v-select",
                             {
-                              ref: "productSearch",
                               attrs: {
                                 disabled: _vm.form.location_id === "",
                                 placeholder: "Enter Product Name / Code",
@@ -85012,7 +85020,7 @@ var render = function () {
                               _c("tr", [
                                 _c("th", [_vm._v("Product Name")]),
                                 _vm._v(" "),
-                                _c("th", [_vm._v("Qty")]),
+                                _c("th", [_vm._v("Purchase Quantity")]),
                                 _vm._v(" "),
                                 _c("th", [_vm._v("Cost (Before Dis)")]),
                                 _vm._v(" "),
@@ -85041,21 +85049,20 @@ var render = function () {
                                     _c("td", [
                                       _vm._v(
                                         "\n                                                " +
-                                          _vm._s(product.data.name) +
+                                          _vm._s(product.name) +
                                           "\n                                                "
                                       ),
                                       _c("br"),
                                       _vm._v(" "),
-                                      product.data.product_locations.length
+                                      product.locations.length
                                         ? _c(
                                             "small",
                                             { staticClass: "text-muted" },
                                             [
                                               _vm._v(
-                                                " Current stock:\n                                                    " +
+                                                " Current\n                                                    stock:\n                                                    " +
                                                   _vm._s(
-                                                    product.data
-                                                      .product_locations[0]
+                                                    product.locations[0].pivot
                                                       .quantity_available
                                                   )
                                               ),
@@ -85066,20 +85073,66 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [
                                       _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.quantity[index],
+                                            expression: "form.quantity[index]",
+                                          },
+                                        ],
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
                                           placeholder: "1",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.quantity[index],
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.quantity,
+                                              index,
+                                              $event.target.value
+                                            )
+                                          },
                                         },
                                       }),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
                                       _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.unit_cost[index],
+                                            expression: "form.unit_cost[index]",
+                                          },
+                                        ],
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
                                           placeholder: "1",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.unit_cost[index],
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.unit_cost,
+                                              index,
+                                              $event.target.value
+                                            )
+                                          },
                                         },
                                       }),
                                     ]),
@@ -85127,10 +85180,34 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [
                                       _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.unit_price[index],
+                                            expression:
+                                              "form.unit_price[index]",
+                                          },
+                                        ],
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
                                           placeholder: "0",
+                                        },
+                                        domProps: {
+                                          value: _vm.form.unit_price[index],
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.unit_price,
+                                              index,
+                                              $event.target.value
+                                            )
+                                          },
                                         },
                                       }),
                                     ]),

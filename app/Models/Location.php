@@ -41,11 +41,6 @@ class Location extends Model
         return $this->hasMany(User::class);
     }
 
-    public function products()
-    {
-        return $this->hasMany(PurchaseProductLocation::class, 'location_id', 'product_id');
-    }
-
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
