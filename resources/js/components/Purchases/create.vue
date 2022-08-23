@@ -138,10 +138,10 @@
                                             <tr>
                                                 <th>Product Name</th>
                                                 <th>Purchase Quantity</th>
-                                                <th>Cost (Before Dis)</th>
+                                                <th>Unit Cost (Before Dis)</th>
                                                 <th>Dis %</th>
-                                                <th>Cost (Before Tax)</th>
-                                                <th>Tax %</th>
+                                                <!-- <th>Cost (Before Tax)</th>
+                                                <th>Tax %</th> -->
                                                 <th>Total</th>
                                                 <th>Price</th>
                                                 <th>Profit %</th>
@@ -153,37 +153,39 @@
                                                 <td>
                                                     {{ product.name }}
                                                     <br>
-                                                    <small v-if="product.locations.length" class="text-muted"> Current
-                                                        stock:
-                                                        {{ product.locations[0].pivot.quantity_available
-                                                        }}</small>
+                                                    <small class="text-muted">
+                                                        Current Stock: {{ product.quantity_available }}
+                                                    </small>
                                                 </td>
                                                 <td>
-                                                    <input v-model="form.quantity[index]" type="number"
+                                                    <input v-model="form.quantity[index]" type="number" min="1"
                                                         class="form-control" placeholder="1">
                                                 </td>
                                                 <td>
-                                                    <input v-model="form.unit_cost[index]" type="number"
+                                                    <input v-model="form.unit_cost[index]" type="number" min="0"
                                                         class="form-control" placeholder="1">
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" placeholder="0">
+                                                    <input v-model="form.discount[index]" type="number" min="0"
+                                                        class="form-control" placeholder="0">
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <input type="number" class="form-control" placeholder="1">
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control" placeholder="0">
-                                                </td>
+                                                </td> -->
                                                 <td>
-                                                    <input type="text" class="form-control" placeholder="0" readonly>
+                                                    <input :value="lineTotalDisplay[index]" type="text"
+                                                        class="form-control" placeholder="0" readonly>
                                                 </td>
                                                 <td>
                                                     <input v-model="form.unit_price[index]" type="number"
                                                         class="form-control" placeholder="0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" placeholder="0" readonly>
+                                                    <input :value="lineProfitDisplay[index]" type="text"
+                                                        class="form-control" placeholder="0" readonly>
                                                 </td>
                                                 <td>
                                                     <a @click.prevent="removeProduct(index)" href="#">
@@ -468,8 +470,10 @@ export default {
 
             selected_products: [],
             quantity: [],
+            discount: [],
             unit_cost: [],
-            unit_price: []
+            unit_price: [],
+            line_total: []
         })
     }),
     computed: {
@@ -497,6 +501,38 @@ export default {
             return this.form.netTotal = this.form.final_total = this.form.due_amount
                 = ((this.netTotal + this.form.tax_amount + this.form.shipping_charges) - this.form.discount_amount).toFixed(2);
 
+        },
+        lineTotalDisplay() {
+            const linesTotal = [];
+
+            this.form.selected_products.forEach((product, index) => {
+                let unitPurchasePrice = product.purchase_price;
+
+                let discount = (unitPurchasePrice * this.form.discount[index]) / 100;
+
+                let total = ((unitPurchasePrice - discount) * this.form.quantity[index]).toFixed(2);
+
+                linesTotal.push(total);
+            });
+
+            return linesTotal;
+        },
+        lineProfitDisplay() {
+            const linesProfit = [];
+
+            this.form.selected_products.forEach((product, index) => {
+                let unitPurchasePrice = product.purchase_price;
+
+                let discount = (unitPurchasePrice * this.form.discount[index]) / 100;
+
+                let profitPerUnit = product.selling_price - (unitPurchasePrice - discount);
+
+                let profitMargin = ((profitPerUnit / product.selling_price) * 100).toFixed(2);
+
+                linesProfit.push(profitMargin);
+            });
+
+            return linesProfit;
         }
     },
     watch: {
@@ -570,9 +606,12 @@ export default {
                 + "&location_id=" + this.form.location_id
                 + "&row_index=" + this.rowIndex
             ).then(({ data }) => {
-                this.form.selected_products.push(data);
-                this.form.unit_cost.push(data.default_purchase_price);
-                this.form.unit_price.push(data.default_selling_price);
+                let product = data.data;
+                this.form.selected_products.push(product);
+                this.form.quantity.push(1);
+                this.form.discount.push(0);
+                this.form.unit_cost.push(product.purchase_price);
+                this.form.unit_price.push(product.selling_price);
             }).catch(error => console.log('Error: ' + error));
         },
         productSelected() {

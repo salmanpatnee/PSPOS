@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Resources\ProductPurchaseDetail;
 use App\Models\Business;
 use App\Models\Product;
 use App\Models\Reference;
@@ -112,12 +113,14 @@ class PurchaseController extends Controller
 
         if (!empty($productId)) {
 
-            $product = Product::select('id', 'name', 'vat', 'default_purchase_price', 'default_selling_price')->where('id', $productId)->with(['locations' => function ($query) use ($locationId) {
-                $query->where('location_product.location_id', $locationId);
-            }])->get();
+            $product = Product::select('id', 'name', 'vat', 'default_purchase_price', 'default_selling_price')
+                ->where('id', $productId)
+                ->with(['locations' => function ($query) use ($locationId) {
+                    $query->where('location_product.location_id', $locationId);
+                }])
+                ->first();
 
-            // return $product[0]->locations[0]->pivot->quantity_available;
-            return $product[0];
+            return new ProductPurchaseDetail($product);
         }
 
         return [];

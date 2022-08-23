@@ -6102,6 +6102,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -6138,8 +6140,10 @@ __webpack_require__.r(__webpack_exports__);
         due_amount: 0.00,
         selected_products: [],
         quantity: [],
+        discount: [],
         unit_cost: [],
-        unit_price: []
+        unit_price: [],
+        line_total: []
       })
     };
   },
@@ -6164,6 +6168,33 @@ __webpack_require__.r(__webpack_exports__);
     },
     purchaseAmountDisplay: function purchaseAmountDisplay() {
       return this.form.netTotal = this.form.final_total = this.form.due_amount = (this.netTotal + this.form.tax_amount + this.form.shipping_charges - this.form.discount_amount).toFixed(2);
+    },
+    lineTotalDisplay: function lineTotalDisplay() {
+      var _this = this;
+
+      var linesTotal = [];
+      this.form.selected_products.forEach(function (product, index) {
+        var unitPurchasePrice = product.purchase_price;
+        var discount = unitPurchasePrice * _this.form.discount[index] / 100;
+
+        var total = ((unitPurchasePrice - discount) * _this.form.quantity[index]).toFixed(2);
+
+        linesTotal.push(total);
+      });
+      return linesTotal;
+    },
+    lineProfitDisplay: function lineProfitDisplay() {
+      var _this2 = this;
+
+      var linesProfit = [];
+      this.form.selected_products.forEach(function (product, index) {
+        var unitPurchasePrice = product.purchase_price;
+        var discount = unitPurchasePrice * _this2.form.discount[index] / 100;
+        var profitPerUnit = product.selling_price - (unitPurchasePrice - discount);
+        var profitMargin = (profitPerUnit / product.selling_price * 100).toFixed(2);
+        linesProfit.push(profitMargin);
+      });
+      return linesProfit;
     }
   },
   watch: {
@@ -6233,16 +6264,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     }, 350),
     selectProduct: function selectProduct(product) {
-      var _this = this;
+      var _this3 = this;
 
       axios.get("/api/purchases/product?product_id=" + product.id + "&location_id=" + this.form.location_id + "&row_index=" + this.rowIndex).then(function (_ref3) {
         var data = _ref3.data;
+        var product = data.data;
 
-        _this.form.selected_products.push(data);
+        _this3.form.selected_products.push(product);
 
-        _this.form.unit_cost.push(data.default_purchase_price);
+        _this3.form.quantity.push(1);
 
-        _this.form.unit_price.push(data.default_selling_price);
+        _this3.form.discount.push(0);
+
+        _this3.form.unit_cost.push(product.purchase_price);
+
+        _this3.form.unit_price.push(product.selling_price);
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
@@ -6254,49 +6290,49 @@ __webpack_require__.r(__webpack_exports__);
       this.form.selected_products.splice(this.form.selected_products.indexOf(index), 1);
     },
     getLocations: function getLocations() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get("/api/locations?paginate=100").then(function (_ref4) {
         var data = _ref4.data;
-        return _this2.locations = data.data;
+        return _this4.locations = data.data;
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
     },
     getTaxes: function getTaxes() {
-      var _this3 = this;
+      var _this5 = this;
 
       axios.get("/api/taxes?paginate=100").then(function (_ref5) {
         var data = _ref5.data;
-        return _this3.taxes = data.data;
+        return _this5.taxes = data.data;
       })["catch"](function (error) {
         return console.log('Error: ' + error);
       });
     },
     store: function store() {
-      var _this4 = this;
+      var _this6 = this;
 
       this.$Progress.start();
       this.form.post(this.endPoint).then(function () {
         Notification.success('Purchase Added');
 
-        _this4.$Progress.finish(); // this.$router.push({ name: 'purchases.index' })
+        _this6.$Progress.finish(); // this.$router.push({ name: 'purchases.index' })
 
       })["catch"](function (error) {
-        _this4.$Progress.fail();
+        _this6.$Progress.fail();
       });
     },
     update: function update() {
-      var _this5 = this;
+      var _this7 = this;
 
       this.form.put(this.endPoint + '/' + this.form.id).then(function () {
         Notification.success('Purchase Updated');
 
-        _this5.$router.push({
+        _this7.$router.push({
           name: 'purchases.index'
         });
       })["catch"](function (error) {
-        _this5.$Progress.fail();
+        _this7.$Progress.fail();
       });
     }
   },
@@ -85022,13 +85058,9 @@ var render = function () {
                                 _vm._v(" "),
                                 _c("th", [_vm._v("Purchase Quantity")]),
                                 _vm._v(" "),
-                                _c("th", [_vm._v("Cost (Before Dis)")]),
+                                _c("th", [_vm._v("Unit Cost (Before Dis)")]),
                                 _vm._v(" "),
                                 _c("th", [_vm._v("Dis %")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v("Cost (Before Tax)")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v("Tax %")]),
                                 _vm._v(" "),
                                 _c("th", [_vm._v("Total")]),
                                 _vm._v(" "),
@@ -85054,21 +85086,19 @@ var render = function () {
                                       ),
                                       _c("br"),
                                       _vm._v(" "),
-                                      product.locations.length
-                                        ? _c(
-                                            "small",
-                                            { staticClass: "text-muted" },
-                                            [
-                                              _vm._v(
-                                                " Current\n                                                    stock:\n                                                    " +
-                                                  _vm._s(
-                                                    product.locations[0].pivot
-                                                      .quantity_available
-                                                  )
-                                              ),
-                                            ]
-                                          )
-                                        : _vm._e(),
+                                      _c(
+                                        "small",
+                                        { staticClass: "text-muted" },
+                                        [
+                                          _vm._v(
+                                            "\n                                                    Current Stock: " +
+                                              _vm._s(
+                                                product.quantity_available
+                                              ) +
+                                              "\n                                                "
+                                          ),
+                                        ]
+                                      ),
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
@@ -85084,6 +85114,7 @@ var render = function () {
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
+                                          min: "1",
                                           placeholder: "1",
                                         },
                                         domProps: {
@@ -85117,6 +85148,7 @@ var render = function () {
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
+                                          min: "0",
                                           placeholder: "1",
                                         },
                                         domProps: {
@@ -85139,30 +85171,34 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("td", [
                                       _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.discount[index],
+                                            expression: "form.discount[index]",
+                                          },
+                                        ],
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
+                                          min: "0",
                                           placeholder: "0",
                                         },
-                                      }),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("input", {
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "1",
+                                        domProps: {
+                                          value: _vm.form.discount[index],
                                         },
-                                      }),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("input", {
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "0",
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.form.discount,
+                                              index,
+                                              $event.target.value
+                                            )
+                                          },
                                         },
                                       }),
                                     ]),
@@ -85174,6 +85210,9 @@ var render = function () {
                                           type: "text",
                                           placeholder: "0",
                                           readonly: "",
+                                        },
+                                        domProps: {
+                                          value: _vm.lineTotalDisplay[index],
                                         },
                                       }),
                                     ]),
@@ -85219,6 +85258,9 @@ var render = function () {
                                           type: "text",
                                           placeholder: "0",
                                           readonly: "",
+                                        },
+                                        domProps: {
+                                          value: _vm.lineProfitDisplay[index],
                                         },
                                       }),
                                     ]),
